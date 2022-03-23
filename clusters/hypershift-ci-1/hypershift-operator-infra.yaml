@@ -1,0 +1,57 @@
+apiVersion: s3.aws.jet.crossplane.io/v1alpha2
+kind: Bucket
+metadata:
+  name: hypershift-ci-1-oidc
+  annotations:
+    crossplane.io/external-name: hypershift-ci-1-oidc
+spec:
+  forProvider:
+    region: us-east-1
+    acl: public-read
+---
+apiVersion: iam.aws.jet.crossplane.io/v1alpha2
+kind: User
+metadata:
+  name: hypershift-ci-1-oidc
+spec:
+  forProvider: {}
+---
+apiVersion: iam.aws.jet.crossplane.io/v1alpha2
+kind: AccessKey
+metadata:
+  name: hypershift-ci-1-oidc
+spec:
+  forProvider:
+    user: hypershift-ci-1-oidc
+  writeConnectionSecretToRef:
+    namespace: hypershift
+    name: oidc-s3-access-key
+---
+apiVersion: s3.aws.jet.crossplane.io/v1alpha1
+kind: BucketPolicy
+metadata:
+  name: hypershift-ci-1-oidc
+spec:
+  forProvider:
+    bucket: hypershift-ci-1-oidc
+    region: us-east-1
+    policy: >
+      {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Action": [
+              "s3:*"
+            ],
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": [
+                "arn:aws:iam::820196288204:user/hypershift-ci-1-oidc"
+              ]
+            },
+            "Resource": [
+              "arn:aws:s3:::hypershift-ci-1-oidc/*"
+            ]
+          }
+        ]
+      }
