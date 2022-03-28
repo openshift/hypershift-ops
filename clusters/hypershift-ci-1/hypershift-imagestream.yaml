@@ -1,0 +1,17 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: hypershift-operator
+  namespace: hypershift
+spec:
+  lookupPolicy:
+    local: true
+  tags:
+  - name: latest
+    from:
+      kind: DockerImage
+      name: quay.io/hypershift/hypershift-operator:latest
+    referencePolicy:
+      type: Local
+    importPolicy:
+      scheduled: true

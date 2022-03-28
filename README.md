@@ -12,7 +12,10 @@
 hypershift install render \
   --oidc-storage-provider-s3-bucket-name hypershift-ci-1-oidc \
   --oidc-storage-provider-s3-region us-east-1 \
-  --oidc-storage-provider-s3-secret oidc-s3-creds > clusters/hypershift-ci-1/hypershift-operator.yaml
+  --oidc-storage-provider-s3-secret oidc-s3-creds \
+  --hypershift-image hypershift-operator:latest > clusters/hypershift-ci-1/hypershift-operator.yaml
+
+oc kustomize ./clusters/hypershift-ci-1 -o clusters/hypershift-ci-1/hypershift-operator.yaml
 ```
 
 ## Install
