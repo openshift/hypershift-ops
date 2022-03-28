@@ -66,6 +66,19 @@ rules:
   verbs:
   - '*'
 - apiGroups:
+  - batch
+  resources:
+  - cronjobs
+  - jobs
+  verbs:
+  - '*'
+- apiGroups:
+  - coordination.k8s.io
+  resources:
+  - leases
+  verbs:
+  - '*'
+- apiGroups:
   - networking.k8s.io
   resources:
   - networkpolicies
@@ -80,8 +93,15 @@ rules:
   - addons.cluster.x-k8s.io
   - exp.cluster.x-k8s.io
   - cluster.x-k8s.io
+  - monitoring.coreos.com
   resources:
   - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - policy
+  resources:
+  - poddisruptionbudgets
   verbs:
   - '*'
 - apiGroups:
@@ -107,12 +127,19 @@ rules:
   resources:
   - '*'
   verbs:
-  - '*'
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
 - apiGroups:
   - ""
   resources:
   - events
   - configmaps
+  - persistentvolumeclaims
   - pods
   - pods/log
   - secrets
@@ -120,12 +147,14 @@ rules:
   - namespaces
   - serviceaccounts
   - services
+  - endpoints
   verbs:
   - '*'
 - apiGroups:
   - apps
   resources:
   - deployments
+  - statefulsets
   verbs:
   - '*'
 - apiGroups:
@@ -154,6 +183,37 @@ rules:
   - capi-provider.agent-install.openshift.io
   resources:
   - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - operator.openshift.io
+  resources:
+  - ingresscontrollers
+  verbs:
+  - '*'
+- apiGroups:
+  - kubevirt.io
+  resources:
+  - virtualmachineinstances
+  - virtualmachines
+  verbs:
+  - '*'
+- apiGroups:
+  - agent-install.openshift.io
+  resources:
+  - agents
+  verbs:
+  - '*'
+- apiGroups:
+  - extensions.hive.openshift.io
+  resources:
+  - agentclusterinstalls
+  verbs:
+  - '*'
+- apiGroups:
+  - hive.openshift.io
+  resources:
+  - clusterdeployments
   verbs:
   - '*'
 ---
@@ -239,7 +299,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: registry.ci.openshift.org/ocp/4.11:hypershift-operator
+        image: quay.io/hypershift/hypershift-operator:latest
         imagePullPolicy: Always
         livenessProbe:
           failureThreshold: 5
@@ -19192,6 +19252,10 @@ spec:
       jsonPath: .status.conditions[?(@.type=="Available")].reason
       name: Reason
       type: string
+    - description: Message
+      jsonPath: .status.conditions[?(@.type=="Available")].message
+      name: Message
+      type: string
     name: v1alpha1
     schema:
       openAPIV3Schema:
@@ -19264,6 +19328,16 @@ spec:
                     format: int32
                     type: integer
                 type: object
+              clusterID:
+                description: ClusterID uniquely identifies this cluster. This is expected
+                  to be an RFC4122 UUID value (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                  in hexadecimal values). As with a Kubernetes metadata.uid, this
+                  ID uniquely identifies this cluster in space and time. This value
+                  identifies the cluster in metrics pushed to telemetry and metrics
+                  produced by the control plane operators. If a value is not specified,
+                  an ID is generated. After initial creation, the value is immutable.
+                pattern: '[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}'
+                type: string
               configuration:
                 description: Configuration specifies configuration for individual
                   OCP components in the cluster, represented as embedded resources
@@ -19510,6 +19584,23 @@ spec:
                 - podCIDR
                 - serviceCIDR
                 type: object
+              olmCatalogPlacement:
+                default: management
+                description: OLMCatalogPlacement specifies the placement of OLM catalog
+                  components. By default, this is set to management and OLM catalog
+                  components are deployed onto the management cluster. If set to guest,
+                  the OLM catalog components will be deployed onto the guest cluster.
+                enum:
+                - management
+                - guest
+                type: string
+              pausedUntil:
+                description: 'PausedUntil is a field that can be used to pause reconciliation
+                  on a resource. Either a date can be provided in RFC3339 format or
+                  a boolean. If a date is provided: reconciliation is paused on the
+                  resource until that date. If the boolean true is provided: reconciliation
+                  is paused on the resource until the field is removed.'
+                type: string
               platform:
                 description: Platform specifies the underlying infrastructure provider
                   for the cluster and is used to configure platform specific behavior.
@@ -20027,6 +20118,15 @@ spec:
                       description: ServicePublishingStrategy specifies how to publish
                         Service.
                       properties:
+                        loadBalancer:
+                          description: LoadBalancer configures exposing a service
+                            using a LoadBalancer.
+                          properties:
+                            hostname:
+                              description: Hostname is the name of the DNS record
+                                that will be created pointing to the LoadBalancer.
+                              type: string
+                          type: object
                         nodePort:
                           description: NodePort configures exposing a service using
                             a NodePort.
@@ -20043,6 +20143,15 @@ spec:
                               type: integer
                           required:
                           - address
+                          type: object
+                        route:
+                          description: Route configures exposing a service using a
+                            Route.
+                          properties:
+                            hostname:
+                              description: Hostname is the name of the DNS record
+                                that will be created pointing to the Route.
+                              type: string
                           type: object
                         type:
                           description: Type is the publishing strategy used for the
@@ -20073,7 +20182,6 @@ spec:
                     type: string
                 type: object
             required:
-            - issuerURL
             - networking
             - platform
             - pullSecret
@@ -20356,6 +20464,12 @@ spec:
                       TODO: Add other useful fields. apiVersion, kind, uid?'
                     type: string
                 type: object
+              clusterID:
+                description: ClusterID is the unique id that identifies the cluster
+                  externally. Making it optional here allows us to keep compatibility
+                  with previous versions of the control-plane-operator that have no
+                  knowledge of this field.
+                type: string
               configuration:
                 description: 'Configuration embeds resources that correspond to the
                   openshift configuration API: https://docs.openshift.com/container-platform/4.7/rest_api/config_apis/config-apis-index.html'
@@ -20564,6 +20678,23 @@ spec:
                 enum:
                 - OpenShiftSDN
                 - Calico
+                type: string
+              olmCatalogPlacement:
+                default: management
+                description: OLMCatalogPlacement specifies the placement of OLM catalog
+                  components. By default, this is set to management and OLM catalog
+                  components are deployed onto the management cluster. If set to guest,
+                  the OLM catalog components will be deployed onto the guest cluster.
+                enum:
+                - management
+                - guest
+                type: string
+              pausedUntil:
+                description: 'PausedUntil is a field that can be used to pause reconciliation
+                  on a resource. Either a date can be provided in RFC3339 format or
+                  a boolean. If a date is provided: reconciliation is paused on the
+                  resource until that date. If the boolean true is provided: reconciliation
+                  is paused on the resource until the field is removed.'
                 type: string
               platform:
                 description: PlatformSpec specifies the underlying infrastructure
@@ -21072,6 +21203,15 @@ spec:
                       description: ServicePublishingStrategy specifies how to publish
                         Service.
                       properties:
+                        loadBalancer:
+                          description: LoadBalancer configures exposing a service
+                            using a LoadBalancer.
+                          properties:
+                            hostname:
+                              description: Hostname is the name of the DNS record
+                                that will be created pointing to the LoadBalancer.
+                              type: string
+                          type: object
                         nodePort:
                           description: NodePort configures exposing a service using
                             a NodePort.
@@ -21088,6 +21228,15 @@ spec:
                               type: integer
                           required:
                           - address
+                          type: object
+                        route:
+                          description: Route configures exposing a service using a
+                            Route.
+                          properties:
+                            hostname:
+                              description: Hostname is the name of the DNS record
+                                that will be created pointing to the Route.
+                              type: string
                           type: object
                         type:
                           description: Type is the publishing strategy used for the
@@ -21314,9 +21463,13 @@ spec:
       jsonPath: .spec.clusterName
       name: Cluster
       type: string
+    - description: Desired Nodes
+      jsonPath: .spec.nodeCount
+      name: Desired Nodes
+      type: integer
     - description: Available Nodes
       jsonPath: .status.nodeCount
-      name: NodeCount
+      name: Current Nodes
       type: integer
     - description: Autoscaling Enabled
       jsonPath: .status.conditions[?(@.type=="AutoscalingEnabled")].status
@@ -21337,6 +21490,10 @@ spec:
     - description: UpdatingConfig in progress
       jsonPath: .status.conditions[?(@.type=="UpdatingConfig")].status
       name: UpdatingConfig
+      type: string
+    - description: Message
+      jsonPath: .status.conditions[?(@.type=="Ready")].message
+      name: Message
       type: string
     name: v1alpha1
     schema:
@@ -21703,12 +21860,24 @@ spec:
                     type: object
                   azure:
                     properties:
+                      availabilityZone:
+                        description: AvailabilityZone of the nodepool. Must not be
+                          specified for clusters in a location that does not support
+                          AvailabilityZone.
+                        type: string
+                      diskSizeGB:
+                        default: 120
+                        format: int32
+                        minimum: 16
+                        type: integer
                       imageID:
+                        description: 'ImageID is the id of the image to boot from.
+                          If unset, the default image at the location below will be
+                          used: subscription/$subscriptionID/resourceGroups/$resourceGroupName/providers/Microsoft.Compute/images/rhcos.x86_64.vhd'
                         type: string
                       vmsize:
                         type: string
                     required:
-                    - imageID
                     - vmsize
                     type: object
                   ibmcloud:
@@ -26085,69 +26254,50 @@ spec:
                 description: Conditions represents the latest available observations
                   of the node pool's current state.
                 items:
-                  description: "Condition contains details for one aspect of the current
-                    state of this API Resource. --- This struct is intended for direct
-                    use as an array at the field path .status.conditions.  For example,
-                    type FooStatus struct{     // Represents the observations of a
-                    foo's current state.     // Known .status.conditions.type are:
-                    \"Available\", \"Progressing\", and \"Degraded\"     // +patchMergeKey=type
-                    \    // +patchStrategy=merge     // +listType=map     // +listMapKey=type
-                    \    Conditions []metav1.Condition `json:\"conditions,omitempty\"
-                    patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`
-                    \n     // other fields }"
+                  description: We define our own condition type since metav1.Condition
+                    has validation for Reason that might be broken by what we bubble
+                    up from CAPI. NodePoolCondition defines an observation of NodePool
+                    resource operational state.
                   properties:
                     lastTransitionTime:
-                      description: lastTransitionTime is the last time the condition
-                        transitioned from one status to another. This should be when
-                        the underlying condition changed.  If that is not known, then
-                        using the time when the API field changed is acceptable.
+                      description: Last time the condition transitioned from one status
+                        to another. This should be when the underlying condition changed.
+                        If that is not known, then using the time when the API field
+                        changed is acceptable.
                       format: date-time
                       type: string
                     message:
-                      description: message is a human readable message indicating
-                        details about the transition. This may be an empty string.
-                      maxLength: 32768
+                      description: A human readable message indicating details about
+                        the transition. This field may be empty.
                       type: string
                     observedGeneration:
-                      description: observedGeneration represents the .metadata.generation
-                        that the condition was set based upon. For instance, if .metadata.generation
-                        is currently 12, but the .status.conditions[x].observedGeneration
-                        is 9, the condition is out of date with respect to the current
-                        state of the instance.
                       format: int64
                       minimum: 0
                       type: integer
                     reason:
-                      description: reason contains a programmatic identifier indicating
-                        the reason for the condition's last transition. Producers
-                        of specific condition types may define expected values and
-                        meanings for this field, and whether the values are considered
-                        a guaranteed API. The value should be a CamelCase string.
-                        This field may not be empty.
-                      maxLength: 1024
-                      minLength: 1
-                      pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
+                      description: The reason for the condition's last transition
+                        in CamelCase. The specific API may choose whether or not this
+                        field is considered a guaranteed API. This field may not be
+                        empty.
+                      type: string
+                    severity:
+                      description: Severity provides an explicit classification of
+                        Reason code, so the users or machines can immediately understand
+                        the current situation and act accordingly. The Severity field
+                        MUST be set only when Status=False.
                       type: string
                     status:
-                      description: status of the condition, one of True, False, Unknown.
-                      enum:
-                      - "True"
-                      - "False"
-                      - Unknown
+                      description: Status of the condition, one of True, False, Unknown.
                       type: string
                     type:
-                      description: type of condition in CamelCase or in foo.example.com/CamelCase.
-                        --- Many .condition.type values are consistent across resources
+                      description: Type of condition in CamelCase or in foo.example.com/CamelCase.
+                        Many .condition.type values are consistent across resources
                         like Available, but because arbitrary conditions can be useful
                         (see .node.status.conditions), the ability to deconflict is
-                        important. The regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)
-                      maxLength: 316
-                      pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+                        important.
                       type: string
                   required:
                   - lastTransitionTime
-                  - message
-                  - reason
                   - status
                   - type
                   type: object
@@ -26178,3 +26328,13 @@ status:
     plural: ""
   conditions: []
   storedVersions: []
+---
+apiVersion: v1
+data:
+  name: hypershift-ci-1-oidc
+  region: us-east-1
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: oidc-storage-provider-s3-config
+  namespace: kube-public

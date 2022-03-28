@@ -7,6 +7,14 @@
 - [Helm](https://helm.sh/)
 - An OCP cluster ([ROSA instructions](https://www.rosaworkshop.io/rosa/2-deploy/#automatic-mode))
 
+## Update the hypershift manifest
+```shell
+hypershift install render \
+  --oidc-storage-provider-s3-bucket-name hypershift-ci-1-oidc \
+  --oidc-storage-provider-s3-region us-east-1 \
+  --oidc-storage-provider-s3-secret oidc-s3-creds > clusters/hypershift-ci-1/hypershift-operator.yaml
+```
+
 ## Install
 
 Copy the [hypershift-ops-crossplane AWS credentials](https://vault.ci.openshift.org/ui/vault/secrets/kv/show/selfservice/hypershift-team/ops/hypershift-ops-crossplane) from Vault to `$AWS_CREDS`.
