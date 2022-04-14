@@ -7445,6 +7445,16 @@ spec:
           spec:
             description: Spec is the desired behavior of the HostedCluster.
             properties:
+              additionalTrustBundle:
+                description: AdditionalTrustBundle is a reference to a ConfigMap containing
+                  a PEM-encoded X.509 certificate bundle that will be added to the
+                  hosted controlplane and nodes
+                properties:
+                  name:
+                    description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                      TODO: Add other useful fields. apiVersion, kind, uid?'
+                    type: string
+                type: object
               auditWebhook:
                 description: "AuditWebhook contains metadata for configuring an audit
                   webhook endpoint for a cluster to process cluster audit events.
@@ -7730,12 +7740,14 @@ spec:
                     description: "MachineCIDR is... \n TODO(dan): document it"
                     type: string
                   networkType:
-                    default: OpenShiftSDN
+                    default: OVNKubernetes
                     description: NetworkType specifies the SDN provider used for cluster
                       networking.
                     enum:
                     - OpenShiftSDN
                     - Calico
+                    - OVNKubernetes
+                    - Other
                     type: string
                   podCIDR:
                     description: "PodCIDR is... \n TODO(dan): document it"
@@ -8260,6 +8272,19 @@ spec:
                 required:
                 - type
                 type: object
+              serviceAccountSigningKey:
+                description: ServiceAccountSigningKey is a reference to a secret containing
+                  the private key used by the service account token issuer. The secret
+                  is expected to contain a single key named "key". If not specified,
+                  a service account signing key will be generated automatically for
+                  the cluster. When specifying a service account signing key, a IssuerURL
+                  must also be specified.
+                properties:
+                  name:
+                    description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                      TODO: Add other useful fields. apiVersion, kind, uid?'
+                    type: string
+                type: object
               services:
                 description: "Services specifies how individual control plane services
                   are published from the hosting cluster of the control plane. \n
@@ -8278,6 +8303,7 @@ spec:
                       - OIDC
                       - Konnectivity
                       - Ignition
+                      - OVNSbDb
                       type: string
                     servicePublishingStrategy:
                       description: ServicePublishingStrategy specifies how to publish
@@ -8605,6 +8631,15 @@ spec:
           spec:
             description: HostedControlPlaneSpec defines the desired state of HostedControlPlane
             properties:
+              additionalTrustBundle:
+                description: AdditionalTrustBundle references a ConfigMap containing
+                  a PEM-encoded X.509 certificate bundle
+                properties:
+                  name:
+                    description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                      TODO: Add other useful fields. apiVersion, kind, uid?'
+                    type: string
+                type: object
               apiAdvertiseAddress:
                 description: APIAdvertiseAddress is the address at which the APIServer
                   listens inside a worker.
@@ -8843,6 +8878,8 @@ spec:
                 enum:
                 - OpenShiftSDN
                 - Calico
+                - OVNKubernetes
+                - Other
                 type: string
               olmCatalogPlacement:
                 default: management
@@ -9345,6 +9382,18 @@ spec:
                 required:
                 - type
                 type: object
+              serviceAccountSigningKey:
+                description: ServiceAccountSigningKey is a reference to a secret containing
+                  the private key used by the service account token issuer. The secret
+                  is expected to contain a single key named "key". If not specified,
+                  a service account signing key will be generated automatically for
+                  the cluster.
+                properties:
+                  name:
+                    description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                      TODO: Add other useful fields. apiVersion, kind, uid?'
+                    type: string
+                type: object
               serviceCIDR:
                 type: string
               services:
@@ -9363,6 +9412,7 @@ spec:
                       - OIDC
                       - Konnectivity
                       - Ignition
+                      - OVNSbDb
                       type: string
                     servicePublishingStrategy:
                       description: ServicePublishingStrategy specifies how to publish
@@ -26165,6 +26215,8 @@ metadata:
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    service.beta.openshift.io/serving-cert-secret-name: manager-serving-cert
   creationTimestamp: null
   labels:
     name: operator
@@ -26176,6 +26228,10 @@ spec:
     port: 9393
     protocol: TCP
     targetPort: metrics
+  - name: manager
+    port: 443
+    protocol: TCP
+    targetPort: manager
   selector:
     name: operator
   type: ClusterIP
@@ -26208,6 +26264,14 @@ metadata:
   name: hypershift-etcd
 value: 100002000
 ---
+apiVersion: scheduling.k8s.io/v1
+description: This priority class is used for hypershift operator pods
+kind: PriorityClass
+metadata:
+  creationTimestamp: null
+  name: hypershift-operator
+value: 100003000
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -26228,6 +26292,16 @@ spec:
         hypershift.openshift.io/operator-component: operator
         name: operator
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: name
+                operator: In
+                values:
+                - operator
+            topologyKey: kubernetes.io/hostname
       containers:
       - args:
         - run
@@ -26264,6 +26338,9 @@ spec:
         - containerPort: 9000
           name: metrics
           protocol: TCP
+        - containerPort: 9443
+          name: manager
+          protocol: TCP
         readinessProbe:
           failureThreshold: 3
           httpGet:
@@ -26283,6 +26360,7 @@ spec:
         volumeMounts:
         - mountPath: /etc/oidc-storage-provider-s3-creds
           name: oidc-storage-provider-s3-creds
+      priorityClassName: hypershift-operator
       serviceAccountName: operator
       volumes:
       - name: oidc-storage-provider-s3-creds
