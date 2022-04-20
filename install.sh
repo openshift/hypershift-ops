@@ -35,7 +35,7 @@ done
 shift $((OPTIND-1)) # remove parsed options and args from $@ list
 
 # Set up globals
-CLUSTER_DIR="${SCRIPT_DIR}/clusters/${CLUSTER}"
+CLUSTER_DIR="${SCRIPT_DIR}/clusters/${CLUSTER}/manifests"
 COMMON_DIR="${SCRIPT_DIR}/common"
 
 # Validate inputs
