@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- hypershift-operator.yaml
+- manifests/hypershift-operator.yaml
 
 patchesStrategicMerge:
 - hypershift-operator-deployment-imagestreamtrigger-annotation.patch.yaml
