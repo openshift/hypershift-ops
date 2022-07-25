@@ -2,6 +2,8 @@ apiVersion: v1
 kind: Namespace
 metadata:
   creationTimestamp: null
+  labels:
+    openshift.io/cluster-monitoring: "true"
   name: hypershift
 spec: {}
 status: {}
@@ -10,7 +12,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/v1beta1: v1alpha1
@@ -180,14 +182,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/v1beta1: v1alpha1
@@ -266,6 +268,7 @@ spec:
                       are ANDed.
                     type: object
                 type: object
+                x-kubernetes-map-type: atomic
               providerID:
                 description: ProviderID is the host's motherboard serial formatted
                   as agent://12345678-1234-1234-1234-123456789abc
@@ -392,14 +395,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/v1beta1: v1alpha1
@@ -492,6 +495,7 @@ spec:
                               only "value". The requirements are ANDed.
                             type: object
                         type: object
+                        x-kubernetes-map-type: atomic
                       providerID:
                         description: ProviderID is the host's motherboard serial formatted
                           as agent://12345678-1234-1234-1234-123456789abc
@@ -510,14 +514,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   name: awsclustercontrolleridentities.infrastructure.cluster.x-k8s.io
 spec:
@@ -618,6 +622,7 @@ spec:
                           "value". The requirements are ANDed.
                         type: object
                     type: object
+                    x-kubernetes-map-type: atomic
                 type: object
             type: object
         type: object
@@ -627,14 +632,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   name: awsclusterroleidentities.infrastructure.cluster.x-k8s.io
 spec:
@@ -734,6 +739,7 @@ spec:
                           "value". The requirements are ANDed.
                         type: object
                     type: object
+                    x-kubernetes-map-type: atomic
                 type: object
               durationSeconds:
                 description: The duration, in seconds, of the role session before
@@ -802,14 +808,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/v1beta1: v1beta1
@@ -1606,14 +1612,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   name: awsclusterstaticidentities.infrastructure.cluster.x-k8s.io
 spec:
@@ -1714,11 +1720,13 @@ spec:
                           "value". The requirements are ANDed.
                         type: object
                     type: object
+                    x-kubernetes-map-type: atomic
                 type: object
               secretRef:
                 description: 'Reference to a secret containing the credentials. The
-                  secret should contain the following data keys:  AccessKeyID: AKIAIOSFODNN7EXAMPLE  SecretAccessKey:
-                  wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY  SessionToken: Optional'
+                  secret should contain the following data keys: AccessKeyID: AKIAIOSFODNN7EXAMPLE
+                  SecretAccessKey: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY SessionToken:
+                  Optional'
                 type: string
             required:
             - secretRef
@@ -1730,14 +1738,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   name: awsclustertemplates.infrastructure.cluster.x-k8s.io
 spec:
@@ -2111,14 +2119,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   name: awsendpointservices.hypershift.openshift.io
 spec:
@@ -2203,13 +2211,12 @@ spec:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct
                     use as an array at the field path .status.conditions.  For example,
-                    type FooStatus struct{     // Represents the observations of a
-                    foo's current state.     // Known .status.conditions.type are:
-                    \"Available\", \"Progressing\", and \"Degraded\"     // +patchMergeKey=type
-                    \    // +patchStrategy=merge     // +listType=map     // +listMapKey=type
-                    \    Conditions []metav1.Condition `json:\"conditions,omitempty\"
-                    patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`
-                    \n     // other fields }"
+                    type FooStatus struct{ // Represents the observations of a foo's
+                    current state. // Known .status.conditions.type are: \"Available\",
+                    \"Progressing\", and \"Degraded\" // +patchMergeKey=type // +patchStrategy=merge
+                    // +listType=map // +listMapKey=type Conditions []metav1.Condition
+                    `json:\"conditions,omitempty\" patchStrategy:\"merge\" patchMergeKey:\"type\"
+                    protobuf:\"bytes,1,rep,name=conditions\"` \n // other fields }"
                   properties:
                     lastTransitionTime:
                       description: lastTransitionTime is the last time the condition
@@ -2294,14 +2301,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   name: awsfargateprofiles.infrastructure.cluster.x-k8s.io
 spec:
@@ -2494,14 +2501,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   name: awsmachinepools.infrastructure.cluster.x-k8s.io
 spec:
@@ -2983,14 +2990,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/v1beta1: v1beta1
@@ -3470,14 +3477,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/v1beta1: v1beta1
@@ -3872,14 +3879,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   name: awsmanagedmachinepools.infrastructure.cluster.x-k8s.io
 spec:
@@ -4162,14 +4169,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   name: azureclusteridentities.infrastructure.cluster.x-k8s.io
 spec:
@@ -4272,6 +4279,7 @@ spec:
                           "value". The requirements are ANDed.
                         type: object
                     type: object
+                    x-kubernetes-map-type: atomic
                 type: object
               clientID:
                 description: Both User Assigned MSI and SP can use this field.
@@ -4289,6 +4297,7 @@ spec:
                       name must be unique.
                     type: string
                 type: object
+                x-kubernetes-map-type: atomic
               resourceID:
                 description: User assigned MSI resource id.
                 type: string
@@ -4366,14 +4375,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/v1beta1: v1beta1
@@ -4775,6 +4784,7 @@ spec:
                     description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
                     type: string
                 type: object
+                x-kubernetes-map-type: atomic
               location:
                 type: string
               networkSpec:
@@ -5280,14 +5290,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/v1beta1: v1beta1
@@ -5828,14 +5838,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/v1beta1: v1beta1
@@ -6270,14 +6280,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   name: clusterclasses.cluster.x-k8s.io
 spec:
@@ -6367,6 +6377,7 @@ spec:
                             description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
                             type: string
                         type: object
+                        x-kubernetes-map-type: atomic
                     required:
                     - ref
                     type: object
@@ -6432,6 +6443,7 @@ spec:
                         description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
                         type: string
                     type: object
+                    x-kubernetes-map-type: atomic
                 required:
                 - ref
                 type: object
@@ -6479,6 +6491,7 @@ spec:
                         description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
                         type: string
                     type: object
+                    x-kubernetes-map-type: atomic
                 required:
                 - ref
                 type: object
@@ -6556,6 +6569,7 @@ spec:
                                         https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
                                       type: string
                                   type: object
+                                  x-kubernetes-map-type: atomic
                               required:
                               - ref
                               type: object
@@ -6610,6 +6624,7 @@ spec:
                                         https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
                                       type: string
                                   type: object
+                                  x-kubernetes-map-type: atomic
                               required:
                               - ref
                               type: object
@@ -6656,14 +6671,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   name: clusterresourcesetbindings.addons.cluster.x-k8s.io
 spec:
@@ -6769,14 +6784,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   name: clusterresourcesets.addons.cluster.x-k8s.io
 spec:
@@ -6863,6 +6878,7 @@ spec:
                       are ANDed.
                     type: object
                 type: object
+                x-kubernetes-map-type: atomic
               resources:
                 description: Resources is a list of Secrets/ConfigMaps where each
                   contains 1 or more resources to be applied to remote clusters.
@@ -6958,14 +6974,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   name: clusters.cluster.x-k8s.io
 spec:
@@ -7099,6 +7115,7 @@ spec:
                     description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
                     type: string
                 type: object
+                x-kubernetes-map-type: atomic
               infrastructureRef:
                 description: InfrastructureRef is a reference to a provider-specific
                   resource that holds the details for provisioning infrastructure
@@ -7137,6 +7154,7 @@ spec:
                     description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
                     type: string
                 type: object
+                x-kubernetes-map-type: atomic
               paused:
                 description: Paused can be used to prevent controllers from processing
                   the Cluster and all its associated objects.
@@ -7374,14 +7392,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   name: hostedclusters.hypershift.openshift.io
 spec:
@@ -7413,9 +7431,9 @@ spec:
       jsonPath: .status.conditions[?(@.type=="Available")].status
       name: Available
       type: string
-    - description: Reason
-      jsonPath: .status.conditions[?(@.type=="Available")].reason
-      name: Reason
+    - description: Progressing
+      jsonPath: .status.conditions[?(@.type=="Progressing")].status
+      name: Progressing
       type: string
     - description: Message
       jsonPath: .status.conditions[?(@.type=="Available")].message
@@ -7455,6 +7473,7 @@ spec:
                       TODO: Add other useful fields. apiVersion, kind, uid?'
                     type: string
                 type: object
+                x-kubernetes-map-type: atomic
               auditWebhook:
                 description: "AuditWebhook contains metadata for configuring an audit
                   webhook endpoint for a cluster to process cluster audit events.
@@ -7470,6 +7489,7 @@ spec:
                       TODO: Add other useful fields. apiVersion, kind, uid?'
                     type: string
                 type: object
+                x-kubernetes-map-type: atomic
               autoscaling:
                 description: Autoscaling specifies auto-scaling behavior that applies
                   to all NodePools associated with the control plane.
@@ -7595,8 +7615,8 @@ spec:
                               that match one or more of the customRules. \n The following
                               profiles are provided: - Default: default policy which
                               means MetaData level logging with the exception of events
-                              \  (not logged at all), oauthaccesstokens and oauthauthorizetokens
-                              (both logged at RequestBody   level). - WriteRequestBodies:
+                              (not logged at all), oauthaccesstokens and oauthauthorizetokens
+                              (both logged at RequestBody level). - WriteRequestBodies:
                               like 'Default', but logs request and response HTTP payloads
                               for write requests (create, update, patch). - AllRequestBodies:
                               like 'WriteRequestBodies', but also logs request and
@@ -7650,9 +7670,9 @@ spec:
                               practices. \n When encryption is enabled, all sensitive
                               resources shipped with the platform are encrypted. This
                               list of sensitive resources can and will change over
-                              time.  The current authoritative list is: \n   1. secrets
-                              \  2. configmaps   3. routes.route.openshift.io   4.
-                              oauthaccesstokens.oauth.openshift.io   5. oauthauthorizetokens.oauth.openshift.io"
+                              time.  The current authoritative list is: \n 1. secrets
+                              2. configmaps 3. routes.route.openshift.io 4. oauthaccesstokens.oauth.openshift.io
+                              5. oauthauthorizetokens.oauth.openshift.io"
                             enum:
                             - ""
                             - identity
@@ -7715,10 +7735,9 @@ spec:
                             description: "custom is a user-defined TLS security profile.
                               Be extremely careful using a custom profile as invalid
                               configurations can be catastrophic. An example custom
-                              profile looks like this: \n   ciphers:     - ECDHE-ECDSA-CHACHA20-POLY1305
-                              \    - ECDHE-RSA-CHACHA20-POLY1305     - ECDHE-RSA-AES128-GCM-SHA256
-                              \    - ECDHE-ECDSA-AES128-GCM-SHA256   minTLSVersion:
-                              TLSv1.1"
+                              profile looks like this: \n ciphers: - ECDHE-ECDSA-CHACHA20-POLY1305
+                              - ECDHE-RSA-CHACHA20-POLY1305 - ECDHE-RSA-AES128-GCM-SHA256
+                              - ECDHE-ECDSA-AES128-GCM-SHA256 minTLSVersion: TLSv1.1"
                             nullable: true
                             properties:
                               ciphers:
@@ -7726,7 +7745,7 @@ spec:
                                   algorithms that are negotiated during the TLS handshake.
                                   \ Operators may remove entries their operands do
                                   not support.  For example, to use DES-CBC3-SHA  (yaml):
-                                  \n   ciphers:     - DES-CBC3-SHA"
+                                  \n ciphers: - DES-CBC3-SHA"
                                 items:
                                   type: string
                                 type: array
@@ -7734,7 +7753,7 @@ spec:
                                 description: "minTLSVersion is used to specify the
                                   minimal version of the TLS protocol that is negotiated
                                   during the TLS handshake. For example, to use TLS
-                                  versions 1.1, 1.2 and 1.3 (yaml): \n   minTLSVersion:
+                                  versions 1.1, 1.2 and 1.3 (yaml): \n minTLSVersion:
                                   TLSv1.1 \n NOTE: currently the highest minTLSVersion
                                   allowed is VersionTLS12"
                                 enum:
@@ -7747,41 +7766,39 @@ spec:
                           intermediate:
                             description: "intermediate is a TLS security profile based
                               on: \n https://wiki.mozilla.org/Security/Server_Side_TLS#Intermediate_compatibility_.28recommended.29
-                              \n and looks like this (yaml): \n   ciphers:     - TLS_AES_128_GCM_SHA256
-                              \    - TLS_AES_256_GCM_SHA384     - TLS_CHACHA20_POLY1305_SHA256
-                              \    - ECDHE-ECDSA-AES128-GCM-SHA256     - ECDHE-RSA-AES128-GCM-SHA256
-                              \    - ECDHE-ECDSA-AES256-GCM-SHA384     - ECDHE-RSA-AES256-GCM-SHA384
-                              \    - ECDHE-ECDSA-CHACHA20-POLY1305     - ECDHE-RSA-CHACHA20-POLY1305
-                              \    - DHE-RSA-AES128-GCM-SHA256     - DHE-RSA-AES256-GCM-SHA384
-                              \  minTLSVersion: TLSv1.2"
+                              \n and looks like this (yaml): \n ciphers: - TLS_AES_128_GCM_SHA256
+                              - TLS_AES_256_GCM_SHA384 - TLS_CHACHA20_POLY1305_SHA256
+                              - ECDHE-ECDSA-AES128-GCM-SHA256 - ECDHE-RSA-AES128-GCM-SHA256
+                              - ECDHE-ECDSA-AES256-GCM-SHA384 - ECDHE-RSA-AES256-GCM-SHA384
+                              - ECDHE-ECDSA-CHACHA20-POLY1305 - ECDHE-RSA-CHACHA20-POLY1305
+                              - DHE-RSA-AES128-GCM-SHA256 - DHE-RSA-AES256-GCM-SHA384
+                              minTLSVersion: TLSv1.2"
                             nullable: true
                             type: object
                           modern:
                             description: "modern is a TLS security profile based on:
                               \n https://wiki.mozilla.org/Security/Server_Side_TLS#Modern_compatibility
-                              \n and looks like this (yaml): \n   ciphers:     - TLS_AES_128_GCM_SHA256
-                              \    - TLS_AES_256_GCM_SHA384     - TLS_CHACHA20_POLY1305_SHA256
-                              \  minTLSVersion: TLSv1.3 \n NOTE: Currently unsupported."
+                              \n and looks like this (yaml): \n ciphers: - TLS_AES_128_GCM_SHA256
+                              - TLS_AES_256_GCM_SHA384 - TLS_CHACHA20_POLY1305_SHA256
+                              minTLSVersion: TLSv1.3 \n NOTE: Currently unsupported."
                             nullable: true
                             type: object
                           old:
                             description: "old is a TLS security profile based on:
                               \n https://wiki.mozilla.org/Security/Server_Side_TLS#Old_backward_compatibility
-                              \n and looks like this (yaml): \n   ciphers:     - TLS_AES_128_GCM_SHA256
-                              \    - TLS_AES_256_GCM_SHA384     - TLS_CHACHA20_POLY1305_SHA256
-                              \    - ECDHE-ECDSA-AES128-GCM-SHA256     - ECDHE-RSA-AES128-GCM-SHA256
-                              \    - ECDHE-ECDSA-AES256-GCM-SHA384     - ECDHE-RSA-AES256-GCM-SHA384
-                              \    - ECDHE-ECDSA-CHACHA20-POLY1305     - ECDHE-RSA-CHACHA20-POLY1305
-                              \    - DHE-RSA-AES128-GCM-SHA256     - DHE-RSA-AES256-GCM-SHA384
-                              \    - DHE-RSA-CHACHA20-POLY1305     - ECDHE-ECDSA-AES128-SHA256
-                              \    - ECDHE-RSA-AES128-SHA256     - ECDHE-ECDSA-AES128-SHA
-                              \    - ECDHE-RSA-AES128-SHA     - ECDHE-ECDSA-AES256-SHA384
-                              \    - ECDHE-RSA-AES256-SHA384     - ECDHE-ECDSA-AES256-SHA
-                              \    - ECDHE-RSA-AES256-SHA     - DHE-RSA-AES128-SHA256
-                              \    - DHE-RSA-AES256-SHA256     - AES128-GCM-SHA256
-                              \    - AES256-GCM-SHA384     - AES128-SHA256     - AES256-SHA256
-                              \    - AES128-SHA     - AES256-SHA     - DES-CBC3-SHA
-                              \  minTLSVersion: TLSv1.0"
+                              \n and looks like this (yaml): \n ciphers: - TLS_AES_128_GCM_SHA256
+                              - TLS_AES_256_GCM_SHA384 - TLS_CHACHA20_POLY1305_SHA256
+                              - ECDHE-ECDSA-AES128-GCM-SHA256 - ECDHE-RSA-AES128-GCM-SHA256
+                              - ECDHE-ECDSA-AES256-GCM-SHA384 - ECDHE-RSA-AES256-GCM-SHA384
+                              - ECDHE-ECDSA-CHACHA20-POLY1305 - ECDHE-RSA-CHACHA20-POLY1305
+                              - DHE-RSA-AES128-GCM-SHA256 - DHE-RSA-AES256-GCM-SHA384
+                              - DHE-RSA-CHACHA20-POLY1305 - ECDHE-ECDSA-AES128-SHA256
+                              - ECDHE-RSA-AES128-SHA256 - ECDHE-ECDSA-AES128-SHA -
+                              ECDHE-RSA-AES128-SHA - ECDHE-ECDSA-AES256-SHA384 - ECDHE-RSA-AES256-SHA384
+                              - ECDHE-ECDSA-AES256-SHA - ECDHE-RSA-AES256-SHA - DHE-RSA-AES128-SHA256
+                              - DHE-RSA-AES256-SHA256 - AES128-GCM-SHA256 - AES256-GCM-SHA384
+                              - AES128-SHA256 - AES256-SHA256 - AES128-SHA - AES256-SHA
+                              - DES-CBC3-SHA minTLSVersion: TLSv1.0"
                             nullable: true
                             type: object
                           type:
@@ -7915,6 +7932,7 @@ spec:
                             TODO: Add other useful fields. apiVersion, kind, uid?'
                           type: string
                       type: object
+                      x-kubernetes-map-type: atomic
                     type: array
                   featureGate:
                     description: FeatureGate holds cluster-wide information about
@@ -8278,6 +8296,7 @@ spec:
                                     requirements are ANDed.
                                   type: object
                               type: object
+                              x-kubernetes-map-type: atomic
                             preloadPolicy:
                               description: preloadPolicy directs the client to include
                                 hosts in its host preload list so that it never needs
@@ -8781,11 +8800,11 @@ spec:
                                   description: 'insecure, if true, indicates the connection
                                     should not use TLS WARNING: Should not be set
                                     to `true` with the URL scheme "ldaps://" as "ldaps://"
-                                    URLs always          attempt to connect using
-                                    TLS, even when `insecure` is set to `true` When
-                                    `true`, "ldap://" URLS connect insecurely. When
-                                    `false`, "ldap://" URLs are upgraded to a TLS
-                                    connection using StartTLS as specified in https://tools.ietf.org/html/rfc2830.'
+                                    URLs always attempt to connect using TLS, even
+                                    when `insecure` is set to `true` When `true`,
+                                    "ldap://" URLS connect insecurely. When `false`,
+                                    "ldap://" URLs are upgraded to a TLS connection
+                                    using StartTLS as specified in https://tools.ietf.org/html/rfc2830.'
                                   type: boolean
                                 url:
                                   description: 'url is an RFC 2255 URL which specifies
@@ -8803,7 +8822,7 @@ spec:
                                 returned by this provider. - It MUST be unique and
                                 not shared by any other identity provider used - It
                                 MUST be a valid path segment: name cannot equal "."
-                                or ".." or contain "/" or "%" or ":"   Ref: https://godoc.org/github.com/openshift/origin/pkg/user/apis/user/validation#ValidateIdentityProviderName'
+                                or ".." or contain "/" or "%" or ":" Ref: https://godoc.org/github.com/openshift/origin/pkg/user/apis/user/validation#ValidateIdentityProviderName'
                               type: string
                             openID:
                               description: openID enables user authentication using
@@ -8941,8 +8960,9 @@ spec:
                                     from OAuth clients which expect WWW-Authenticate
                                     challenges will be redirected here. ${url} is
                                     replaced with the current URL, escaped to be safe
-                                    in a query parameter   https://www.example.com/sso-login?then=${url}
-                                    ${query} is replaced with the current query string   https://www.example.com/auth-proxy/oauth/authorize?${query}
+                                    in a query parameter https://www.example.com/sso-login?then=${url}
+                                    ${query} is replaced with the current query string
+                                    https://www.example.com/auth-proxy/oauth/authorize?${query}
                                     Required when challenge is set to true.
                                   type: string
                                 clientCommonNames:
@@ -8971,8 +8991,9 @@ spec:
                                     from OAuth clients which expect interactive logins
                                     will be redirected here ${url} is replaced with
                                     the current URL, escaped to be safe in a query
-                                    parameter   https://www.example.com/sso-login?then=${url}
-                                    ${query} is replaced with the current query string   https://www.example.com/auth-proxy/oauth/authorize?${query}
+                                    parameter https://www.example.com/sso-login?then=${url}
+                                    ${query} is replaced with the current query string
+                                    https://www.example.com/auth-proxy/oauth/authorize?${query}
                                     Required when login is set to true.
                                   type: string
                                 nameHeaders:
@@ -9124,9 +9145,9 @@ spec:
                           HTTPS requests as well. \n The namespace for the ConfigMap
                           referenced by trustedCA is \"openshift-config\". Here is
                           an example ConfigMap (in yaml): \n apiVersion: v1 kind:
-                          ConfigMap metadata:  name: user-ca-bundle  namespace: openshift-config
-                          \ data:    ca-bundle.crt: |      -----BEGIN CERTIFICATE-----
-                          \     Custom CA certificate bundle.      -----END CERTIFICATE-----"
+                          ConfigMap metadata: name: user-ca-bundle namespace: openshift-config
+                          data: ca-bundle.crt: | -----BEGIN CERTIFICATE----- Custom
+                          CA certificate bundle. -----END CERTIFICATE-----"
                         properties:
                           name:
                             description: name is the metadata.name of the referenced
@@ -9214,6 +9235,7 @@ spec:
                             TODO: Add other useful fields. apiVersion, kind, uid?'
                           type: string
                       type: object
+                      x-kubernetes-map-type: atomic
                     type: array
                 type: object
               controllerAvailabilityPolicy:
@@ -9276,6 +9298,16 @@ spec:
                                   https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1."
                                 type: string
                             type: object
+                          restoreSnapshotURL:
+                            description: RestoreSnapshotURL allows an optional list
+                              of URLs to be provided where an etcd snapshot can be
+                              downloaded, for example a pre-signed URL referencing
+                              a storage service, one URL per replica. This snapshot
+                              will be restored on initial startup, only when the etcd
+                              PV is empty.
+                            items:
+                              type: string
+                            type: array
                           type:
                             description: Type is the kind of persistent storage implementation
                               to use for etcd.
@@ -9300,8 +9332,8 @@ spec:
                     properties:
                       endpoint:
                         description: "Endpoint is the full etcd cluster client endpoint
-                          URL. For example: \n     https://etcd-client:2379 \n If
-                          the URL uses an HTTPS scheme, the TLS field is required."
+                          URL. For example: \n https://etcd-client:2379 \n If the
+                          URL uses an HTTPS scheme, the TLS field is required."
                         pattern: ^https://
                         type: string
                       tls:
@@ -9311,9 +9343,9 @@ spec:
                           clientSecret:
                             description: "ClientSecret refers to a secret for client
                               mTLS authentication with the etcd cluster. It may have
-                              the following key/value pairs: \n     etcd-client-ca.crt:
-                              Certificate Authority value     etcd-client.crt: Client
-                              certificate value     etcd-client.key: Client certificate
+                              the following key/value pairs: \n etcd-client-ca.crt:
+                              Certificate Authority value etcd-client.crt: Client
+                              certificate value etcd-client.key: Client certificate
                               key value"
                             properties:
                               name:
@@ -9322,6 +9354,7 @@ spec:
                                   uid?'
                                 type: string
                             type: object
+                            x-kubernetes-map-type: atomic
                         required:
                         - clientSecret
                         type: object
@@ -9410,9 +9443,47 @@ spec:
                         format: int32
                         type: integer
                     type: object
+                  clusterNetwork:
+                    description: 'ClusterNetwork is the list of IP address pools for
+                      pods. TODO: make this required in the next version of the API'
+                    items:
+                      description: ClusterNetworkEntry is a single IP address block
+                        for pod IP blocks. IP blocks are allocated with size 2^HostSubnetLength.
+                      properties:
+                        cidr:
+                          description: CIDR is the IP block address pool.
+                          type: string
+                        hostPrefix:
+                          description: HostPrefix is the prefix size to allocate to
+                            each node from the CIDR. For example, 24 would allocate
+                            2^8=256 adresses to each node. If this field is not used
+                            by the plugin, it can be left unset.
+                          format: int32
+                          type: integer
+                      required:
+                      - cidr
+                      type: object
+                    type: array
                   machineCIDR:
-                    description: "MachineCIDR is... \n TODO(dan): document it"
+                    description: Deprecated This field will be removed in the next
+                      API release. Use MachineNetwork instead
                     type: string
+                  machineNetwork:
+                    description: 'MachineNetwork is the list of IP address pools for
+                      machines. TODO: make this required in the next version of the
+                      API'
+                    items:
+                      description: MachineNetworkEntry is a single IP address block
+                        for node IP blocks.
+                      properties:
+                        cidr:
+                          description: CIDR is the IP block address pool for machines
+                            within the cluster.
+                          type: string
+                      required:
+                      - cidr
+                      type: object
+                    type: array
                   networkType:
                     default: OVNKubernetes
                     description: NetworkType specifies the SDN provider used for cluster
@@ -9424,16 +9495,31 @@ spec:
                     - Other
                     type: string
                   podCIDR:
-                    description: "PodCIDR is... \n TODO(dan): document it"
+                    description: Deprecated This field will be removed in the next
+                      API release. Use ClusterNetwork instead
                     type: string
                   serviceCIDR:
-                    description: "ServiceCIDR is... \n TODO(dan): document it"
+                    description: Deprecated This field will be removed in the next
+                      API release. Use ServiceNetwork instead
                     type: string
+                  serviceNetwork:
+                    description: 'ServiceNetwork is the list of IP address pools for
+                      services. NOTE: currently only one entry is supported. TODO:
+                      make this required in the next version of the API'
+                    items:
+                      description: ServiceNetworkEntry is a single IP address block
+                        for the service network.
+                      properties:
+                        cidr:
+                          description: CIDR is the IP block address pool for services
+                            within the cluster.
+                          type: string
+                      required:
+                      - cidr
+                      type: object
+                    type: array
                 required:
-                - machineCIDR
                 - networkType
-                - podCIDR
-                - serviceCIDR
                 type: object
               olmCatalogPlacement:
                 default: management
@@ -9471,9 +9557,10 @@ spec:
                       on Amazon Web Services.
                     properties:
                       cloudProviderConfig:
-                        description: "CloudProviderConfig specifies AWS networking
-                          configuration for the control plane. \n TODO(dan): should
-                          this be named AWSNetworkConfig?"
+                        description: 'CloudProviderConfig specifies AWS networking
+                          configuration for the control plane. This is mainly used
+                          for cloud provider controller config: https://github.com/kubernetes/kubernetes/blob/f5be5052e3d0808abb904aebd3218fe4a5c2dd82/staging/src/k8s.io/legacy-cloud-providers/aws/aws.go#L1347-L1364
+                          TODO(dan): should this be named AWSNetworkConfig?'
                         properties:
                           subnet:
                             description: Subnet is the subnet to use for control plane
@@ -9529,6 +9616,7 @@ spec:
                               TODO: Add other useful fields. apiVersion, kind, uid?'
                             type: string
                         type: object
+                        x-kubernetes-map-type: atomic
                       endpointAccess:
                         default: Public
                         description: EndpointAccess specifies the publishing scope
@@ -9547,6 +9635,7 @@ spec:
                               TODO: Add other useful fields. apiVersion, kind, uid?'
                             type: string
                         type: object
+                        x-kubernetes-map-type: atomic
                       nodePoolManagementCreds:
                         description: Deprecated This field will be removed in the
                           next API release. Use RolesRef instead.
@@ -9556,6 +9645,7 @@ spec:
                               TODO: Add other useful fields. apiVersion, kind, uid?'
                             type: string
                         type: object
+                        x-kubernetes-map-type: atomic
                       region:
                         description: Region is the AWS region in which the cluster
                           resides. This configures the OCP control plane cloud integrations,
@@ -9617,171 +9707,143 @@ spec:
                         properties:
                           controlPlaneOperatorARN:
                             description: "ControlPlaneOperatorARN  is an ARN value
-                              referencing a role that should contain policy permissions
-                              matching the control-plane-operator policy. \n The following
-                              is an example of a valid policy document: \n { \t\"Version\":
-                              \"2012-10-17\", \t\"Statement\": [ \t\t{ \t\t\t\"Effect\":
-                              \"Allow\", \t\t\t\"Action\": [ \t\t\t\t\"ec2:CreateVpcEndpoint\",
-                              \t\t\t\t\"ec2:DescribeVpcEndpoints\", \t\t\t\t\"ec2:ModifyVpcEndpoint\",
-                              \t\t\t\t\"ec2:DeleteVpcEndpoints\", \t\t\t\t\"ec2:CreateTags\",
-                              \t\t\t\t\"route53:ListHostedZones\" \t\t\t], \t\t\t\"Resource\":
-                              \"*\" \t\t}, \t\t{ \t\t\t\"Effect\": \"Allow\", \t\t\t\"Action\":
-                              [ \t\t\t\t\"route53:ChangeResourceRecordSets\", \t\t\t\t\"route53:ListResourceRecordSets\"
-                              \t\t\t], \t\t\t\"Resource\": \"arn:aws:route53:::%s\"
-                              \t\t} \t] }"
+                              referencing a role appropriate for the Control Plane
+                              Operator. \n The following is an example of a valid
+                              policy document: \n { \"Version\": \"2012-10-17\", \"Statement\":
+                              [ { \"Effect\": \"Allow\", \"Action\": [ \"ec2:CreateVpcEndpoint\",
+                              \"ec2:DescribeVpcEndpoints\", \"ec2:ModifyVpcEndpoint\",
+                              \"ec2:DeleteVpcEndpoints\", \"ec2:CreateTags\", \"route53:ListHostedZones\"
+                              ], \"Resource\": \"*\" }, { \"Effect\": \"Allow\", \"Action\":
+                              [ \"route53:ChangeResourceRecordSets\", \"route53:ListResourceRecordSets\"
+                              ], \"Resource\": \"arn:aws:route53:::%s\" } ] }"
                             type: string
                           imageRegistryARN:
                             description: "ImageRegistryARN is an ARN value referencing
-                              a role used for image registry OIDC integration. \n
-                              The following is an example of a valid policy document:
-                              \n { \t\"Version\": \"2012-10-17\", \t\"Statement\":
-                              [ \t\t{ \t\t\t\"Effect\": \"Allow\", \t\t\t\"Action\":
-                              [ \t\t\t\t\"s3:CreateBucket\", \t\t\t\t\"s3:DeleteBucket\",
-                              \t\t\t\t\"s3:PutBucketTagging\", \t\t\t\t\"s3:GetBucketTagging\",
-                              \t\t\t\t\"s3:PutBucketPublicAccessBlock\", \t\t\t\t\"s3:GetBucketPublicAccessBlock\",
-                              \t\t\t\t\"s3:PutEncryptionConfiguration\", \t\t\t\t\"s3:GetEncryptionConfiguration\",
-                              \t\t\t\t\"s3:PutLifecycleConfiguration\", \t\t\t\t\"s3:GetLifecycleConfiguration\",
-                              \t\t\t\t\"s3:GetBucketLocation\", \t\t\t\t\"s3:ListBucket\",
-                              \t\t\t\t\"s3:GetObject\", \t\t\t\t\"s3:PutObject\",
-                              \t\t\t\t\"s3:DeleteObject\", \t\t\t\t\"s3:ListBucketMultipartUploads\",
-                              \t\t\t\t\"s3:AbortMultipartUpload\", \t\t\t\t\"s3:ListMultipartUploadParts\"
-                              \t\t\t], \t\t\t\"Resource\": \"*\" \t\t} \t] }"
+                              a role appropriate for the Image Registry Operator.
+                              \n The following is an example of a valid policy document:
+                              \n { \"Version\": \"2012-10-17\", \"Statement\": [ {
+                              \"Effect\": \"Allow\", \"Action\": [ \"s3:CreateBucket\",
+                              \"s3:DeleteBucket\", \"s3:PutBucketTagging\", \"s3:GetBucketTagging\",
+                              \"s3:PutBucketPublicAccessBlock\", \"s3:GetBucketPublicAccessBlock\",
+                              \"s3:PutEncryptionConfiguration\", \"s3:GetEncryptionConfiguration\",
+                              \"s3:PutLifecycleConfiguration\", \"s3:GetLifecycleConfiguration\",
+                              \"s3:GetBucketLocation\", \"s3:ListBucket\", \"s3:GetObject\",
+                              \"s3:PutObject\", \"s3:DeleteObject\", \"s3:ListBucketMultipartUploads\",
+                              \"s3:AbortMultipartUpload\", \"s3:ListMultipartUploadParts\"
+                              ], \"Resource\": \"*\" } ] }"
                             type: string
                           ingressARN:
                             description: "The referenced role must have a trust relationship
                               that allows it to be assumed via web identity. https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc.html.
-                              Example: { \t\t\"Version\": \"2012-10-17\", \t\t\"Statement\":
-                              [ \t\t\t{ \t\t\t\t\"Effect\": \"Allow\", \t\t\t\t\"Principal\":
-                              { \t\t\t\t\t\"Federated\": \"{{ .ProviderARN }}\" \t\t\t\t},
-                              \t\t\t\t\t\"Action\": \"sts:AssumeRoleWithWebIdentity\",
-                              \t\t\t\t\"Condition\": { \t\t\t\t\t\"StringEquals\":
-                              { \t\t\t\t\t\t\"{{ .ProviderName }}:sub\": {{ .ServiceAccounts
-                              }} \t\t\t\t\t} \t\t\t\t} \t\t\t} \t\t] \t} \n IngressARN
-                              is an ARN value referencing a role used for ingress
-                              OIDC integration. \n The following is an example of
-                              a valid policy document: \n { \t\"Version\": \"2012-10-17\",
-                              \t\"Statement\": [ \t\t{ \t\t\t\"Effect\": \"Allow\",
-                              \t\t\t\"Action\": [ \t\t\t\t\"elasticloadbalancing:DescribeLoadBalancers\",
-                              \t\t\t\t\"tag:GetResources\", \t\t\t\t\"route53:ListHostedZones\"
-                              \t\t\t], \t\t\t\"Resource\": \"*\" \t\t}, \t\t{ \t\t\t\"Effect\":
-                              \"Allow\", \t\t\t\"Action\": [ \t\t\t\t\"route53:ChangeResourceRecordSets\"
-                              \t\t\t], \t\t\t\"Resource\": [ \t\t\t\t\"arn:aws:route53:::PUBLIC_ZONE_ID\",
-                              \t\t\t\t\"arn:aws:route53:::PRIVATE_ZONE_ID\" \t\t\t]
-                              \t\t} \t] }"
+                              Example: { \"Version\": \"2012-10-17\", \"Statement\":
+                              [ { \"Effect\": \"Allow\", \"Principal\": { \"Federated\":
+                              \"{{ .ProviderARN }}\" }, \"Action\": \"sts:AssumeRoleWithWebIdentity\",
+                              \"Condition\": { \"StringEquals\": { \"{{ .ProviderName
+                              }}:sub\": {{ .ServiceAccounts }} } } } ] } \n IngressARN
+                              is an ARN value referencing a role appropriate for the
+                              Ingress Operator. \n The following is an example of
+                              a valid policy document: \n { \"Version\": \"2012-10-17\",
+                              \"Statement\": [ { \"Effect\": \"Allow\", \"Action\":
+                              [ \"elasticloadbalancing:DescribeLoadBalancers\", \"tag:GetResources\",
+                              \"route53:ListHostedZones\" ], \"Resource\": \"*\" },
+                              { \"Effect\": \"Allow\", \"Action\": [ \"route53:ChangeResourceRecordSets\"
+                              ], \"Resource\": [ \"arn:aws:route53:::PUBLIC_ZONE_ID\",
+                              \"arn:aws:route53:::PRIVATE_ZONE_ID\" ] } ] }"
                             type: string
                           kubeCloudControllerARN:
                             description: "KubeCloudControllerARN is an ARN value referencing
-                              a role that should contain policy permissions matching
-                              the cloud controller policy. \n The following is an
-                              example of a valid policy document: \n  {  \"Version\":
-                              \"2012-10-17\",  \"Statement\": [    {      \"Action\":
-                              [        \"ec2:DescribeInstances\",        \"ec2:DescribeImages\",
-                              \       \"ec2:DescribeRegions\",        \"ec2:DescribeRouteTables\",
-                              \       \"ec2:DescribeSecurityGroups\",        \"ec2:DescribeSubnets\",
-                              \       \"ec2:DescribeVolumes\",        \"ec2:CreateSecurityGroup\",
-                              \       \"ec2:CreateTags\",        \"ec2:CreateVolume\",
-                              \       \"ec2:ModifyInstanceAttribute\",        \"ec2:ModifyVolume\",
-                              \       \"ec2:AttachVolume\",        \"ec2:AuthorizeSecurityGroupIngress\",
-                              \       \"ec2:CreateRoute\",        \"ec2:DeleteRoute\",
-                              \       \"ec2:DeleteSecurityGroup\",        \"ec2:DeleteVolume\",
-                              \       \"ec2:DetachVolume\",        \"ec2:RevokeSecurityGroupIngress\",
-                              \       \"ec2:DescribeVpcs\",        \"elasticloadbalancing:AddTags\",
-                              \       \"elasticloadbalancing:AttachLoadBalancerToSubnets\",
-                              \       \"elasticloadbalancing:ApplySecurityGroupsToLoadBalancer\",
-                              \       \"elasticloadbalancing:CreateLoadBalancer\",
-                              \       \"elasticloadbalancing:CreateLoadBalancerPolicy\",
-                              \       \"elasticloadbalancing:CreateLoadBalancerListeners\",
-                              \       \"elasticloadbalancing:ConfigureHealthCheck\",
-                              \       \"elasticloadbalancing:DeleteLoadBalancer\",
-                              \       \"elasticloadbalancing:DeleteLoadBalancerListeners\",
-                              \       \"elasticloadbalancing:DescribeLoadBalancers\",
-                              \       \"elasticloadbalancing:DescribeLoadBalancerAttributes\",
-                              \       \"elasticloadbalancing:DetachLoadBalancerFromSubnets\",
-                              \       \"elasticloadbalancing:DeregisterInstancesFromLoadBalancer\",
-                              \       \"elasticloadbalancing:ModifyLoadBalancerAttributes\",
-                              \       \"elasticloadbalancing:RegisterInstancesWithLoadBalancer\",
-                              \       \"elasticloadbalancing:SetLoadBalancerPoliciesForBackendServer\",
-                              \       \"elasticloadbalancing:AddTags\",        \"elasticloadbalancing:CreateListener\",
-                              \       \"elasticloadbalancing:CreateTargetGroup\",
-                              \       \"elasticloadbalancing:DeleteListener\",        \"elasticloadbalancing:DeleteTargetGroup\",
-                              \       \"elasticloadbalancing:DescribeListeners\",
-                              \       \"elasticloadbalancing:DescribeLoadBalancerPolicies\",
-                              \       \"elasticloadbalancing:DescribeTargetGroups\",
-                              \       \"elasticloadbalancing:DescribeTargetHealth\",
-                              \       \"elasticloadbalancing:ModifyListener\",        \"elasticloadbalancing:ModifyTargetGroup\",
-                              \       \"elasticloadbalancing:RegisterTargets\",        \"elasticloadbalancing:SetLoadBalancerPoliciesOfListener\",
-                              \       \"iam:CreateServiceLinkedRole\",        \"kms:DescribeKey\"
-                              \     ],      \"Resource\": [        \"*\"      ],      \"Effect\":
-                              \"Allow\"    }  ] }"
+                              a role appropriate for the KCM/KCC. \n The following
+                              is an example of a valid policy document: \n { \"Version\":
+                              \"2012-10-17\", \"Statement\": [ { \"Action\": [ \"ec2:DescribeInstances\",
+                              \"ec2:DescribeImages\", \"ec2:DescribeRegions\", \"ec2:DescribeRouteTables\",
+                              \"ec2:DescribeSecurityGroups\", \"ec2:DescribeSubnets\",
+                              \"ec2:DescribeVolumes\", \"ec2:CreateSecurityGroup\",
+                              \"ec2:CreateTags\", \"ec2:CreateVolume\", \"ec2:ModifyInstanceAttribute\",
+                              \"ec2:ModifyVolume\", \"ec2:AttachVolume\", \"ec2:AuthorizeSecurityGroupIngress\",
+                              \"ec2:CreateRoute\", \"ec2:DeleteRoute\", \"ec2:DeleteSecurityGroup\",
+                              \"ec2:DeleteVolume\", \"ec2:DetachVolume\", \"ec2:RevokeSecurityGroupIngress\",
+                              \"ec2:DescribeVpcs\", \"elasticloadbalancing:AddTags\",
+                              \"elasticloadbalancing:AttachLoadBalancerToSubnets\",
+                              \"elasticloadbalancing:ApplySecurityGroupsToLoadBalancer\",
+                              \"elasticloadbalancing:CreateLoadBalancer\", \"elasticloadbalancing:CreateLoadBalancerPolicy\",
+                              \"elasticloadbalancing:CreateLoadBalancerListeners\",
+                              \"elasticloadbalancing:ConfigureHealthCheck\", \"elasticloadbalancing:DeleteLoadBalancer\",
+                              \"elasticloadbalancing:DeleteLoadBalancerListeners\",
+                              \"elasticloadbalancing:DescribeLoadBalancers\", \"elasticloadbalancing:DescribeLoadBalancerAttributes\",
+                              \"elasticloadbalancing:DetachLoadBalancerFromSubnets\",
+                              \"elasticloadbalancing:DeregisterInstancesFromLoadBalancer\",
+                              \"elasticloadbalancing:ModifyLoadBalancerAttributes\",
+                              \"elasticloadbalancing:RegisterInstancesWithLoadBalancer\",
+                              \"elasticloadbalancing:SetLoadBalancerPoliciesForBackendServer\",
+                              \"elasticloadbalancing:AddTags\", \"elasticloadbalancing:CreateListener\",
+                              \"elasticloadbalancing:CreateTargetGroup\", \"elasticloadbalancing:DeleteListener\",
+                              \"elasticloadbalancing:DeleteTargetGroup\", \"elasticloadbalancing:DescribeListeners\",
+                              \"elasticloadbalancing:DescribeLoadBalancerPolicies\",
+                              \"elasticloadbalancing:DescribeTargetGroups\", \"elasticloadbalancing:DescribeTargetHealth\",
+                              \"elasticloadbalancing:ModifyListener\", \"elasticloadbalancing:ModifyTargetGroup\",
+                              \"elasticloadbalancing:RegisterTargets\", \"elasticloadbalancing:SetLoadBalancerPoliciesOfListener\",
+                              \"iam:CreateServiceLinkedRole\", \"kms:DescribeKey\"
+                              ], \"Resource\": [ \"*\" ], \"Effect\": \"Allow\" }
+                              ] }"
                             type: string
                           networkARN:
-                            description: "NetworkOIDC is an ARN value referencing
-                              a role used for networking OIDC integration. \n The
-                              following is an example of a valid policy document:
-                              \n { \t\"Version\": \"2012-10-17\", \t\"Statement\":
-                              [ \t\t{ \t\t\t\"Effect\": \"Allow\", \t\t\t\"Action\":
-                              [ \t\t\t\t\"ec2:DescribeInstances\",        \"ec2:DescribeInstanceStatus\",
-                              \       \"ec2:DescribeInstanceTypes\",        \"ec2:UnassignPrivateIpAddresses\",
-                              \       \"ec2:AssignPrivateIpAddresses\",        \"ec2:UnassignIpv6Addresses\",
-                              \       \"ec2:AssignIpv6Addresses\",        \"ec2:DescribeSubnets\",
-                              \       \"ec2:DescribeNetworkInterfaces\" \t\t\t], \t\t\t\"Resource\":
-                              \"*\" \t\t} \t] }"
+                            description: "NetworkARN is an ARN value referencing a
+                              role appropriate for the Network Operator. \n The following
+                              is an example of a valid policy document: \n { \"Version\":
+                              \"2012-10-17\", \"Statement\": [ { \"Effect\": \"Allow\",
+                              \"Action\": [ \"ec2:DescribeInstances\", \"ec2:DescribeInstanceStatus\",
+                              \"ec2:DescribeInstanceTypes\", \"ec2:UnassignPrivateIpAddresses\",
+                              \"ec2:AssignPrivateIpAddresses\", \"ec2:UnassignIpv6Addresses\",
+                              \"ec2:AssignIpv6Addresses\", \"ec2:DescribeSubnets\",
+                              \"ec2:DescribeNetworkInterfaces\" ], \"Resource\": \"*\"
+                              } ] }"
                             type: string
                           nodePoolManagementARN:
                             description: "NodePoolManagementARN is an ARN value referencing
-                              a role that should contain policy permissions matching
-                              the node pool management policy. \n The following is
-                              an example of a valid policy document: \n {   \"Version\":
-                              \"2012-10-17\",  \"Statement\": [    {      \"Action\":
-                              [        \"ec2:AllocateAddress\",        \"ec2:AssociateRouteTable\",
-                              \       \"ec2:AttachInternetGateway\",        \"ec2:AuthorizeSecurityGroupIngress\",
-                              \       \"ec2:CreateInternetGateway\",        \"ec2:CreateNatGateway\",
-                              \       \"ec2:CreateRoute\",        \"ec2:CreateRouteTable\",
-                              \       \"ec2:CreateSecurityGroup\",        \"ec2:CreateSubnet\",
-                              \       \"ec2:CreateTags\",        \"ec2:DeleteInternetGateway\",
-                              \       \"ec2:DeleteNatGateway\",        \"ec2:DeleteRouteTable\",
-                              \       \"ec2:DeleteSecurityGroup\",        \"ec2:DeleteSubnet\",
-                              \       \"ec2:DeleteTags\",        \"ec2:DescribeAccountAttributes\",
-                              \       \"ec2:DescribeAddresses\",        \"ec2:DescribeAvailabilityZones\",
-                              \       \"ec2:DescribeImages\",        \"ec2:DescribeInstances\",
-                              \       \"ec2:DescribeInternetGateways\",        \"ec2:DescribeNatGateways\",
-                              \       \"ec2:DescribeNetworkInterfaces\",        \"ec2:DescribeNetworkInterfaceAttribute\",
-                              \       \"ec2:DescribeRouteTables\",        \"ec2:DescribeSecurityGroups\",
-                              \       \"ec2:DescribeSubnets\",        \"ec2:DescribeVpcs\",
-                              \       \"ec2:DescribeVpcAttribute\",        \"ec2:DescribeVolumes\",
-                              \       \"ec2:DetachInternetGateway\",        \"ec2:DisassociateRouteTable\",
-                              \       \"ec2:DisassociateAddress\",        \"ec2:ModifyInstanceAttribute\",
-                              \       \"ec2:ModifyNetworkInterfaceAttribute\",        \"ec2:ModifySubnetAttribute\",
-                              \       \"ec2:ReleaseAddress\",        \"ec2:RevokeSecurityGroupIngress\",
-                              \       \"ec2:RunInstances\",        \"ec2:TerminateInstances\",
-                              \       \"tag:GetResources\",        \"ec2:CreateLaunchTemplate\",
-                              \       \"ec2:CreateLaunchTemplateVersion\",        \"ec2:DescribeLaunchTemplates\",
-                              \       \"ec2:DescribeLaunchTemplateVersions\",        \"ec2:DeleteLaunchTemplate\",
-                              \       \"ec2:DeleteLaunchTemplateVersions\"      ],
-                              \     \"Resource\": [        \"*\"      ],      \"Effect\":
-                              \"Allow\"    },    {      \"Condition\": {        \"StringLike\":
-                              {          \"iam:AWSServiceName\": \"elasticloadbalancing.amazonaws.com\"
-                              \       }      },      \"Action\": [        \"iam:CreateServiceLinkedRole\"
-                              \     ],      \"Resource\": [        \"arn:*:iam::*:role/aws-service-role/elasticloadbalancing.amazonaws.com/AWSServiceRoleForElasticLoadBalancing\"
-                              \     ],      \"Effect\": \"Allow\"    },    {      \"Action\":
-                              [        \"iam:PassRole\"      ],      \"Resource\":
-                              [        \"arn:*:iam::*:role/*-worker-role\"      ],
-                              \     \"Effect\": \"Allow\"    }  ] }"
+                              a role appropriate for the CAPI Controller. \n The following
+                              is an example of a valid policy document: \n { \"Version\":
+                              \"2012-10-17\", \"Statement\": [ { \"Action\": [ \"ec2:AllocateAddress\",
+                              \"ec2:AssociateRouteTable\", \"ec2:AttachInternetGateway\",
+                              \"ec2:AuthorizeSecurityGroupIngress\", \"ec2:CreateInternetGateway\",
+                              \"ec2:CreateNatGateway\", \"ec2:CreateRoute\", \"ec2:CreateRouteTable\",
+                              \"ec2:CreateSecurityGroup\", \"ec2:CreateSubnet\", \"ec2:CreateTags\",
+                              \"ec2:DeleteInternetGateway\", \"ec2:DeleteNatGateway\",
+                              \"ec2:DeleteRouteTable\", \"ec2:DeleteSecurityGroup\",
+                              \"ec2:DeleteSubnet\", \"ec2:DeleteTags\", \"ec2:DescribeAccountAttributes\",
+                              \"ec2:DescribeAddresses\", \"ec2:DescribeAvailabilityZones\",
+                              \"ec2:DescribeImages\", \"ec2:DescribeInstances\", \"ec2:DescribeInternetGateways\",
+                              \"ec2:DescribeNatGateways\", \"ec2:DescribeNetworkInterfaces\",
+                              \"ec2:DescribeNetworkInterfaceAttribute\", \"ec2:DescribeRouteTables\",
+                              \"ec2:DescribeSecurityGroups\", \"ec2:DescribeSubnets\",
+                              \"ec2:DescribeVpcs\", \"ec2:DescribeVpcAttribute\",
+                              \"ec2:DescribeVolumes\", \"ec2:DetachInternetGateway\",
+                              \"ec2:DisassociateRouteTable\", \"ec2:DisassociateAddress\",
+                              \"ec2:ModifyInstanceAttribute\", \"ec2:ModifyNetworkInterfaceAttribute\",
+                              \"ec2:ModifySubnetAttribute\", \"ec2:ReleaseAddress\",
+                              \"ec2:RevokeSecurityGroupIngress\", \"ec2:RunInstances\",
+                              \"ec2:TerminateInstances\", \"tag:GetResources\", \"ec2:CreateLaunchTemplate\",
+                              \"ec2:CreateLaunchTemplateVersion\", \"ec2:DescribeLaunchTemplates\",
+                              \"ec2:DescribeLaunchTemplateVersions\", \"ec2:DeleteLaunchTemplate\",
+                              \"ec2:DeleteLaunchTemplateVersions\" ], \"Resource\":
+                              [ \"*\" ], \"Effect\": \"Allow\" }, { \"Condition\":
+                              { \"StringLike\": { \"iam:AWSServiceName\": \"elasticloadbalancing.amazonaws.com\"
+                              } }, \"Action\": [ \"iam:CreateServiceLinkedRole\" ],
+                              \"Resource\": [ \"arn:*:iam::*:role/aws-service-role/elasticloadbalancing.amazonaws.com/AWSServiceRoleForElasticLoadBalancing\"
+                              ], \"Effect\": \"Allow\" }, { \"Action\": [ \"iam:PassRole\"
+                              ], \"Resource\": [ \"arn:*:iam::*:role/*-worker-role\"
+                              ], \"Effect\": \"Allow\" } ] }"
                             type: string
                           storageARN:
-                            description: "StorageOIDC is an ARN value referencing
-                              a role used for storage driver OIDC integration. \n
-                              The following is an example of a valid policy document:
-                              \n { \t\"Version\": \"2012-10-17\", \t\"Statement\":
-                              [ \t\t{ \t\t\t\"Effect\": \"Allow\", \t\t\t\"Action\":
-                              [ \t\t\t\t\"ec2:AttachVolume\", \t\t\t\t\"ec2:CreateSnapshot\",
-                              \t\t\t\t\"ec2:CreateTags\", \t\t\t\t\"ec2:CreateVolume\",
-                              \t\t\t\t\"ec2:DeleteSnapshot\", \t\t\t\t\"ec2:DeleteTags\",
-                              \t\t\t\t\"ec2:DeleteVolume\", \t\t\t\t\"ec2:DescribeInstances\",
-                              \t\t\t\t\"ec2:DescribeSnapshots\", \t\t\t\t\"ec2:DescribeTags\",
-                              \t\t\t\t\"ec2:DescribeVolumes\", \t\t\t\t\"ec2:DescribeVolumesModifications\",
-                              \t\t\t\t\"ec2:DetachVolume\", \t\t\t\t\"ec2:ModifyVolume\"
-                              \t\t\t], \t\t\t\"Resource\": \"*\" \t\t} \t] }"
+                            description: "StorageARN is an ARN value referencing a
+                              role appropriate for the Storage Operator. \n The following
+                              is an example of a valid policy document: \n { \"Version\":
+                              \"2012-10-17\", \"Statement\": [ { \"Effect\": \"Allow\",
+                              \"Action\": [ \"ec2:AttachVolume\", \"ec2:CreateSnapshot\",
+                              \"ec2:CreateTags\", \"ec2:CreateVolume\", \"ec2:DeleteSnapshot\",
+                              \"ec2:DeleteTags\", \"ec2:DeleteVolume\", \"ec2:DescribeInstances\",
+                              \"ec2:DescribeSnapshots\", \"ec2:DescribeTags\", \"ec2:DescribeVolumes\",
+                              \"ec2:DescribeVolumesModifications\", \"ec2:DetachVolume\",
+                              \"ec2:ModifyVolume\" ], \"Resource\": \"*\" } ] }"
                             type: string
                         required:
                         - controlPlaneOperatorARN
@@ -9837,6 +9899,7 @@ spec:
                               TODO: Add other useful fields. apiVersion, kind, uid?'
                             type: string
                         type: object
+                        x-kubernetes-map-type: atomic
                       location:
                         type: string
                       machineIdentityID:
@@ -9899,6 +9962,7 @@ spec:
                               TODO: Add other useful fields. apiVersion, kind, uid?'
                             type: string
                         type: object
+                        x-kubernetes-map-type: atomic
                       ingressOperatorCloudCreds:
                         description: IngressOperatorCloudCreds is a reference to a
                           secret containing ibm cloud credentials for ingress operator
@@ -9909,6 +9973,7 @@ spec:
                               TODO: Add other useful fields. apiVersion, kind, uid?'
                             type: string
                         type: object
+                        x-kubernetes-map-type: atomic
                       kubeCloudControllerCreds:
                         description: "KubeCloudControllerCreds is a reference to a
                           secret containing cloud credentials with permissions matching
@@ -9921,6 +9986,7 @@ spec:
                               TODO: Add other useful fields. apiVersion, kind, uid?'
                             type: string
                         type: object
+                        x-kubernetes-map-type: atomic
                       nodePoolManagementCreds:
                         description: "NodePoolManagementCreds is a reference to a
                           secret containing cloud credentials with permissions matching
@@ -9933,6 +9999,7 @@ spec:
                               TODO: Add other useful fields. apiVersion, kind, uid?'
                             type: string
                         type: object
+                        x-kubernetes-map-type: atomic
                       region:
                         description: Region is the IBMCloud region in which the cluster
                           resides. This configures the OCP control plane cloud integrations,
@@ -10041,6 +10108,7 @@ spec:
                       TODO: Add other useful fields. apiVersion, kind, uid?'
                     type: string
                 type: object
+                x-kubernetes-map-type: atomic
               release:
                 description: "Release specifies the desired OCP release payload for
                   the hosted cluster. \n Updating this field will trigger a rollout
@@ -10072,6 +10140,7 @@ spec:
                               TODO: Add other useful fields. apiVersion, kind, uid?'
                             type: string
                         type: object
+                        x-kubernetes-map-type: atomic
                       backupKey:
                         description: BackupKey defines the old key during the rotation
                           process so previously created secrets can continue to be
@@ -10083,6 +10152,7 @@ spec:
                               TODO: Add other useful fields. apiVersion, kind, uid?'
                             type: string
                         type: object
+                        x-kubernetes-map-type: atomic
                     required:
                     - activeKey
                     type: object
@@ -10125,6 +10195,7 @@ spec:
                                       uid?'
                                     type: string
                                 type: object
+                                x-kubernetes-map-type: atomic
                             required:
                             - credentials
                             type: object
@@ -10187,6 +10258,7 @@ spec:
                                           kind, uid?'
                                         type: string
                                     type: object
+                                    x-kubernetes-map-type: atomic
                                 required:
                                 - credentials
                                 type: object
@@ -10269,6 +10341,7 @@ spec:
                       TODO: Add other useful fields. apiVersion, kind, uid?'
                     type: string
                 type: object
+                x-kubernetes-map-type: atomic
               services:
                 description: "Services specifies how individual control plane services
                   are published from the hosting cluster of the control plane. \n
@@ -10356,6 +10429,7 @@ spec:
                       TODO: Add other useful fields. apiVersion, kind, uid?'
                     type: string
                 type: object
+                x-kubernetes-map-type: atomic
             required:
             - networking
             - platform
@@ -10374,13 +10448,12 @@ spec:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct
                     use as an array at the field path .status.conditions.  For example,
-                    type FooStatus struct{     // Represents the observations of a
-                    foo's current state.     // Known .status.conditions.type are:
-                    \"Available\", \"Progressing\", and \"Degraded\"     // +patchMergeKey=type
-                    \    // +patchStrategy=merge     // +listType=map     // +listMapKey=type
-                    \    Conditions []metav1.Condition `json:\"conditions,omitempty\"
-                    patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`
-                    \n     // other fields }"
+                    type FooStatus struct{ // Represents the observations of a foo's
+                    current state. // Known .status.conditions.type are: \"Available\",
+                    \"Progressing\", and \"Degraded\" // +patchMergeKey=type // +patchStrategy=merge
+                    // +listType=map // +listMapKey=type Conditions []metav1.Condition
+                    `json:\"conditions,omitempty\" patchStrategy:\"merge\" patchMergeKey:\"type\"
+                    protobuf:\"bytes,1,rep,name=conditions\"` \n // other fields }"
                   properties:
                     lastTransitionTime:
                       description: lastTransitionTime is the last time the condition
@@ -10452,6 +10525,7 @@ spec:
                       TODO: Add other useful fields. apiVersion, kind, uid?'
                     type: string
                 type: object
+                x-kubernetes-map-type: atomic
               kubeconfig:
                 description: KubeConfig is a reference to the secret containing the
                   default kubeconfig for the cluster.
@@ -10461,6 +10535,7 @@ spec:
                       TODO: Add other useful fields. apiVersion, kind, uid?'
                     type: string
                 type: object
+                x-kubernetes-map-type: atomic
               oauthCallbackURLTemplate:
                 description: OAuthCallbackURLTemplate contains a template for the
                   URL to use as a callback for identity providers. The [identity-provider-name]
@@ -10576,14 +10651,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/v1beta1: v1alpha1
@@ -10631,22 +10706,25 @@ spec:
                       TODO: Add other useful fields. apiVersion, kind, uid?'
                     type: string
                 type: object
+                x-kubernetes-map-type: atomic
               apiAdvertiseAddress:
-                description: APIAdvertiseAddress is the address at which the APIServer
-                  listens inside a worker.
+                description: deprecated use networking.apiServer.AdvertiseAddress
+                  APIAdvertiseAddress is the address at which the APIServer listens
+                  inside a worker.
                 type: string
               apiAllowedCIDRBlocks:
-                description: APIAllowedCIDRBlocks is an allow list of CIDR blocks
-                  that can access the APIServer If not specified, traffic is allowed
-                  from all addresses. This depends on underlying support by the cloud
-                  provider for Service LoadBalancerSourceRanges
+                description: deprecated use networking.apiServer.APIAllowedCIDRBlocks
+                  APIAllowedCIDRBlocks is an allow list of CIDR blocks that can access
+                  the APIServer If not specified, traffic is allowed from all addresses.
+                  This depends on underlying support by the cloud provider for Service
+                  LoadBalancerSourceRanges
                 items:
                   pattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(3[0-2]|[1-2][0-9]|[0-9]))$
                   type: string
                 type: array
               apiPort:
-                description: APIPort is the port at which the APIServer listens inside
-                  a worker
+                description: deprecated use networking.apiServer.APIPort APIPort is
+                  the port at which the APIServer listens inside a worker
                 format: int32
                 type: integer
               auditWebhook:
@@ -10664,6 +10742,7 @@ spec:
                       TODO: Add other useful fields. apiVersion, kind, uid?'
                     type: string
                 type: object
+                x-kubernetes-map-type: atomic
               autoscaling:
                 description: Autoscaling specifies auto-scaling behavior that applies
                   to all NodePools associated with the control plane.
@@ -10784,8 +10863,8 @@ spec:
                               that match one or more of the customRules. \n The following
                               profiles are provided: - Default: default policy which
                               means MetaData level logging with the exception of events
-                              \  (not logged at all), oauthaccesstokens and oauthauthorizetokens
-                              (both logged at RequestBody   level). - WriteRequestBodies:
+                              (not logged at all), oauthaccesstokens and oauthauthorizetokens
+                              (both logged at RequestBody level). - WriteRequestBodies:
                               like 'Default', but logs request and response HTTP payloads
                               for write requests (create, update, patch). - AllRequestBodies:
                               like 'WriteRequestBodies', but also logs request and
@@ -10839,9 +10918,9 @@ spec:
                               practices. \n When encryption is enabled, all sensitive
                               resources shipped with the platform are encrypted. This
                               list of sensitive resources can and will change over
-                              time.  The current authoritative list is: \n   1. secrets
-                              \  2. configmaps   3. routes.route.openshift.io   4.
-                              oauthaccesstokens.oauth.openshift.io   5. oauthauthorizetokens.oauth.openshift.io"
+                              time.  The current authoritative list is: \n 1. secrets
+                              2. configmaps 3. routes.route.openshift.io 4. oauthaccesstokens.oauth.openshift.io
+                              5. oauthauthorizetokens.oauth.openshift.io"
                             enum:
                             - ""
                             - identity
@@ -10904,10 +10983,9 @@ spec:
                             description: "custom is a user-defined TLS security profile.
                               Be extremely careful using a custom profile as invalid
                               configurations can be catastrophic. An example custom
-                              profile looks like this: \n   ciphers:     - ECDHE-ECDSA-CHACHA20-POLY1305
-                              \    - ECDHE-RSA-CHACHA20-POLY1305     - ECDHE-RSA-AES128-GCM-SHA256
-                              \    - ECDHE-ECDSA-AES128-GCM-SHA256   minTLSVersion:
-                              TLSv1.1"
+                              profile looks like this: \n ciphers: - ECDHE-ECDSA-CHACHA20-POLY1305
+                              - ECDHE-RSA-CHACHA20-POLY1305 - ECDHE-RSA-AES128-GCM-SHA256
+                              - ECDHE-ECDSA-AES128-GCM-SHA256 minTLSVersion: TLSv1.1"
                             nullable: true
                             properties:
                               ciphers:
@@ -10915,7 +10993,7 @@ spec:
                                   algorithms that are negotiated during the TLS handshake.
                                   \ Operators may remove entries their operands do
                                   not support.  For example, to use DES-CBC3-SHA  (yaml):
-                                  \n   ciphers:     - DES-CBC3-SHA"
+                                  \n ciphers: - DES-CBC3-SHA"
                                 items:
                                   type: string
                                 type: array
@@ -10923,7 +11001,7 @@ spec:
                                 description: "minTLSVersion is used to specify the
                                   minimal version of the TLS protocol that is negotiated
                                   during the TLS handshake. For example, to use TLS
-                                  versions 1.1, 1.2 and 1.3 (yaml): \n   minTLSVersion:
+                                  versions 1.1, 1.2 and 1.3 (yaml): \n minTLSVersion:
                                   TLSv1.1 \n NOTE: currently the highest minTLSVersion
                                   allowed is VersionTLS12"
                                 enum:
@@ -10936,41 +11014,39 @@ spec:
                           intermediate:
                             description: "intermediate is a TLS security profile based
                               on: \n https://wiki.mozilla.org/Security/Server_Side_TLS#Intermediate_compatibility_.28recommended.29
-                              \n and looks like this (yaml): \n   ciphers:     - TLS_AES_128_GCM_SHA256
-                              \    - TLS_AES_256_GCM_SHA384     - TLS_CHACHA20_POLY1305_SHA256
-                              \    - ECDHE-ECDSA-AES128-GCM-SHA256     - ECDHE-RSA-AES128-GCM-SHA256
-                              \    - ECDHE-ECDSA-AES256-GCM-SHA384     - ECDHE-RSA-AES256-GCM-SHA384
-                              \    - ECDHE-ECDSA-CHACHA20-POLY1305     - ECDHE-RSA-CHACHA20-POLY1305
-                              \    - DHE-RSA-AES128-GCM-SHA256     - DHE-RSA-AES256-GCM-SHA384
-                              \  minTLSVersion: TLSv1.2"
+                              \n and looks like this (yaml): \n ciphers: - TLS_AES_128_GCM_SHA256
+                              - TLS_AES_256_GCM_SHA384 - TLS_CHACHA20_POLY1305_SHA256
+                              - ECDHE-ECDSA-AES128-GCM-SHA256 - ECDHE-RSA-AES128-GCM-SHA256
+                              - ECDHE-ECDSA-AES256-GCM-SHA384 - ECDHE-RSA-AES256-GCM-SHA384
+                              - ECDHE-ECDSA-CHACHA20-POLY1305 - ECDHE-RSA-CHACHA20-POLY1305
+                              - DHE-RSA-AES128-GCM-SHA256 - DHE-RSA-AES256-GCM-SHA384
+                              minTLSVersion: TLSv1.2"
                             nullable: true
                             type: object
                           modern:
                             description: "modern is a TLS security profile based on:
                               \n https://wiki.mozilla.org/Security/Server_Side_TLS#Modern_compatibility
-                              \n and looks like this (yaml): \n   ciphers:     - TLS_AES_128_GCM_SHA256
-                              \    - TLS_AES_256_GCM_SHA384     - TLS_CHACHA20_POLY1305_SHA256
-                              \  minTLSVersion: TLSv1.3 \n NOTE: Currently unsupported."
+                              \n and looks like this (yaml): \n ciphers: - TLS_AES_128_GCM_SHA256
+                              - TLS_AES_256_GCM_SHA384 - TLS_CHACHA20_POLY1305_SHA256
+                              minTLSVersion: TLSv1.3 \n NOTE: Currently unsupported."
                             nullable: true
                             type: object
                           old:
                             description: "old is a TLS security profile based on:
                               \n https://wiki.mozilla.org/Security/Server_Side_TLS#Old_backward_compatibility
-                              \n and looks like this (yaml): \n   ciphers:     - TLS_AES_128_GCM_SHA256
-                              \    - TLS_AES_256_GCM_SHA384     - TLS_CHACHA20_POLY1305_SHA256
-                              \    - ECDHE-ECDSA-AES128-GCM-SHA256     - ECDHE-RSA-AES128-GCM-SHA256
-                              \    - ECDHE-ECDSA-AES256-GCM-SHA384     - ECDHE-RSA-AES256-GCM-SHA384
-                              \    - ECDHE-ECDSA-CHACHA20-POLY1305     - ECDHE-RSA-CHACHA20-POLY1305
-                              \    - DHE-RSA-AES128-GCM-SHA256     - DHE-RSA-AES256-GCM-SHA384
-                              \    - DHE-RSA-CHACHA20-POLY1305     - ECDHE-ECDSA-AES128-SHA256
-                              \    - ECDHE-RSA-AES128-SHA256     - ECDHE-ECDSA-AES128-SHA
-                              \    - ECDHE-RSA-AES128-SHA     - ECDHE-ECDSA-AES256-SHA384
-                              \    - ECDHE-RSA-AES256-SHA384     - ECDHE-ECDSA-AES256-SHA
-                              \    - ECDHE-RSA-AES256-SHA     - DHE-RSA-AES128-SHA256
-                              \    - DHE-RSA-AES256-SHA256     - AES128-GCM-SHA256
-                              \    - AES256-GCM-SHA384     - AES128-SHA256     - AES256-SHA256
-                              \    - AES128-SHA     - AES256-SHA     - DES-CBC3-SHA
-                              \  minTLSVersion: TLSv1.0"
+                              \n and looks like this (yaml): \n ciphers: - TLS_AES_128_GCM_SHA256
+                              - TLS_AES_256_GCM_SHA384 - TLS_CHACHA20_POLY1305_SHA256
+                              - ECDHE-ECDSA-AES128-GCM-SHA256 - ECDHE-RSA-AES128-GCM-SHA256
+                              - ECDHE-ECDSA-AES256-GCM-SHA384 - ECDHE-RSA-AES256-GCM-SHA384
+                              - ECDHE-ECDSA-CHACHA20-POLY1305 - ECDHE-RSA-CHACHA20-POLY1305
+                              - DHE-RSA-AES128-GCM-SHA256 - DHE-RSA-AES256-GCM-SHA384
+                              - DHE-RSA-CHACHA20-POLY1305 - ECDHE-ECDSA-AES128-SHA256
+                              - ECDHE-RSA-AES128-SHA256 - ECDHE-ECDSA-AES128-SHA -
+                              ECDHE-RSA-AES128-SHA - ECDHE-ECDSA-AES256-SHA384 - ECDHE-RSA-AES256-SHA384
+                              - ECDHE-ECDSA-AES256-SHA - ECDHE-RSA-AES256-SHA - DHE-RSA-AES128-SHA256
+                              - DHE-RSA-AES256-SHA256 - AES128-GCM-SHA256 - AES256-GCM-SHA384
+                              - AES128-SHA256 - AES256-SHA256 - AES128-SHA - AES256-SHA
+                              - DES-CBC3-SHA minTLSVersion: TLSv1.0"
                             nullable: true
                             type: object
                           type:
@@ -11104,6 +11180,7 @@ spec:
                             TODO: Add other useful fields. apiVersion, kind, uid?'
                           type: string
                       type: object
+                      x-kubernetes-map-type: atomic
                     type: array
                   featureGate:
                     description: FeatureGate holds cluster-wide information about
@@ -11467,6 +11544,7 @@ spec:
                                     requirements are ANDed.
                                   type: object
                               type: object
+                              x-kubernetes-map-type: atomic
                             preloadPolicy:
                               description: preloadPolicy directs the client to include
                                 hosts in its host preload list so that it never needs
@@ -11970,11 +12048,11 @@ spec:
                                   description: 'insecure, if true, indicates the connection
                                     should not use TLS WARNING: Should not be set
                                     to `true` with the URL scheme "ldaps://" as "ldaps://"
-                                    URLs always          attempt to connect using
-                                    TLS, even when `insecure` is set to `true` When
-                                    `true`, "ldap://" URLS connect insecurely. When
-                                    `false`, "ldap://" URLs are upgraded to a TLS
-                                    connection using StartTLS as specified in https://tools.ietf.org/html/rfc2830.'
+                                    URLs always attempt to connect using TLS, even
+                                    when `insecure` is set to `true` When `true`,
+                                    "ldap://" URLS connect insecurely. When `false`,
+                                    "ldap://" URLs are upgraded to a TLS connection
+                                    using StartTLS as specified in https://tools.ietf.org/html/rfc2830.'
                                   type: boolean
                                 url:
                                   description: 'url is an RFC 2255 URL which specifies
@@ -11992,7 +12070,7 @@ spec:
                                 returned by this provider. - It MUST be unique and
                                 not shared by any other identity provider used - It
                                 MUST be a valid path segment: name cannot equal "."
-                                or ".." or contain "/" or "%" or ":"   Ref: https://godoc.org/github.com/openshift/origin/pkg/user/apis/user/validation#ValidateIdentityProviderName'
+                                or ".." or contain "/" or "%" or ":" Ref: https://godoc.org/github.com/openshift/origin/pkg/user/apis/user/validation#ValidateIdentityProviderName'
                               type: string
                             openID:
                               description: openID enables user authentication using
@@ -12130,8 +12208,9 @@ spec:
                                     from OAuth clients which expect WWW-Authenticate
                                     challenges will be redirected here. ${url} is
                                     replaced with the current URL, escaped to be safe
-                                    in a query parameter   https://www.example.com/sso-login?then=${url}
-                                    ${query} is replaced with the current query string   https://www.example.com/auth-proxy/oauth/authorize?${query}
+                                    in a query parameter https://www.example.com/sso-login?then=${url}
+                                    ${query} is replaced with the current query string
+                                    https://www.example.com/auth-proxy/oauth/authorize?${query}
                                     Required when challenge is set to true.
                                   type: string
                                 clientCommonNames:
@@ -12160,8 +12239,9 @@ spec:
                                     from OAuth clients which expect interactive logins
                                     will be redirected here ${url} is replaced with
                                     the current URL, escaped to be safe in a query
-                                    parameter   https://www.example.com/sso-login?then=${url}
-                                    ${query} is replaced with the current query string   https://www.example.com/auth-proxy/oauth/authorize?${query}
+                                    parameter https://www.example.com/sso-login?then=${url}
+                                    ${query} is replaced with the current query string
+                                    https://www.example.com/auth-proxy/oauth/authorize?${query}
                                     Required when login is set to true.
                                   type: string
                                 nameHeaders:
@@ -12313,9 +12393,9 @@ spec:
                           HTTPS requests as well. \n The namespace for the ConfigMap
                           referenced by trustedCA is \"openshift-config\". Here is
                           an example ConfigMap (in yaml): \n apiVersion: v1 kind:
-                          ConfigMap metadata:  name: user-ca-bundle  namespace: openshift-config
-                          \ data:    ca-bundle.crt: |      -----BEGIN CERTIFICATE-----
-                          \     Custom CA certificate bundle.      -----END CERTIFICATE-----"
+                          ConfigMap metadata: name: user-ca-bundle namespace: openshift-config
+                          data: ca-bundle.crt: | -----BEGIN CERTIFICATE----- Custom
+                          CA certificate bundle. -----END CERTIFICATE-----"
                         properties:
                           name:
                             description: name is the metadata.name of the referenced
@@ -12403,6 +12483,7 @@ spec:
                             TODO: Add other useful fields. apiVersion, kind, uid?'
                           type: string
                       type: object
+                      x-kubernetes-map-type: atomic
                     type: array
                 type: object
               controllerAvailabilityPolicy:
@@ -12462,6 +12543,16 @@ spec:
                                   https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1."
                                 type: string
                             type: object
+                          restoreSnapshotURL:
+                            description: RestoreSnapshotURL allows an optional list
+                              of URLs to be provided where an etcd snapshot can be
+                              downloaded, for example a pre-signed URL referencing
+                              a storage service, one URL per replica. This snapshot
+                              will be restored on initial startup, only when the etcd
+                              PV is empty.
+                            items:
+                              type: string
+                            type: array
                           type:
                             description: Type is the kind of persistent storage implementation
                               to use for etcd.
@@ -12486,8 +12577,8 @@ spec:
                     properties:
                       endpoint:
                         description: "Endpoint is the full etcd cluster client endpoint
-                          URL. For example: \n     https://etcd-client:2379 \n If
-                          the URL uses an HTTPS scheme, the TLS field is required."
+                          URL. For example: \n https://etcd-client:2379 \n If the
+                          URL uses an HTTPS scheme, the TLS field is required."
                         pattern: ^https://
                         type: string
                       tls:
@@ -12497,9 +12588,9 @@ spec:
                           clientSecret:
                             description: "ClientSecret refers to a secret for client
                               mTLS authentication with the etcd cluster. It may have
-                              the following key/value pairs: \n     etcd-client-ca.crt:
-                              Certificate Authority value     etcd-client.crt: Client
-                              certificate value     etcd-client.key: Client certificate
+                              the following key/value pairs: \n etcd-client-ca.crt:
+                              Certificate Authority value etcd-client.crt: Client
+                              certificate value etcd-client.key: Client certificate
                               key value"
                             properties:
                               name:
@@ -12508,6 +12599,7 @@ spec:
                                   uid?'
                                 type: string
                             type: object
+                            x-kubernetes-map-type: atomic
                         required:
                         - clientSecret
                         type: object
@@ -12569,16 +12661,125 @@ spec:
                 - name
                 type: object
               machineCIDR:
+                description: deprecated use networking.MachineNetwork
                 type: string
               networkType:
-                description: NetworkType specifies the SDN provider used for cluster
-                  networking.
+                description: deprecated use networking.NetworkType NetworkType specifies
+                  the SDN provider used for cluster networking.
                 enum:
                 - OpenShiftSDN
                 - Calico
                 - OVNKubernetes
                 - Other
                 type: string
+              networking:
+                description: Networking specifies network configuration for the cluster.
+                properties:
+                  apiServer:
+                    description: APIServer contains advanced network settings for
+                      the API server that affect how the APIServer is exposed inside
+                      a cluster node.
+                    properties:
+                      advertiseAddress:
+                        description: AdvertiseAddress is the address that nodes will
+                          use to talk to the API server. This is an address associated
+                          with the loopback adapter of each node. If not specified,
+                          172.20.0.1 is used.
+                        type: string
+                      allowedCIDRBlocks:
+                        description: AllowedCIDRBlocks is an allow list of CIDR blocks
+                          that can access the APIServer If not specified, traffic
+                          is allowed from all addresses. This depends on underlying
+                          support by the cloud provider for Service LoadBalancerSourceRanges
+                        items:
+                          pattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(3[0-2]|[1-2][0-9]|[0-9]))$
+                          type: string
+                        type: array
+                      port:
+                        description: Port is the port at which the APIServer is exposed
+                          inside a node. Other pods using host networking cannot listen
+                          on this port. If not specified, 6443 is used.
+                        format: int32
+                        type: integer
+                    type: object
+                  clusterNetwork:
+                    description: 'ClusterNetwork is the list of IP address pools for
+                      pods. TODO: make this required in the next version of the API'
+                    items:
+                      description: ClusterNetworkEntry is a single IP address block
+                        for pod IP blocks. IP blocks are allocated with size 2^HostSubnetLength.
+                      properties:
+                        cidr:
+                          description: CIDR is the IP block address pool.
+                          type: string
+                        hostPrefix:
+                          description: HostPrefix is the prefix size to allocate to
+                            each node from the CIDR. For example, 24 would allocate
+                            2^8=256 adresses to each node. If this field is not used
+                            by the plugin, it can be left unset.
+                          format: int32
+                          type: integer
+                      required:
+                      - cidr
+                      type: object
+                    type: array
+                  machineCIDR:
+                    description: Deprecated This field will be removed in the next
+                      API release. Use MachineNetwork instead
+                    type: string
+                  machineNetwork:
+                    description: 'MachineNetwork is the list of IP address pools for
+                      machines. TODO: make this required in the next version of the
+                      API'
+                    items:
+                      description: MachineNetworkEntry is a single IP address block
+                        for node IP blocks.
+                      properties:
+                        cidr:
+                          description: CIDR is the IP block address pool for machines
+                            within the cluster.
+                          type: string
+                      required:
+                      - cidr
+                      type: object
+                    type: array
+                  networkType:
+                    default: OVNKubernetes
+                    description: NetworkType specifies the SDN provider used for cluster
+                      networking.
+                    enum:
+                    - OpenShiftSDN
+                    - Calico
+                    - OVNKubernetes
+                    - Other
+                    type: string
+                  podCIDR:
+                    description: Deprecated This field will be removed in the next
+                      API release. Use ClusterNetwork instead
+                    type: string
+                  serviceCIDR:
+                    description: Deprecated This field will be removed in the next
+                      API release. Use ServiceNetwork instead
+                    type: string
+                  serviceNetwork:
+                    description: 'ServiceNetwork is the list of IP address pools for
+                      services. NOTE: currently only one entry is supported. TODO:
+                      make this required in the next version of the API'
+                    items:
+                      description: ServiceNetworkEntry is a single IP address block
+                        for the service network.
+                      properties:
+                        cidr:
+                          description: CIDR is the IP block address pool for services
+                            within the cluster.
+                          type: string
+                      required:
+                      - cidr
+                      type: object
+                    type: array
+                required:
+                - networkType
+                type: object
               olmCatalogPlacement:
                 default: management
                 description: OLMCatalogPlacement specifies the placement of OLM catalog
@@ -12616,9 +12817,10 @@ spec:
                       on Amazon Web Services.
                     properties:
                       cloudProviderConfig:
-                        description: "CloudProviderConfig specifies AWS networking
-                          configuration for the control plane. \n TODO(dan): should
-                          this be named AWSNetworkConfig?"
+                        description: 'CloudProviderConfig specifies AWS networking
+                          configuration for the control plane. This is mainly used
+                          for cloud provider controller config: https://github.com/kubernetes/kubernetes/blob/f5be5052e3d0808abb904aebd3218fe4a5c2dd82/staging/src/k8s.io/legacy-cloud-providers/aws/aws.go#L1347-L1364
+                          TODO(dan): should this be named AWSNetworkConfig?'
                         properties:
                           subnet:
                             description: Subnet is the subnet to use for control plane
@@ -12674,6 +12876,7 @@ spec:
                               TODO: Add other useful fields. apiVersion, kind, uid?'
                             type: string
                         type: object
+                        x-kubernetes-map-type: atomic
                       endpointAccess:
                         default: Public
                         description: EndpointAccess specifies the publishing scope
@@ -12692,6 +12895,7 @@ spec:
                               TODO: Add other useful fields. apiVersion, kind, uid?'
                             type: string
                         type: object
+                        x-kubernetes-map-type: atomic
                       nodePoolManagementCreds:
                         description: Deprecated This field will be removed in the
                           next API release. Use RolesRef instead.
@@ -12701,6 +12905,7 @@ spec:
                               TODO: Add other useful fields. apiVersion, kind, uid?'
                             type: string
                         type: object
+                        x-kubernetes-map-type: atomic
                       region:
                         description: Region is the AWS region in which the cluster
                           resides. This configures the OCP control plane cloud integrations,
@@ -12762,171 +12967,143 @@ spec:
                         properties:
                           controlPlaneOperatorARN:
                             description: "ControlPlaneOperatorARN  is an ARN value
-                              referencing a role that should contain policy permissions
-                              matching the control-plane-operator policy. \n The following
-                              is an example of a valid policy document: \n { \t\"Version\":
-                              \"2012-10-17\", \t\"Statement\": [ \t\t{ \t\t\t\"Effect\":
-                              \"Allow\", \t\t\t\"Action\": [ \t\t\t\t\"ec2:CreateVpcEndpoint\",
-                              \t\t\t\t\"ec2:DescribeVpcEndpoints\", \t\t\t\t\"ec2:ModifyVpcEndpoint\",
-                              \t\t\t\t\"ec2:DeleteVpcEndpoints\", \t\t\t\t\"ec2:CreateTags\",
-                              \t\t\t\t\"route53:ListHostedZones\" \t\t\t], \t\t\t\"Resource\":
-                              \"*\" \t\t}, \t\t{ \t\t\t\"Effect\": \"Allow\", \t\t\t\"Action\":
-                              [ \t\t\t\t\"route53:ChangeResourceRecordSets\", \t\t\t\t\"route53:ListResourceRecordSets\"
-                              \t\t\t], \t\t\t\"Resource\": \"arn:aws:route53:::%s\"
-                              \t\t} \t] }"
+                              referencing a role appropriate for the Control Plane
+                              Operator. \n The following is an example of a valid
+                              policy document: \n { \"Version\": \"2012-10-17\", \"Statement\":
+                              [ { \"Effect\": \"Allow\", \"Action\": [ \"ec2:CreateVpcEndpoint\",
+                              \"ec2:DescribeVpcEndpoints\", \"ec2:ModifyVpcEndpoint\",
+                              \"ec2:DeleteVpcEndpoints\", \"ec2:CreateTags\", \"route53:ListHostedZones\"
+                              ], \"Resource\": \"*\" }, { \"Effect\": \"Allow\", \"Action\":
+                              [ \"route53:ChangeResourceRecordSets\", \"route53:ListResourceRecordSets\"
+                              ], \"Resource\": \"arn:aws:route53:::%s\" } ] }"
                             type: string
                           imageRegistryARN:
                             description: "ImageRegistryARN is an ARN value referencing
-                              a role used for image registry OIDC integration. \n
-                              The following is an example of a valid policy document:
-                              \n { \t\"Version\": \"2012-10-17\", \t\"Statement\":
-                              [ \t\t{ \t\t\t\"Effect\": \"Allow\", \t\t\t\"Action\":
-                              [ \t\t\t\t\"s3:CreateBucket\", \t\t\t\t\"s3:DeleteBucket\",
-                              \t\t\t\t\"s3:PutBucketTagging\", \t\t\t\t\"s3:GetBucketTagging\",
-                              \t\t\t\t\"s3:PutBucketPublicAccessBlock\", \t\t\t\t\"s3:GetBucketPublicAccessBlock\",
-                              \t\t\t\t\"s3:PutEncryptionConfiguration\", \t\t\t\t\"s3:GetEncryptionConfiguration\",
-                              \t\t\t\t\"s3:PutLifecycleConfiguration\", \t\t\t\t\"s3:GetLifecycleConfiguration\",
-                              \t\t\t\t\"s3:GetBucketLocation\", \t\t\t\t\"s3:ListBucket\",
-                              \t\t\t\t\"s3:GetObject\", \t\t\t\t\"s3:PutObject\",
-                              \t\t\t\t\"s3:DeleteObject\", \t\t\t\t\"s3:ListBucketMultipartUploads\",
-                              \t\t\t\t\"s3:AbortMultipartUpload\", \t\t\t\t\"s3:ListMultipartUploadParts\"
-                              \t\t\t], \t\t\t\"Resource\": \"*\" \t\t} \t] }"
+                              a role appropriate for the Image Registry Operator.
+                              \n The following is an example of a valid policy document:
+                              \n { \"Version\": \"2012-10-17\", \"Statement\": [ {
+                              \"Effect\": \"Allow\", \"Action\": [ \"s3:CreateBucket\",
+                              \"s3:DeleteBucket\", \"s3:PutBucketTagging\", \"s3:GetBucketTagging\",
+                              \"s3:PutBucketPublicAccessBlock\", \"s3:GetBucketPublicAccessBlock\",
+                              \"s3:PutEncryptionConfiguration\", \"s3:GetEncryptionConfiguration\",
+                              \"s3:PutLifecycleConfiguration\", \"s3:GetLifecycleConfiguration\",
+                              \"s3:GetBucketLocation\", \"s3:ListBucket\", \"s3:GetObject\",
+                              \"s3:PutObject\", \"s3:DeleteObject\", \"s3:ListBucketMultipartUploads\",
+                              \"s3:AbortMultipartUpload\", \"s3:ListMultipartUploadParts\"
+                              ], \"Resource\": \"*\" } ] }"
                             type: string
                           ingressARN:
                             description: "The referenced role must have a trust relationship
                               that allows it to be assumed via web identity. https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc.html.
-                              Example: { \t\t\"Version\": \"2012-10-17\", \t\t\"Statement\":
-                              [ \t\t\t{ \t\t\t\t\"Effect\": \"Allow\", \t\t\t\t\"Principal\":
-                              { \t\t\t\t\t\"Federated\": \"{{ .ProviderARN }}\" \t\t\t\t},
-                              \t\t\t\t\t\"Action\": \"sts:AssumeRoleWithWebIdentity\",
-                              \t\t\t\t\"Condition\": { \t\t\t\t\t\"StringEquals\":
-                              { \t\t\t\t\t\t\"{{ .ProviderName }}:sub\": {{ .ServiceAccounts
-                              }} \t\t\t\t\t} \t\t\t\t} \t\t\t} \t\t] \t} \n IngressARN
-                              is an ARN value referencing a role used for ingress
-                              OIDC integration. \n The following is an example of
-                              a valid policy document: \n { \t\"Version\": \"2012-10-17\",
-                              \t\"Statement\": [ \t\t{ \t\t\t\"Effect\": \"Allow\",
-                              \t\t\t\"Action\": [ \t\t\t\t\"elasticloadbalancing:DescribeLoadBalancers\",
-                              \t\t\t\t\"tag:GetResources\", \t\t\t\t\"route53:ListHostedZones\"
-                              \t\t\t], \t\t\t\"Resource\": \"*\" \t\t}, \t\t{ \t\t\t\"Effect\":
-                              \"Allow\", \t\t\t\"Action\": [ \t\t\t\t\"route53:ChangeResourceRecordSets\"
-                              \t\t\t], \t\t\t\"Resource\": [ \t\t\t\t\"arn:aws:route53:::PUBLIC_ZONE_ID\",
-                              \t\t\t\t\"arn:aws:route53:::PRIVATE_ZONE_ID\" \t\t\t]
-                              \t\t} \t] }"
+                              Example: { \"Version\": \"2012-10-17\", \"Statement\":
+                              [ { \"Effect\": \"Allow\", \"Principal\": { \"Federated\":
+                              \"{{ .ProviderARN }}\" }, \"Action\": \"sts:AssumeRoleWithWebIdentity\",
+                              \"Condition\": { \"StringEquals\": { \"{{ .ProviderName
+                              }}:sub\": {{ .ServiceAccounts }} } } } ] } \n IngressARN
+                              is an ARN value referencing a role appropriate for the
+                              Ingress Operator. \n The following is an example of
+                              a valid policy document: \n { \"Version\": \"2012-10-17\",
+                              \"Statement\": [ { \"Effect\": \"Allow\", \"Action\":
+                              [ \"elasticloadbalancing:DescribeLoadBalancers\", \"tag:GetResources\",
+                              \"route53:ListHostedZones\" ], \"Resource\": \"*\" },
+                              { \"Effect\": \"Allow\", \"Action\": [ \"route53:ChangeResourceRecordSets\"
+                              ], \"Resource\": [ \"arn:aws:route53:::PUBLIC_ZONE_ID\",
+                              \"arn:aws:route53:::PRIVATE_ZONE_ID\" ] } ] }"
                             type: string
                           kubeCloudControllerARN:
                             description: "KubeCloudControllerARN is an ARN value referencing
-                              a role that should contain policy permissions matching
-                              the cloud controller policy. \n The following is an
-                              example of a valid policy document: \n  {  \"Version\":
-                              \"2012-10-17\",  \"Statement\": [    {      \"Action\":
-                              [        \"ec2:DescribeInstances\",        \"ec2:DescribeImages\",
-                              \       \"ec2:DescribeRegions\",        \"ec2:DescribeRouteTables\",
-                              \       \"ec2:DescribeSecurityGroups\",        \"ec2:DescribeSubnets\",
-                              \       \"ec2:DescribeVolumes\",        \"ec2:CreateSecurityGroup\",
-                              \       \"ec2:CreateTags\",        \"ec2:CreateVolume\",
-                              \       \"ec2:ModifyInstanceAttribute\",        \"ec2:ModifyVolume\",
-                              \       \"ec2:AttachVolume\",        \"ec2:AuthorizeSecurityGroupIngress\",
-                              \       \"ec2:CreateRoute\",        \"ec2:DeleteRoute\",
-                              \       \"ec2:DeleteSecurityGroup\",        \"ec2:DeleteVolume\",
-                              \       \"ec2:DetachVolume\",        \"ec2:RevokeSecurityGroupIngress\",
-                              \       \"ec2:DescribeVpcs\",        \"elasticloadbalancing:AddTags\",
-                              \       \"elasticloadbalancing:AttachLoadBalancerToSubnets\",
-                              \       \"elasticloadbalancing:ApplySecurityGroupsToLoadBalancer\",
-                              \       \"elasticloadbalancing:CreateLoadBalancer\",
-                              \       \"elasticloadbalancing:CreateLoadBalancerPolicy\",
-                              \       \"elasticloadbalancing:CreateLoadBalancerListeners\",
-                              \       \"elasticloadbalancing:ConfigureHealthCheck\",
-                              \       \"elasticloadbalancing:DeleteLoadBalancer\",
-                              \       \"elasticloadbalancing:DeleteLoadBalancerListeners\",
-                              \       \"elasticloadbalancing:DescribeLoadBalancers\",
-                              \       \"elasticloadbalancing:DescribeLoadBalancerAttributes\",
-                              \       \"elasticloadbalancing:DetachLoadBalancerFromSubnets\",
-                              \       \"elasticloadbalancing:DeregisterInstancesFromLoadBalancer\",
-                              \       \"elasticloadbalancing:ModifyLoadBalancerAttributes\",
-                              \       \"elasticloadbalancing:RegisterInstancesWithLoadBalancer\",
-                              \       \"elasticloadbalancing:SetLoadBalancerPoliciesForBackendServer\",
-                              \       \"elasticloadbalancing:AddTags\",        \"elasticloadbalancing:CreateListener\",
-                              \       \"elasticloadbalancing:CreateTargetGroup\",
-                              \       \"elasticloadbalancing:DeleteListener\",        \"elasticloadbalancing:DeleteTargetGroup\",
-                              \       \"elasticloadbalancing:DescribeListeners\",
-                              \       \"elasticloadbalancing:DescribeLoadBalancerPolicies\",
-                              \       \"elasticloadbalancing:DescribeTargetGroups\",
-                              \       \"elasticloadbalancing:DescribeTargetHealth\",
-                              \       \"elasticloadbalancing:ModifyListener\",        \"elasticloadbalancing:ModifyTargetGroup\",
-                              \       \"elasticloadbalancing:RegisterTargets\",        \"elasticloadbalancing:SetLoadBalancerPoliciesOfListener\",
-                              \       \"iam:CreateServiceLinkedRole\",        \"kms:DescribeKey\"
-                              \     ],      \"Resource\": [        \"*\"      ],      \"Effect\":
-                              \"Allow\"    }  ] }"
+                              a role appropriate for the KCM/KCC. \n The following
+                              is an example of a valid policy document: \n { \"Version\":
+                              \"2012-10-17\", \"Statement\": [ { \"Action\": [ \"ec2:DescribeInstances\",
+                              \"ec2:DescribeImages\", \"ec2:DescribeRegions\", \"ec2:DescribeRouteTables\",
+                              \"ec2:DescribeSecurityGroups\", \"ec2:DescribeSubnets\",
+                              \"ec2:DescribeVolumes\", \"ec2:CreateSecurityGroup\",
+                              \"ec2:CreateTags\", \"ec2:CreateVolume\", \"ec2:ModifyInstanceAttribute\",
+                              \"ec2:ModifyVolume\", \"ec2:AttachVolume\", \"ec2:AuthorizeSecurityGroupIngress\",
+                              \"ec2:CreateRoute\", \"ec2:DeleteRoute\", \"ec2:DeleteSecurityGroup\",
+                              \"ec2:DeleteVolume\", \"ec2:DetachVolume\", \"ec2:RevokeSecurityGroupIngress\",
+                              \"ec2:DescribeVpcs\", \"elasticloadbalancing:AddTags\",
+                              \"elasticloadbalancing:AttachLoadBalancerToSubnets\",
+                              \"elasticloadbalancing:ApplySecurityGroupsToLoadBalancer\",
+                              \"elasticloadbalancing:CreateLoadBalancer\", \"elasticloadbalancing:CreateLoadBalancerPolicy\",
+                              \"elasticloadbalancing:CreateLoadBalancerListeners\",
+                              \"elasticloadbalancing:ConfigureHealthCheck\", \"elasticloadbalancing:DeleteLoadBalancer\",
+                              \"elasticloadbalancing:DeleteLoadBalancerListeners\",
+                              \"elasticloadbalancing:DescribeLoadBalancers\", \"elasticloadbalancing:DescribeLoadBalancerAttributes\",
+                              \"elasticloadbalancing:DetachLoadBalancerFromSubnets\",
+                              \"elasticloadbalancing:DeregisterInstancesFromLoadBalancer\",
+                              \"elasticloadbalancing:ModifyLoadBalancerAttributes\",
+                              \"elasticloadbalancing:RegisterInstancesWithLoadBalancer\",
+                              \"elasticloadbalancing:SetLoadBalancerPoliciesForBackendServer\",
+                              \"elasticloadbalancing:AddTags\", \"elasticloadbalancing:CreateListener\",
+                              \"elasticloadbalancing:CreateTargetGroup\", \"elasticloadbalancing:DeleteListener\",
+                              \"elasticloadbalancing:DeleteTargetGroup\", \"elasticloadbalancing:DescribeListeners\",
+                              \"elasticloadbalancing:DescribeLoadBalancerPolicies\",
+                              \"elasticloadbalancing:DescribeTargetGroups\", \"elasticloadbalancing:DescribeTargetHealth\",
+                              \"elasticloadbalancing:ModifyListener\", \"elasticloadbalancing:ModifyTargetGroup\",
+                              \"elasticloadbalancing:RegisterTargets\", \"elasticloadbalancing:SetLoadBalancerPoliciesOfListener\",
+                              \"iam:CreateServiceLinkedRole\", \"kms:DescribeKey\"
+                              ], \"Resource\": [ \"*\" ], \"Effect\": \"Allow\" }
+                              ] }"
                             type: string
                           networkARN:
-                            description: "NetworkOIDC is an ARN value referencing
-                              a role used for networking OIDC integration. \n The
-                              following is an example of a valid policy document:
-                              \n { \t\"Version\": \"2012-10-17\", \t\"Statement\":
-                              [ \t\t{ \t\t\t\"Effect\": \"Allow\", \t\t\t\"Action\":
-                              [ \t\t\t\t\"ec2:DescribeInstances\",        \"ec2:DescribeInstanceStatus\",
-                              \       \"ec2:DescribeInstanceTypes\",        \"ec2:UnassignPrivateIpAddresses\",
-                              \       \"ec2:AssignPrivateIpAddresses\",        \"ec2:UnassignIpv6Addresses\",
-                              \       \"ec2:AssignIpv6Addresses\",        \"ec2:DescribeSubnets\",
-                              \       \"ec2:DescribeNetworkInterfaces\" \t\t\t], \t\t\t\"Resource\":
-                              \"*\" \t\t} \t] }"
+                            description: "NetworkARN is an ARN value referencing a
+                              role appropriate for the Network Operator. \n The following
+                              is an example of a valid policy document: \n { \"Version\":
+                              \"2012-10-17\", \"Statement\": [ { \"Effect\": \"Allow\",
+                              \"Action\": [ \"ec2:DescribeInstances\", \"ec2:DescribeInstanceStatus\",
+                              \"ec2:DescribeInstanceTypes\", \"ec2:UnassignPrivateIpAddresses\",
+                              \"ec2:AssignPrivateIpAddresses\", \"ec2:UnassignIpv6Addresses\",
+                              \"ec2:AssignIpv6Addresses\", \"ec2:DescribeSubnets\",
+                              \"ec2:DescribeNetworkInterfaces\" ], \"Resource\": \"*\"
+                              } ] }"
                             type: string
                           nodePoolManagementARN:
                             description: "NodePoolManagementARN is an ARN value referencing
-                              a role that should contain policy permissions matching
-                              the node pool management policy. \n The following is
-                              an example of a valid policy document: \n {   \"Version\":
-                              \"2012-10-17\",  \"Statement\": [    {      \"Action\":
-                              [        \"ec2:AllocateAddress\",        \"ec2:AssociateRouteTable\",
-                              \       \"ec2:AttachInternetGateway\",        \"ec2:AuthorizeSecurityGroupIngress\",
-                              \       \"ec2:CreateInternetGateway\",        \"ec2:CreateNatGateway\",
-                              \       \"ec2:CreateRoute\",        \"ec2:CreateRouteTable\",
-                              \       \"ec2:CreateSecurityGroup\",        \"ec2:CreateSubnet\",
-                              \       \"ec2:CreateTags\",        \"ec2:DeleteInternetGateway\",
-                              \       \"ec2:DeleteNatGateway\",        \"ec2:DeleteRouteTable\",
-                              \       \"ec2:DeleteSecurityGroup\",        \"ec2:DeleteSubnet\",
-                              \       \"ec2:DeleteTags\",        \"ec2:DescribeAccountAttributes\",
-                              \       \"ec2:DescribeAddresses\",        \"ec2:DescribeAvailabilityZones\",
-                              \       \"ec2:DescribeImages\",        \"ec2:DescribeInstances\",
-                              \       \"ec2:DescribeInternetGateways\",        \"ec2:DescribeNatGateways\",
-                              \       \"ec2:DescribeNetworkInterfaces\",        \"ec2:DescribeNetworkInterfaceAttribute\",
-                              \       \"ec2:DescribeRouteTables\",        \"ec2:DescribeSecurityGroups\",
-                              \       \"ec2:DescribeSubnets\",        \"ec2:DescribeVpcs\",
-                              \       \"ec2:DescribeVpcAttribute\",        \"ec2:DescribeVolumes\",
-                              \       \"ec2:DetachInternetGateway\",        \"ec2:DisassociateRouteTable\",
-                              \       \"ec2:DisassociateAddress\",        \"ec2:ModifyInstanceAttribute\",
-                              \       \"ec2:ModifyNetworkInterfaceAttribute\",        \"ec2:ModifySubnetAttribute\",
-                              \       \"ec2:ReleaseAddress\",        \"ec2:RevokeSecurityGroupIngress\",
-                              \       \"ec2:RunInstances\",        \"ec2:TerminateInstances\",
-                              \       \"tag:GetResources\",        \"ec2:CreateLaunchTemplate\",
-                              \       \"ec2:CreateLaunchTemplateVersion\",        \"ec2:DescribeLaunchTemplates\",
-                              \       \"ec2:DescribeLaunchTemplateVersions\",        \"ec2:DeleteLaunchTemplate\",
-                              \       \"ec2:DeleteLaunchTemplateVersions\"      ],
-                              \     \"Resource\": [        \"*\"      ],      \"Effect\":
-                              \"Allow\"    },    {      \"Condition\": {        \"StringLike\":
-                              {          \"iam:AWSServiceName\": \"elasticloadbalancing.amazonaws.com\"
-                              \       }      },      \"Action\": [        \"iam:CreateServiceLinkedRole\"
-                              \     ],      \"Resource\": [        \"arn:*:iam::*:role/aws-service-role/elasticloadbalancing.amazonaws.com/AWSServiceRoleForElasticLoadBalancing\"
-                              \     ],      \"Effect\": \"Allow\"    },    {      \"Action\":
-                              [        \"iam:PassRole\"      ],      \"Resource\":
-                              [        \"arn:*:iam::*:role/*-worker-role\"      ],
-                              \     \"Effect\": \"Allow\"    }  ] }"
+                              a role appropriate for the CAPI Controller. \n The following
+                              is an example of a valid policy document: \n { \"Version\":
+                              \"2012-10-17\", \"Statement\": [ { \"Action\": [ \"ec2:AllocateAddress\",
+                              \"ec2:AssociateRouteTable\", \"ec2:AttachInternetGateway\",
+                              \"ec2:AuthorizeSecurityGroupIngress\", \"ec2:CreateInternetGateway\",
+                              \"ec2:CreateNatGateway\", \"ec2:CreateRoute\", \"ec2:CreateRouteTable\",
+                              \"ec2:CreateSecurityGroup\", \"ec2:CreateSubnet\", \"ec2:CreateTags\",
+                              \"ec2:DeleteInternetGateway\", \"ec2:DeleteNatGateway\",
+                              \"ec2:DeleteRouteTable\", \"ec2:DeleteSecurityGroup\",
+                              \"ec2:DeleteSubnet\", \"ec2:DeleteTags\", \"ec2:DescribeAccountAttributes\",
+                              \"ec2:DescribeAddresses\", \"ec2:DescribeAvailabilityZones\",
+                              \"ec2:DescribeImages\", \"ec2:DescribeInstances\", \"ec2:DescribeInternetGateways\",
+                              \"ec2:DescribeNatGateways\", \"ec2:DescribeNetworkInterfaces\",
+                              \"ec2:DescribeNetworkInterfaceAttribute\", \"ec2:DescribeRouteTables\",
+                              \"ec2:DescribeSecurityGroups\", \"ec2:DescribeSubnets\",
+                              \"ec2:DescribeVpcs\", \"ec2:DescribeVpcAttribute\",
+                              \"ec2:DescribeVolumes\", \"ec2:DetachInternetGateway\",
+                              \"ec2:DisassociateRouteTable\", \"ec2:DisassociateAddress\",
+                              \"ec2:ModifyInstanceAttribute\", \"ec2:ModifyNetworkInterfaceAttribute\",
+                              \"ec2:ModifySubnetAttribute\", \"ec2:ReleaseAddress\",
+                              \"ec2:RevokeSecurityGroupIngress\", \"ec2:RunInstances\",
+                              \"ec2:TerminateInstances\", \"tag:GetResources\", \"ec2:CreateLaunchTemplate\",
+                              \"ec2:CreateLaunchTemplateVersion\", \"ec2:DescribeLaunchTemplates\",
+                              \"ec2:DescribeLaunchTemplateVersions\", \"ec2:DeleteLaunchTemplate\",
+                              \"ec2:DeleteLaunchTemplateVersions\" ], \"Resource\":
+                              [ \"*\" ], \"Effect\": \"Allow\" }, { \"Condition\":
+                              { \"StringLike\": { \"iam:AWSServiceName\": \"elasticloadbalancing.amazonaws.com\"
+                              } }, \"Action\": [ \"iam:CreateServiceLinkedRole\" ],
+                              \"Resource\": [ \"arn:*:iam::*:role/aws-service-role/elasticloadbalancing.amazonaws.com/AWSServiceRoleForElasticLoadBalancing\"
+                              ], \"Effect\": \"Allow\" }, { \"Action\": [ \"iam:PassRole\"
+                              ], \"Resource\": [ \"arn:*:iam::*:role/*-worker-role\"
+                              ], \"Effect\": \"Allow\" } ] }"
                             type: string
                           storageARN:
-                            description: "StorageOIDC is an ARN value referencing
-                              a role used for storage driver OIDC integration. \n
-                              The following is an example of a valid policy document:
-                              \n { \t\"Version\": \"2012-10-17\", \t\"Statement\":
-                              [ \t\t{ \t\t\t\"Effect\": \"Allow\", \t\t\t\"Action\":
-                              [ \t\t\t\t\"ec2:AttachVolume\", \t\t\t\t\"ec2:CreateSnapshot\",
-                              \t\t\t\t\"ec2:CreateTags\", \t\t\t\t\"ec2:CreateVolume\",
-                              \t\t\t\t\"ec2:DeleteSnapshot\", \t\t\t\t\"ec2:DeleteTags\",
-                              \t\t\t\t\"ec2:DeleteVolume\", \t\t\t\t\"ec2:DescribeInstances\",
-                              \t\t\t\t\"ec2:DescribeSnapshots\", \t\t\t\t\"ec2:DescribeTags\",
-                              \t\t\t\t\"ec2:DescribeVolumes\", \t\t\t\t\"ec2:DescribeVolumesModifications\",
-                              \t\t\t\t\"ec2:DetachVolume\", \t\t\t\t\"ec2:ModifyVolume\"
-                              \t\t\t], \t\t\t\"Resource\": \"*\" \t\t} \t] }"
+                            description: "StorageARN is an ARN value referencing a
+                              role appropriate for the Storage Operator. \n The following
+                              is an example of a valid policy document: \n { \"Version\":
+                              \"2012-10-17\", \"Statement\": [ { \"Effect\": \"Allow\",
+                              \"Action\": [ \"ec2:AttachVolume\", \"ec2:CreateSnapshot\",
+                              \"ec2:CreateTags\", \"ec2:CreateVolume\", \"ec2:DeleteSnapshot\",
+                              \"ec2:DeleteTags\", \"ec2:DeleteVolume\", \"ec2:DescribeInstances\",
+                              \"ec2:DescribeSnapshots\", \"ec2:DescribeTags\", \"ec2:DescribeVolumes\",
+                              \"ec2:DescribeVolumesModifications\", \"ec2:DetachVolume\",
+                              \"ec2:ModifyVolume\" ], \"Resource\": \"*\" } ] }"
                             type: string
                         required:
                         - controlPlaneOperatorARN
@@ -12982,6 +13159,7 @@ spec:
                               TODO: Add other useful fields. apiVersion, kind, uid?'
                             type: string
                         type: object
+                        x-kubernetes-map-type: atomic
                       location:
                         type: string
                       machineIdentityID:
@@ -13044,6 +13222,7 @@ spec:
                               TODO: Add other useful fields. apiVersion, kind, uid?'
                             type: string
                         type: object
+                        x-kubernetes-map-type: atomic
                       ingressOperatorCloudCreds:
                         description: IngressOperatorCloudCreds is a reference to a
                           secret containing ibm cloud credentials for ingress operator
@@ -13054,6 +13233,7 @@ spec:
                               TODO: Add other useful fields. apiVersion, kind, uid?'
                             type: string
                         type: object
+                        x-kubernetes-map-type: atomic
                       kubeCloudControllerCreds:
                         description: "KubeCloudControllerCreds is a reference to a
                           secret containing cloud credentials with permissions matching
@@ -13066,6 +13246,7 @@ spec:
                               TODO: Add other useful fields. apiVersion, kind, uid?'
                             type: string
                         type: object
+                        x-kubernetes-map-type: atomic
                       nodePoolManagementCreds:
                         description: "NodePoolManagementCreds is a reference to a
                           secret containing cloud credentials with permissions matching
@@ -13078,6 +13259,7 @@ spec:
                               TODO: Add other useful fields. apiVersion, kind, uid?'
                             type: string
                         type: object
+                        x-kubernetes-map-type: atomic
                       region:
                         description: Region is the IBMCloud region in which the cluster
                           resides. This configures the OCP control plane cloud integrations,
@@ -13177,6 +13359,7 @@ spec:
                 - type
                 type: object
               podCIDR:
+                description: deprecated use networking.ClusterNetwork
                 type: string
               pullSecret:
                 description: LocalObjectReference contains enough information to let
@@ -13187,6 +13370,7 @@ spec:
                       TODO: Add other useful fields. apiVersion, kind, uid?'
                     type: string
                 type: object
+                x-kubernetes-map-type: atomic
               releaseImage:
                 type: string
               secretEncryption:
@@ -13206,6 +13390,7 @@ spec:
                               TODO: Add other useful fields. apiVersion, kind, uid?'
                             type: string
                         type: object
+                        x-kubernetes-map-type: atomic
                       backupKey:
                         description: BackupKey defines the old key during the rotation
                           process so previously created secrets can continue to be
@@ -13217,6 +13402,7 @@ spec:
                               TODO: Add other useful fields. apiVersion, kind, uid?'
                             type: string
                         type: object
+                        x-kubernetes-map-type: atomic
                     required:
                     - activeKey
                     type: object
@@ -13259,6 +13445,7 @@ spec:
                                       uid?'
                                     type: string
                                 type: object
+                                x-kubernetes-map-type: atomic
                             required:
                             - credentials
                             type: object
@@ -13321,6 +13508,7 @@ spec:
                                           kind, uid?'
                                         type: string
                                     type: object
+                                    x-kubernetes-map-type: atomic
                                 required:
                                 - credentials
                                 type: object
@@ -13402,7 +13590,9 @@ spec:
                       TODO: Add other useful fields. apiVersion, kind, uid?'
                     type: string
                 type: object
+                x-kubernetes-map-type: atomic
               serviceCIDR:
+                description: deprecated use networking.ServiceNetwork
                 type: string
               services:
                 description: Services defines metadata about how control plane services
@@ -13488,18 +13678,16 @@ spec:
                       TODO: Add other useful fields. apiVersion, kind, uid?'
                     type: string
                 type: object
+                x-kubernetes-map-type: atomic
             required:
             - dns
             - etcd
             - infraID
             - issuerURL
-            - machineCIDR
-            - networkType
+            - networking
             - platform
-            - podCIDR
             - pullSecret
             - releaseImage
-            - serviceCIDR
             - services
             - sshKey
             type: object
@@ -13513,13 +13701,12 @@ spec:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct
                     use as an array at the field path .status.conditions.  For example,
-                    type FooStatus struct{     // Represents the observations of a
-                    foo's current state.     // Known .status.conditions.type are:
-                    \"Available\", \"Progressing\", and \"Degraded\"     // +patchMergeKey=type
-                    \    // +patchStrategy=merge     // +listType=map     // +listMapKey=type
-                    \    Conditions []metav1.Condition `json:\"conditions,omitempty\"
-                    patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`
-                    \n     // other fields }"
+                    type FooStatus struct{ // Represents the observations of a foo's
+                    current state. // Known .status.conditions.type are: \"Available\",
+                    \"Progressing\", and \"Degraded\" // +patchMergeKey=type // +patchStrategy=merge
+                    // +listType=map // +listMapKey=type Conditions []metav1.Condition
+                    `json:\"conditions,omitempty\" patchStrategy:\"merge\" patchMergeKey:\"type\"
+                    protobuf:\"bytes,1,rep,name=conditions\"` \n // other fields }"
                   properties:
                     lastTransitionTime:
                       description: lastTransitionTime is the last time the condition
@@ -13627,6 +13814,7 @@ spec:
                       TODO: Add other useful fields. apiVersion, kind, uid?'
                     type: string
                 type: object
+                x-kubernetes-map-type: atomic
               lastReleaseImageTransitionTime:
                 description: lastReleaseImageTransitionTime is the time of the last
                   update to the current releaseImage property.
@@ -13666,14 +13854,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/v1beta1: v1beta1
@@ -13764,14 +13952,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/v1beta1: v1beta1
@@ -13925,14 +14113,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/v1beta1: v1beta1
@@ -14006,6 +14194,7 @@ spec:
                       TODO: Add other useful fields. apiVersion, kind, uid?'
                     type: string
                 type: object
+                x-kubernetes-map-type: atomic
               memory:
                 description: Memory is Amount of memory allocated (in GB)
                 type: string
@@ -14175,14 +14364,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/v1beta1: v1beta1
@@ -14249,6 +14438,7 @@ spec:
                               TODO: Add other useful fields. apiVersion, kind, uid?'
                             type: string
                         type: object
+                        x-kubernetes-map-type: atomic
                       memory:
                         description: Memory is Amount of memory allocated (in GB)
                         type: string
@@ -14310,14 +14500,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/v1beta1: v1alpha4
@@ -14453,14 +14643,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   name: ibmvpcmachines.infrastructure.cluster.x-k8s.io
 spec:
@@ -14578,14 +14768,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   name: ibmvpcmachinetemplates.infrastructure.cluster.x-k8s.io
 spec:
@@ -14683,14 +14873,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/v1beta1: v1alpha1
@@ -14777,6 +14967,7 @@ spec:
                     description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
                     type: string
                 type: object
+                x-kubernetes-map-type: atomic
               sshKeys:
                 description: SSHKeys is a reference to a local struct for SSH keys
                   persistence.
@@ -14819,6 +15010,7 @@ spec:
                         description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
                         type: string
                     type: object
+                    x-kubernetes-map-type: atomic
                   dataSecretName:
                     description: DataSecretName is the name of the secret that stores
                       ssh keys.
@@ -14909,14 +15101,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/v1beta1: v1alpha1
@@ -15076,6 +15268,7 @@ spec:
                                       - kind
                                       - name
                                       type: object
+                                      x-kubernetes-map-type: atomic
                                     dataSourceRef:
                                       description: 'dataSourceRef specifies the object
                                         from which to populate the volume with data,
@@ -15095,12 +15288,12 @@ spec:
                                         the other is non-empty. There are two important
                                         differences between DataSource and DataSourceRef:
                                         * While DataSource only allows two specific
-                                        types of objects, DataSourceRef   allows any
+                                        types of objects, DataSourceRef allows any
                                         non-core object, as well as PersistentVolumeClaim
                                         objects. * While DataSource ignores disallowed
-                                        values (dropping them), DataSourceRef   preserves
+                                        values (dropping them), DataSourceRef preserves
                                         all values, and generates an error if a disallowed
-                                        value is   specified. (Beta) Using this field
+                                        value is specified. (Beta) Using this field
                                         requires the AnyVolumeDataSource feature gate
                                         to be enabled.'
                                       properties:
@@ -15123,6 +15316,7 @@ spec:
                                       - kind
                                       - name
                                       type: object
+                                      x-kubernetes-map-type: atomic
                                     resources:
                                       description: 'resources represents the minimum
                                         resources the volume should have. If RecoverVolumeExpansionFailure
@@ -15210,6 +15404,7 @@ spec:
                                             only "value". The requirements are ANDed.
                                           type: object
                                       type: object
+                                      x-kubernetes-map-type: atomic
                                     storageClassName:
                                       description: 'storageClassName is the name of
                                         the StorageClass required by the claim. More
@@ -15461,6 +15656,7 @@ spec:
                                       - kind
                                       - name
                                       type: object
+                                      x-kubernetes-map-type: atomic
                                     resources:
                                       description: 'Resources represents the minimum
                                         resources the volume should have. More info:
@@ -15544,6 +15740,7 @@ spec:
                                             only "value". The requirements are ANDed.
                                           type: object
                                       type: object
+                                      x-kubernetes-map-type: atomic
                                     storageClassName:
                                       description: 'Name of the StorageClass required
                                         by the claim. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1'
@@ -15845,6 +16042,7 @@ spec:
                                                     type: object
                                                   type: array
                                               type: object
+                                              x-kubernetes-map-type: atomic
                                             weight:
                                               description: Weight associated with
                                                 matching the corresponding nodeSelectorTerm,
@@ -15964,10 +16162,12 @@ spec:
                                                     type: object
                                                   type: array
                                               type: object
+                                              x-kubernetes-map-type: atomic
                                             type: array
                                         required:
                                         - nodeSelectorTerms
                                         type: object
+                                        x-kubernetes-map-type: atomic
                                     type: object
                                   podAffinity:
                                     description: Describes pod affinity scheduling
@@ -16065,6 +16265,7 @@ spec:
                                                         are ANDed.
                                                       type: object
                                                   type: object
+                                                  x-kubernetes-map-type: atomic
                                                 namespaceSelector:
                                                   description: A label query over
                                                     the set of namespaces that the
@@ -16137,6 +16338,7 @@ spec:
                                                         are ANDed.
                                                       type: object
                                                   type: object
+                                                  x-kubernetes-map-type: atomic
                                                 namespaces:
                                                   description: namespaces specifies
                                                     a static list of namespace names
@@ -16261,6 +16463,7 @@ spec:
                                                     are ANDed.
                                                   type: object
                                               type: object
+                                              x-kubernetes-map-type: atomic
                                             namespaceSelector:
                                               description: A label query over the
                                                 set of namespaces that the term applies
@@ -16328,6 +16531,7 @@ spec:
                                                     are ANDed.
                                                   type: object
                                               type: object
+                                              x-kubernetes-map-type: atomic
                                             namespaces:
                                               description: namespaces specifies a
                                                 static list of namespace names that
@@ -16453,6 +16657,7 @@ spec:
                                                         are ANDed.
                                                       type: object
                                                   type: object
+                                                  x-kubernetes-map-type: atomic
                                                 namespaceSelector:
                                                   description: A label query over
                                                     the set of namespaces that the
@@ -16525,6 +16730,7 @@ spec:
                                                         are ANDed.
                                                       type: object
                                                   type: object
+                                                  x-kubernetes-map-type: atomic
                                                 namespaces:
                                                   description: namespaces specifies
                                                     a static list of namespace names
@@ -16649,6 +16855,7 @@ spec:
                                                     are ANDed.
                                                   type: object
                                               type: object
+                                              x-kubernetes-map-type: atomic
                                             namespaceSelector:
                                               description: A label query over the
                                                 set of namespaces that the term applies
@@ -16716,6 +16923,7 @@ spec:
                                                     are ANDed.
                                                   type: object
                                               type: object
+                                              x-kubernetes-map-type: atomic
                                             namespaces:
                                               description: namespaces specifies a
                                                 static list of namespace names that
@@ -18369,6 +18577,7 @@ spec:
                                                 kind, uid?'
                                               type: string
                                           type: object
+                                          x-kubernetes-map-type: atomic
                                         secretRef:
                                           description: UserDataSecretRef references
                                             a k8s secret that contains config drive
@@ -18381,6 +18590,7 @@ spec:
                                                 kind, uid?'
                                               type: string
                                           type: object
+                                          x-kubernetes-map-type: atomic
                                         userData:
                                           description: UserData contains config drive
                                             inline cloud-init userdata.
@@ -18418,6 +18628,7 @@ spec:
                                                 kind, uid?'
                                               type: string
                                           type: object
+                                          x-kubernetes-map-type: atomic
                                         secretRef:
                                           description: UserDataSecretRef references
                                             a k8s secret that contains NoCloud userdata.
@@ -18429,6 +18640,7 @@ spec:
                                                 kind, uid?'
                                               type: string
                                           type: object
+                                          x-kubernetes-map-type: atomic
                                         userData:
                                           description: UserData contains NoCloud inline
                                             cloud-init userdata.
@@ -18462,6 +18674,7 @@ spec:
                                             (cloud-init) or "OEMDRV" (kickstart).
                                           type: string
                                       type: object
+                                      x-kubernetes-map-type: atomic
                                     containerDisk:
                                       description: 'ContainerDisk references a docker
                                         image, embedding a qcow or raw disk. More
@@ -18539,6 +18752,7 @@ spec:
                                                 required:
                                                 - fieldPath
                                                 type: object
+                                                x-kubernetes-map-type: atomic
                                               mode:
                                                 description: 'Optional: mode bits
                                                   used to set permissions on this
@@ -18592,6 +18806,7 @@ spec:
                                                 required:
                                                 - resource
                                                 type: object
+                                                x-kubernetes-map-type: atomic
                                             required:
                                             - path
                                             type: object
@@ -18756,6 +18971,7 @@ spec:
                                                 kind, uid?'
                                               type: string
                                           type: object
+                                          x-kubernetes-map-type: atomic
                                         secret:
                                           description: Secret references a k8s Secret
                                             that contains Sysprep answer file named
@@ -18769,6 +18985,7 @@ spec:
                                                 kind, uid?'
                                               type: string
                                           type: object
+                                          x-kubernetes-map-type: atomic
                                       type: object
                                   required:
                                   - name
@@ -18870,14 +19087,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/v1beta1: v1alpha1
@@ -19057,6 +19274,7 @@ spec:
                                               - kind
                                               - name
                                               type: object
+                                              x-kubernetes-map-type: atomic
                                             dataSourceRef:
                                               description: 'dataSourceRef specifies
                                                 the object from which to populate
@@ -19080,14 +19298,14 @@ spec:
                                                 differences between DataSource and
                                                 DataSourceRef: * While DataSource
                                                 only allows two specific types of
-                                                objects, DataSourceRef   allows any
+                                                objects, DataSourceRef allows any
                                                 non-core object, as well as PersistentVolumeClaim
                                                 objects. * While DataSource ignores
                                                 disallowed values (dropping them),
-                                                DataSourceRef   preserves all values,
+                                                DataSourceRef preserves all values,
                                                 and generates an error if a disallowed
-                                                value is   specified. (Beta) Using
-                                                this field requires the AnyVolumeDataSource
+                                                value is specified. (Beta) Using this
+                                                field requires the AnyVolumeDataSource
                                                 feature gate to be enabled.'
                                               properties:
                                                 apiGroup:
@@ -19111,6 +19329,7 @@ spec:
                                               - kind
                                               - name
                                               type: object
+                                              x-kubernetes-map-type: atomic
                                             resources:
                                               description: 'resources represents the
                                                 minimum resources the volume should
@@ -19210,6 +19429,7 @@ spec:
                                                     are ANDed.
                                                   type: object
                                               type: object
+                                              x-kubernetes-map-type: atomic
                                             storageClassName:
                                               description: 'storageClassName is the
                                                 name of the StorageClass required
@@ -19487,6 +19707,7 @@ spec:
                                               - kind
                                               - name
                                               type: object
+                                              x-kubernetes-map-type: atomic
                                             resources:
                                               description: 'Resources represents the
                                                 minimum resources the volume should
@@ -19580,6 +19801,7 @@ spec:
                                                     are ANDed.
                                                   type: object
                                               type: object
+                                              x-kubernetes-map-type: atomic
                                             storageClassName:
                                               description: 'Name of the StorageClass
                                                 required by the claim. More info:
@@ -19921,6 +20143,7 @@ spec:
                                                             type: object
                                                           type: array
                                                       type: object
+                                                      x-kubernetes-map-type: atomic
                                                     weight:
                                                       description: Weight associated
                                                         with matching the corresponding
@@ -20066,10 +20289,12 @@ spec:
                                                             type: object
                                                           type: array
                                                       type: object
+                                                      x-kubernetes-map-type: atomic
                                                     type: array
                                                 required:
                                                 - nodeSelectorTerms
                                                 type: object
+                                                x-kubernetes-map-type: atomic
                                             type: object
                                           podAffinity:
                                             description: Describes pod affinity scheduling
@@ -20186,6 +20411,7 @@ spec:
                                                                 are ANDed.
                                                               type: object
                                                           type: object
+                                                          x-kubernetes-map-type: atomic
                                                         namespaceSelector:
                                                           description: A label query
                                                             over the set of namespaces
@@ -20275,6 +20501,7 @@ spec:
                                                                 are ANDed.
                                                               type: object
                                                           type: object
+                                                          x-kubernetes-map-type: atomic
                                                         namespaces:
                                                           description: namespaces
                                                             specifies a static list
@@ -20419,6 +20646,7 @@ spec:
                                                             are ANDed.
                                                           type: object
                                                       type: object
+                                                      x-kubernetes-map-type: atomic
                                                     namespaceSelector:
                                                       description: A label query over
                                                         the set of namespaces that
@@ -20499,6 +20727,7 @@ spec:
                                                             are ANDed.
                                                           type: object
                                                       type: object
+                                                      x-kubernetes-map-type: atomic
                                                     namespaces:
                                                       description: namespaces specifies
                                                         a static list of namespace
@@ -20648,6 +20877,7 @@ spec:
                                                                 are ANDed.
                                                               type: object
                                                           type: object
+                                                          x-kubernetes-map-type: atomic
                                                         namespaceSelector:
                                                           description: A label query
                                                             over the set of namespaces
@@ -20737,6 +20967,7 @@ spec:
                                                                 are ANDed.
                                                               type: object
                                                           type: object
+                                                          x-kubernetes-map-type: atomic
                                                         namespaces:
                                                           description: namespaces
                                                             specifies a static list
@@ -20881,6 +21112,7 @@ spec:
                                                             are ANDed.
                                                           type: object
                                                       type: object
+                                                      x-kubernetes-map-type: atomic
                                                     namespaceSelector:
                                                       description: A label query over
                                                         the set of namespaces that
@@ -20961,6 +21193,7 @@ spec:
                                                             are ANDed.
                                                           type: object
                                                       type: object
+                                                      x-kubernetes-map-type: atomic
                                                     namespaces:
                                                       description: namespaces specifies
                                                         a static list of namespace
@@ -22782,6 +23015,7 @@ spec:
                                                         apiVersion, kind, uid?'
                                                       type: string
                                                   type: object
+                                                  x-kubernetes-map-type: atomic
                                                 secretRef:
                                                   description: UserDataSecretRef references
                                                     a k8s secret that contains config
@@ -22794,6 +23028,7 @@ spec:
                                                         apiVersion, kind, uid?'
                                                       type: string
                                                   type: object
+                                                  x-kubernetes-map-type: atomic
                                                 userData:
                                                   description: UserData contains config
                                                     drive inline cloud-init userdata.
@@ -22833,6 +23068,7 @@ spec:
                                                         apiVersion, kind, uid?'
                                                       type: string
                                                   type: object
+                                                  x-kubernetes-map-type: atomic
                                                 secretRef:
                                                   description: UserDataSecretRef references
                                                     a k8s secret that contains NoCloud
@@ -22845,6 +23081,7 @@ spec:
                                                         apiVersion, kind, uid?'
                                                       type: string
                                                   type: object
+                                                  x-kubernetes-map-type: atomic
                                                 userData:
                                                   description: UserData contains NoCloud
                                                     inline cloud-init userdata.
@@ -22881,6 +23118,7 @@ spec:
                                                     (kickstart).
                                                   type: string
                                               type: object
+                                              x-kubernetes-map-type: atomic
                                             containerDisk:
                                               description: 'ContainerDisk references
                                                 a docker image, embedding a qcow or
@@ -22964,6 +23202,7 @@ spec:
                                                         required:
                                                         - fieldPath
                                                         type: object
+                                                        x-kubernetes-map-type: atomic
                                                       mode:
                                                         description: 'Optional: mode
                                                           bits used to set permissions
@@ -23024,6 +23263,7 @@ spec:
                                                         required:
                                                         - resource
                                                         type: object
+                                                        x-kubernetes-map-type: atomic
                                                     required:
                                                     - path
                                                     type: object
@@ -23206,6 +23446,7 @@ spec:
                                                         apiVersion, kind, uid?'
                                                       type: string
                                                   type: object
+                                                  x-kubernetes-map-type: atomic
                                                 secret:
                                                   description: Secret references a
                                                     k8s Secret that contains Sysprep
@@ -23220,6 +23461,7 @@ spec:
                                                         apiVersion, kind, uid?'
                                                       type: string
                                                   type: object
+                                                  x-kubernetes-map-type: atomic
                                               type: object
                                           required:
                                           - name
@@ -23247,14 +23489,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   name: machinedeployments.cluster.x-k8s.io
 spec:
@@ -23405,6 +23647,7 @@ spec:
                       are ANDed.
                     type: object
                 type: object
+                x-kubernetes-map-type: atomic
               strategy:
                 description: The deployment strategy to use to replace existing machines
                   with new ones.
@@ -23540,6 +23783,7 @@ spec:
                                 description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
                                 type: string
                             type: object
+                            x-kubernetes-map-type: atomic
                           dataSecretName:
                             description: DataSecretName is the name of the secret
                               that stores the bootstrap data script. If nil, the Machine
@@ -23594,6 +23838,7 @@ spec:
                             description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
                             type: string
                         type: object
+                        x-kubernetes-map-type: atomic
                       nodeDrainTimeout:
                         description: 'NodeDrainTimeout is the total amount of time
                           that the controller will spend on draining a node. The default
@@ -23737,14 +23982,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   name: machinehealthchecks.cluster.x-k8s.io
 spec:
@@ -23862,6 +24107,7 @@ spec:
                     description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
                     type: string
                 type: object
+                x-kubernetes-map-type: atomic
               selector:
                 description: Label selector to match machines whose health will be
                   exercised
@@ -23907,6 +24153,7 @@ spec:
                       are ANDed.
                     type: object
                 type: object
+                x-kubernetes-map-type: atomic
               unhealthyConditions:
                 description: UnhealthyConditions contains a list of the conditions
                   that determine whether a node is considered unhealthy.  The conditions
@@ -24035,14 +24282,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   name: machinepools.cluster.x-k8s.io
 spec:
@@ -24205,6 +24452,7 @@ spec:
                                 description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
                                 type: string
                             type: object
+                            x-kubernetes-map-type: atomic
                           dataSecretName:
                             description: DataSecretName is the name of the secret
                               that stores the bootstrap data script. If nil, the Machine
@@ -24259,6 +24507,7 @@ spec:
                             description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
                             type: string
                         type: object
+                        x-kubernetes-map-type: atomic
                       nodeDrainTimeout:
                         description: 'NodeDrainTimeout is the total amount of time
                           that the controller will spend on draining a node. The default
@@ -24374,23 +24623,23 @@ spec:
                   description: 'ObjectReference contains enough information to let
                     you inspect or modify the referred object. --- New uses of this
                     type are discouraged because of difficulty describing its usage
-                    when embedded in APIs.  1. Ignored fields.  It includes many fields
+                    when embedded in APIs. 1. Ignored fields.  It includes many fields
                     which are not generally honored.  For instance, ResourceVersion
-                    and FieldPath are both very rarely valid in actual usage.  2.
-                    Invalid usage help.  It is impossible to add specific help for
-                    individual usage.  In most embedded usages, there are particular     restrictions
+                    and FieldPath are both very rarely valid in actual usage. 2. Invalid
+                    usage help.  It is impossible to add specific help for individual
+                    usage.  In most embedded usages, there are particular restrictions
                     like, "must refer only to types A and B" or "UID not honored"
-                    or "name must be restricted".     Those cannot be well described
-                    when embedded.  3. Inconsistent validation.  Because the usages
-                    are different, the validation rules are different by usage, which
-                    makes it hard for users to predict what will happen.  4. The fields
+                    or "name must be restricted". Those cannot be well described when
+                    embedded. 3. Inconsistent validation.  Because the usages are
+                    different, the validation rules are different by usage, which
+                    makes it hard for users to predict what will happen. 4. The fields
                     are both imprecise and overly precise.  Kind is not a precise
-                    mapping to a URL. This can produce ambiguity     during interpretation
+                    mapping to a URL. This can produce ambiguity during interpretation
                     and require a REST mapping.  In most cases, the dependency is
-                    on the group,resource tuple     and the version of the actual
-                    struct is irrelevant.  5. We cannot easily change it.  Because
-                    this type is embedded in many locations, updates to this type     will
-                    affect numerous schemas.  Don''t make new APIs embed an underspecified
+                    on the group,resource tuple and the version of the actual struct
+                    is irrelevant. 5. We cannot easily change it.  Because this type
+                    is embedded in many locations, updates to this type will affect
+                    numerous schemas.  Don''t make new APIs embed an underspecified
                     API type they do not control. Instead of using this type, create
                     a locally provided and used type that is well-focused on your
                     reference. For example, ServiceReferences for admission registration:
@@ -24430,6 +24679,7 @@ spec:
                       description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
                       type: string
                   type: object
+                  x-kubernetes-map-type: atomic
                 type: array
               observedGeneration:
                 description: ObservedGeneration is the latest generation observed
@@ -24472,14 +24722,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   name: machines.cluster.x-k8s.io
 spec:
@@ -24583,6 +24833,7 @@ spec:
                         description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
                         type: string
                     type: object
+                    x-kubernetes-map-type: atomic
                   dataSecretName:
                     description: DataSecretName is the name of the secret that stores
                       the bootstrap data script. If nil, the Machine should remain
@@ -24636,6 +24887,7 @@ spec:
                     description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
                     type: string
                 type: object
+                x-kubernetes-map-type: atomic
               nodeDrainTimeout:
                 description: 'NodeDrainTimeout is the total amount of time that the
                   controller will spend on draining a node. The default value is 0,
@@ -24865,6 +25117,7 @@ spec:
                     description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
                     type: string
                 type: object
+                x-kubernetes-map-type: atomic
               observedGeneration:
                 description: ObservedGeneration is the latest generation observed
                   by the controller.
@@ -24884,14 +25137,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   name: machinesets.cluster.x-k8s.io
 spec:
@@ -25026,6 +25279,7 @@ spec:
                       are ANDed.
                     type: object
                 type: object
+                x-kubernetes-map-type: atomic
               template:
                 description: Template is the object that describes the machine that
                   will be created if insufficient replicas are detected. Object references
@@ -25103,6 +25357,7 @@ spec:
                                 description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
                                 type: string
                             type: object
+                            x-kubernetes-map-type: atomic
                           dataSecretName:
                             description: DataSecretName is the name of the secret
                               that stores the bootstrap data script. If nil, the Machine
@@ -25157,6 +25412,7 @@ spec:
                             description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
                             type: string
                         type: object
+                        x-kubernetes-map-type: atomic
                       nodeDrainTimeout:
                         description: 'NodeDrainTimeout is the total amount of time
                           that the controller will spend on draining a node. The default
@@ -25308,14 +25564,14 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
   name: nodepools.hypershift.openshift.io
 spec:
@@ -25428,6 +25684,7 @@ spec:
                         TODO: Add other useful fields. apiVersion, kind, uid?'
                       type: string
                   type: object
+                  x-kubernetes-map-type: atomic
                 type: array
               management:
                 description: Management specifies behavior for managing nodes in the
@@ -25575,6 +25832,7 @@ spec:
                               only "value". The requirements are ANDed.
                             type: object
                         type: object
+                        x-kubernetes-map-type: atomic
                     type: object
                   aws:
                     description: AWS specifies the configuration used when operating
@@ -25739,6 +25997,19 @@ spec:
                         format: int32
                         minimum: 16
                         type: integer
+                      diskStorageAccountType:
+                        default: Premium_LRS
+                        description: "DiskStorageAccountType is the disk storage account
+                          type to use. Valid values are: * Standard_LRS: HDD * StandardSSD_LRS:
+                          Standard SSD * Premium_LRS: Premium SDD * UltraSSD_LRS:
+                          Ultra SDD \n Defaults to Premium_LRS. For more details,
+                          visit the Azure documentation: https://docs.microsoft.com/en-us/azure/virtual-machines/disks-types#disk-type-comparison"
+                        enum:
+                        - Standard_LRS
+                        - StandardSSD_LRS
+                        - Premium_LRS
+                        - UltraSSD_LRS
+                        type: string
                       imageID:
                         description: 'ImageID is the id of the image to boot from.
                           If unset, the default image at the location below will be
@@ -26056,8 +26327,8 @@ status:
   acceptedNames:
     kind: ""
     plural: ""
-  conditions: []
-  storedVersions: []
+  conditions: null
+  storedVersions: null
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -26310,8 +26581,8 @@ roleRef:
   name: prometheus
 subjects:
 - kind: ServiceAccount
-  name: prometheus-user-workload
-  namespace: openshift-user-workload-monitoring
+  name: prometheus-k8s
+  namespace: openshift-monitoring
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -26401,7 +26672,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    hypershift.openshift.io/install-cli-version: openshift/hypershift 82d3c60ef15e60939e23350b42428341b605014b
+    hypershift.openshift.io/install-cli-version: openshift/hypershift 460b721445def8e9e6006fbf4882c8e497e5e0c9
     image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"hypershift-operator:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"operator\")].image"}]'
   name: operator
   namespace: hypershift
@@ -26544,6 +26815,10 @@ spec:
         by (pod, namespace, code, method) * on (pod, namespace) group_left(app) label_replace(kube_pod_labels{label_hypershift_openshift_io_operator_component!=""},
         "app", "$1", "label_app", "(.*)") )
       record: hypershift:operator:component_api_requests_total
+    - expr: max by(platform) (hypershift_hostedclusters)
+      record: platform:hypershift_hostedclusters:max
+    - expr: max by(platform) (hypershift_nodepools)
+      record: platform:hypershift_nodepools:max
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
