@@ -3,7 +3,6 @@
 ## Prerequisites
 
 - OpenShift CLI
-- [Crossplane CLI](https://crossplane.io/docs/v1.6/getting-started/install-configure.html#install-crossplane-cli)
 - [Helm](https://helm.sh/)
 - An OCP cluster ([ROSA instructions](https://www.rosaworkshop.io/rosa/2-deploy/#automatic-mode))
 
@@ -19,8 +18,6 @@ make kustomize
 ```
 
 ## Install
-
-Copy the [hypershift-ops-crossplane AWS credentials](https://vault.ci.openshift.org/ui/vault/secrets/kv/show/selfservice/hypershift-team/ops/hypershift-ops-crossplane) from Vault to `$AWS_CREDS`.
 
 Install HyperShift:
 
