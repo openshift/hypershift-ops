@@ -41,59 +41,11 @@ COMMON_DIR="${SCRIPT_DIR}/common"
 # Validate inputs
 $(which helm >/dev/null) || die "helm not found on PATH"
 $(which oc >/dev/null) || die "oc not found on PATH"
-$(oc crossplane --help >/dev/null) || die "missing crossplane kubectl plugin"
 [ -d "$CLUSTER_DIR" ] || die "cluster not found"
 [ -f "$AWS_CREDS" ] || die "AWS creds file not found"
 
 # Install the ops namespace, admin SA, and RBAC
 oc apply -f "${COMMON_DIR}/hypershift-ops.yaml"
-
-# Prepare the Crossplane namespace
-oc apply -f "${COMMON_DIR}/crossplane-system.yaml"
-
-# Install crossplane
-if ! oc get -n crossplane-system deployments/crossplane 2>&1 >/dev/null; then
-  echo "installing crossplane"
-  helm install crossplane \
-    --namespace crossplane-system crossplane-stable/crossplane \
-    --set securityContextCrossplane.runAsUser=null \
-    --set securityContextRBACManager.runAsUser=null
-else
-  echo "crossplane already installed"
-fi
-
-# Wait crossplane to roll out
-echo "waiting for crossplane to roll out"
-oc wait --namespace crossplane-system deployments/crossplane --for=condition=Available --timeout=30m 2>&1 >/dev/null
-wait_for_crd "controllerconfigs.pkg.crossplane.io"
-
-# By default, deployments managed by Crossplane will run as arbitrary UIDs like
-# 2000, which is incompatible with OCP. Add a special Crossplane controller
-# config which instructs Crossplane to use security context configurations
-# compatible with OCP.
-oc apply -f "${COMMON_DIR}/crossplane-controllerconfig.yaml"
-
-# Install the Crossplane AWS provider (note that it references the controller
-# config previously created)
-if ! oc get customresourcedefinitions providerconfigs.aws.jet.crossplane.io 2>&1 >/dev/null; then
-  echo "installing crossplane aws provider"
-  oc crossplane install provider crossplane/provider-jet-aws:v0.4.0-preview --config=openshift-config
-else
-  echo "crossplane aws provider already installed"
-fi
-
-wait_for_crd "providerconfigs.aws.jet.crossplane.io"
-
-# Configure the Crossplane AWS provider to reference the AWS creds secret
-oc apply -f "${COMMON_DIR}/jet-aws-providerconfig.yaml"
-
-# Create the AWS credentials for the Crossplane AWS provider
-# TODO: Update if it already exists
-if ! oc get -n crossplane-system secrets aws-creds 2>&1 >/dev/null; then
-  oc create secret generic aws-creds -n crossplane-system --from-file=creds=$AWS_CREDS
-else
-  echo "crossplane AWS creds already exist"
-fi
 
 # Prepare the hypershift namespace
 oc apply -f "${COMMON_DIR}/hypershift.yaml"
