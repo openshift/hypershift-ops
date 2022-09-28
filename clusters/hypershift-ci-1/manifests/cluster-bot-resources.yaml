@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cluster-bot
+
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: object-counts
+  namespace: cluster-bot
+spec:
+  hard:
+    count/hostedclusters.hypershift.openshift.io: "5"
+    count/nodepools.hypershift.openshift.io: "15"

@@ -70,3 +70,6 @@ fi
 
 # Install hypershift
 oc apply -f "${CLUSTER_DIR}/hypershift-operator.yaml"
+
+# Install cluster-bot resources
+oc apply -f "${CLUSTER_DIR}/cluster-bot-resources.yaml"
