@@ -2211,8 +2211,8 @@ spec:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct
                     use as an array at the field path .status.conditions.  For example,
-                    type FooStatus struct{ // Represents the observations of a foo's
-                    current state. // Known .status.conditions.type are: \"Available\",
+                    \n type FooStatus struct{ // Represents the observations of a
+                    foo's current state. // Known .status.conditions.type are: \"Available\",
                     \"Progressing\", and \"Degraded\" // +patchMergeKey=type // +patchStrategy=merge
                     // +listType=map // +listMapKey=type Conditions []metav1.Condition
                     `json:\"conditions,omitempty\" patchStrategy:\"merge\" patchMergeKey:\"type\"
@@ -2275,9 +2275,14 @@ spec:
                   type: object
                 type: array
               dnsName:
-                description: DNSName is the name for the record created in the hypershift
-                  private zone
+                description: 'Deprecated: Use DNSNames instead'
                 type: string
+              dnsNames:
+                description: DNSName are the names for the records created in the
+                  hypershift private zone
+                items:
+                  type: string
+                type: array
               dnsZoneID:
                 description: DNSZoneID is ID for the hypershift private zone
                 type: string
@@ -8146,6 +8151,10 @@ spec:
                           - namespace
                           type: object
                         type: array
+                        x-kubernetes-list-map-keys:
+                        - namespace
+                        - name
+                        x-kubernetes-list-type: map
                       domain:
                         description: "domain is used to generate a default host name
                           for a route when the route's host name is empty. The generated
@@ -8155,6 +8164,75 @@ spec:
                           this pattern: \"*.<domain>\". \n Once set, changing domain
                           is not currently supported."
                         type: string
+                      loadbalancer:
+                        description: loadBalancer contains the load balancer details
+                          in general which are not only specific to the underlying
+                          infrastructure provider of the current cluster and are required
+                          for Ingress Controller to work on OpenShift.
+                        properties:
+                          platform:
+                            description: platform holds configuration specific to
+                              the underlying infrastructure provider for the ingress
+                              load balancers. When omitted, this means the user has
+                              no opinion and the platform is left to choose reasonable
+                              defaults. These defaults are subject to change over
+                              time.
+                            properties:
+                              aws:
+                                description: aws contains settings specific to the
+                                  Amazon Web Services infrastructure provider.
+                                properties:
+                                  type:
+                                    description: "type allows user to set a load balancer
+                                      type. When this field is set the default ingresscontroller
+                                      will get created using the specified LBType.
+                                      If this field is not set then the default ingress
+                                      controller of LBType Classic will be created.
+                                      Valid values are: \n * \"Classic\": A Classic
+                                      Load Balancer that makes routing decisions at
+                                      either the transport layer (TCP/SSL) or the
+                                      application layer (HTTP/HTTPS). See the following
+                                      for additional details: \n https://docs.aws.amazon.com/AmazonECS/latest/developerguide/load-balancer-types.html#clb
+                                      \n * \"NLB\": A Network Load Balancer that makes
+                                      routing decisions at the transport layer (TCP/SSL).
+                                      See the following for additional details: \n
+                                      https://docs.aws.amazon.com/AmazonECS/latest/developerguide/load-balancer-types.html#nlb"
+                                    enum:
+                                    - NLB
+                                    - Classic
+                                    type: string
+                                required:
+                                - type
+                                type: object
+                              type:
+                                description: type is the underlying infrastructure
+                                  provider for the cluster. Allowed values are "AWS",
+                                  "Azure", "BareMetal", "GCP", "Libvirt", "OpenStack",
+                                  "VSphere", "oVirt", "KubeVirt", "EquinixMetal",
+                                  "PowerVS", "AlibabaCloud", "Nutanix" and "None".
+                                  Individual components may not support all platforms,
+                                  and must handle unrecognized platforms as None if
+                                  they do not support that platform.
+                                enum:
+                                - ""
+                                - AWS
+                                - Azure
+                                - BareMetal
+                                - GCP
+                                - Libvirt
+                                - OpenStack
+                                - None
+                                - VSphere
+                                - oVirt
+                                - IBMCloud
+                                - KubeVirt
+                                - EquinixMetal
+                                - PowerVS
+                                - AlibabaCloud
+                                - Nutanix
+                                type: string
+                            type: object
+                        type: object
                       requiredHSTSPolicies:
                         description: "requiredHSTSPolicies specifies HSTS policies
                           that are required to be set on newly created  or updated
@@ -9264,6 +9342,11 @@ spec:
                 type: object
               etcd:
                 default:
+                  managed:
+                    storage:
+                      persistentVolume:
+                        size: 4Gi
+                      type: PersistentVolume
                   managementType: Managed
                 description: Etcd specifies configuration for the control plane etcd
                   cluster. The default ManagementType is Managed. Once set, the ManagementType
@@ -9412,6 +9495,7 @@ spec:
                   issuer in all ServiceAccount tokens generated by the control plane
                   API server. The default value is kubernetes.default.svc, which only
                   works for in-cluster validation.
+                format: uri
                 type: string
               networking:
                 description: Networking specifies network configuration for the cluster.
@@ -9467,6 +9551,7 @@ spec:
                   machineCIDR:
                     description: Deprecated This field will be removed in the next
                       API release. Use MachineNetwork instead
+                    format: cidr
                     type: string
                   machineNetwork:
                     description: 'MachineNetwork is the list of IP address pools for
@@ -9497,10 +9582,12 @@ spec:
                   podCIDR:
                     description: Deprecated This field will be removed in the next
                       API release. Use ClusterNetwork instead
+                    format: cidr
                     type: string
                   serviceCIDR:
                     description: Deprecated This field will be removed in the next
                       API release. Use ServiceNetwork instead
+                    format: cidr
                     type: string
                   serviceNetwork:
                     description: 'ServiceNetwork is the list of IP address pools for
@@ -9520,6 +9607,12 @@ spec:
                     type: array
                 required:
                 - networkType
+                type: object
+              nodeSelector:
+                additionalProperties:
+                  type: string
+                description: NodeSelector when specified, must be true for the pods
+                  managed by the HostedCluster to be scheduled.
                 type: object
               olmCatalogPlacement:
                 default: management
@@ -9950,19 +10043,6 @@ spec:
                           can't be changed.
                         pattern: '^crn:'
                         type: string
-                      controlPlaneOperatorCreds:
-                        description: "ControlPlaneOperatorCreds is a reference to
-                          a secret containing cloud credentials with permissions matching
-                          the control-plane-operator policy. This field is immutable.
-                          Once set, It can't be changed. \n TODO(dan): document the
-                          \"control plane operator policy\""
-                        properties:
-                          name:
-                            description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                              TODO: Add other useful fields. apiVersion, kind, uid?'
-                            type: string
-                        type: object
-                        x-kubernetes-map-type: atomic
                       ingressOperatorCloudCreds:
                         description: IngressOperatorCloudCreds is a reference to a
                           secret containing ibm cloud credentials for ingress operator
@@ -10023,6 +10103,17 @@ spec:
                           instance. https://cloud.ibm.com/docs/power-iaas?topic=power-iaas-creating-power-virtual-server
                           \n This field is immutable. Once set, It can't be changed."
                         type: string
+                      storageOperatorCloudCreds:
+                        description: StorageOperatorCloudCreds is a reference to a
+                          secret containing ibm cloud credentials for storage operator
+                          to get authenticated with ibm cloud.
+                        properties:
+                          name:
+                            description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                              TODO: Add other useful fields. apiVersion, kind, uid?'
+                            type: string
+                        type: object
+                        x-kubernetes-map-type: atomic
                       subnet:
                         description: Subnet is the subnet to use for control plane
                           cloud resources. This field is immutable. Once set, It can't
@@ -10072,13 +10163,13 @@ spec:
                     required:
                     - accountID
                     - cisInstanceCRN
-                    - controlPlaneOperatorCreds
                     - ingressOperatorCloudCreds
                     - kubeCloudControllerCreds
                     - nodePoolManagementCreds
                     - region
                     - resourceGroup
                     - serviceInstanceID
+                    - storageOperatorCloudCreds
                     - subnet
                     - vpc
                     - zone
@@ -10448,8 +10539,8 @@ spec:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct
                     use as an array at the field path .status.conditions.  For example,
-                    type FooStatus struct{ // Represents the observations of a foo's
-                    current state. // Known .status.conditions.type are: \"Available\",
+                    \n type FooStatus struct{ // Represents the observations of a
+                    foo's current state. // Known .status.conditions.type are: \"Available\",
                     \"Progressing\", and \"Degraded\" // +patchMergeKey=type // +patchStrategy=merge
                     // +listType=map // +listMapKey=type Conditions []metav1.Condition
                     `json:\"conditions,omitempty\" patchStrategy:\"merge\" patchMergeKey:\"type\"
@@ -11394,6 +11485,10 @@ spec:
                           - namespace
                           type: object
                         type: array
+                        x-kubernetes-list-map-keys:
+                        - namespace
+                        - name
+                        x-kubernetes-list-type: map
                       domain:
                         description: "domain is used to generate a default host name
                           for a route when the route's host name is empty. The generated
@@ -11403,6 +11498,75 @@ spec:
                           this pattern: \"*.<domain>\". \n Once set, changing domain
                           is not currently supported."
                         type: string
+                      loadbalancer:
+                        description: loadBalancer contains the load balancer details
+                          in general which are not only specific to the underlying
+                          infrastructure provider of the current cluster and are required
+                          for Ingress Controller to work on OpenShift.
+                        properties:
+                          platform:
+                            description: platform holds configuration specific to
+                              the underlying infrastructure provider for the ingress
+                              load balancers. When omitted, this means the user has
+                              no opinion and the platform is left to choose reasonable
+                              defaults. These defaults are subject to change over
+                              time.
+                            properties:
+                              aws:
+                                description: aws contains settings specific to the
+                                  Amazon Web Services infrastructure provider.
+                                properties:
+                                  type:
+                                    description: "type allows user to set a load balancer
+                                      type. When this field is set the default ingresscontroller
+                                      will get created using the specified LBType.
+                                      If this field is not set then the default ingress
+                                      controller of LBType Classic will be created.
+                                      Valid values are: \n * \"Classic\": A Classic
+                                      Load Balancer that makes routing decisions at
+                                      either the transport layer (TCP/SSL) or the
+                                      application layer (HTTP/HTTPS). See the following
+                                      for additional details: \n https://docs.aws.amazon.com/AmazonECS/latest/developerguide/load-balancer-types.html#clb
+                                      \n * \"NLB\": A Network Load Balancer that makes
+                                      routing decisions at the transport layer (TCP/SSL).
+                                      See the following for additional details: \n
+                                      https://docs.aws.amazon.com/AmazonECS/latest/developerguide/load-balancer-types.html#nlb"
+                                    enum:
+                                    - NLB
+                                    - Classic
+                                    type: string
+                                required:
+                                - type
+                                type: object
+                              type:
+                                description: type is the underlying infrastructure
+                                  provider for the cluster. Allowed values are "AWS",
+                                  "Azure", "BareMetal", "GCP", "Libvirt", "OpenStack",
+                                  "VSphere", "oVirt", "KubeVirt", "EquinixMetal",
+                                  "PowerVS", "AlibabaCloud", "Nutanix" and "None".
+                                  Individual components may not support all platforms,
+                                  and must handle unrecognized platforms as None if
+                                  they do not support that platform.
+                                enum:
+                                - ""
+                                - AWS
+                                - Azure
+                                - BareMetal
+                                - GCP
+                                - Libvirt
+                                - OpenStack
+                                - None
+                                - VSphere
+                                - oVirt
+                                - IBMCloud
+                                - KubeVirt
+                                - EquinixMetal
+                                - PowerVS
+                                - AlibabaCloud
+                                - Nutanix
+                                type: string
+                            type: object
+                        type: object
                       requiredHSTSPolicies:
                         description: "requiredHSTSPolicies specifies HSTS policies
                           that are required to be set on newly created  or updated
@@ -12674,6 +12838,8 @@ spec:
                 type: string
               networking:
                 description: Networking specifies network configuration for the cluster.
+                  Temporarily optional for backward compatibility, required in future
+                  releases.
                 properties:
                   apiServer:
                     description: APIServer contains advanced network settings for
@@ -12726,6 +12892,7 @@ spec:
                   machineCIDR:
                     description: Deprecated This field will be removed in the next
                       API release. Use MachineNetwork instead
+                    format: cidr
                     type: string
                   machineNetwork:
                     description: 'MachineNetwork is the list of IP address pools for
@@ -12756,10 +12923,12 @@ spec:
                   podCIDR:
                     description: Deprecated This field will be removed in the next
                       API release. Use ClusterNetwork instead
+                    format: cidr
                     type: string
                   serviceCIDR:
                     description: Deprecated This field will be removed in the next
                       API release. Use ServiceNetwork instead
+                    format: cidr
                     type: string
                   serviceNetwork:
                     description: 'ServiceNetwork is the list of IP address pools for
@@ -12779,6 +12948,12 @@ spec:
                     type: array
                 required:
                 - networkType
+                type: object
+              nodeSelector:
+                additionalProperties:
+                  type: string
+                description: NodeSelector when specified, must be true for the pods
+                  managed by the HostedCluster to be scheduled.
                 type: object
               olmCatalogPlacement:
                 default: management
@@ -13210,19 +13385,6 @@ spec:
                           can't be changed.
                         pattern: '^crn:'
                         type: string
-                      controlPlaneOperatorCreds:
-                        description: "ControlPlaneOperatorCreds is a reference to
-                          a secret containing cloud credentials with permissions matching
-                          the control-plane-operator policy. This field is immutable.
-                          Once set, It can't be changed. \n TODO(dan): document the
-                          \"control plane operator policy\""
-                        properties:
-                          name:
-                            description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                              TODO: Add other useful fields. apiVersion, kind, uid?'
-                            type: string
-                        type: object
-                        x-kubernetes-map-type: atomic
                       ingressOperatorCloudCreds:
                         description: IngressOperatorCloudCreds is a reference to a
                           secret containing ibm cloud credentials for ingress operator
@@ -13283,6 +13445,17 @@ spec:
                           instance. https://cloud.ibm.com/docs/power-iaas?topic=power-iaas-creating-power-virtual-server
                           \n This field is immutable. Once set, It can't be changed."
                         type: string
+                      storageOperatorCloudCreds:
+                        description: StorageOperatorCloudCreds is a reference to a
+                          secret containing ibm cloud credentials for storage operator
+                          to get authenticated with ibm cloud.
+                        properties:
+                          name:
+                            description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                              TODO: Add other useful fields. apiVersion, kind, uid?'
+                            type: string
+                        type: object
+                        x-kubernetes-map-type: atomic
                       subnet:
                         description: Subnet is the subnet to use for control plane
                           cloud resources. This field is immutable. Once set, It can't
@@ -13332,13 +13505,13 @@ spec:
                     required:
                     - accountID
                     - cisInstanceCRN
-                    - controlPlaneOperatorCreds
                     - ingressOperatorCloudCreds
                     - kubeCloudControllerCreds
                     - nodePoolManagementCreds
                     - region
                     - resourceGroup
                     - serviceInstanceID
+                    - storageOperatorCloudCreds
                     - subnet
                     - vpc
                     - zone
@@ -13684,7 +13857,6 @@ spec:
             - etcd
             - infraID
             - issuerURL
-            - networking
             - platform
             - pullSecret
             - releaseImage
@@ -13701,8 +13873,8 @@ spec:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct
                     use as an array at the field path .status.conditions.  For example,
-                    type FooStatus struct{ // Represents the observations of a foo's
-                    current state. // Known .status.conditions.type are: \"Available\",
+                    \n type FooStatus struct{ // Represents the observations of a
+                    foo's current state. // Known .status.conditions.type are: \"Available\",
                     \"Progressing\", and \"Degraded\" // +patchMergeKey=type // +patchStrategy=merge
                     // +listType=map // +listMapKey=type Conditions []metav1.Condition
                     `json:\"conditions,omitempty\" patchStrategy:\"merge\" patchMergeKey:\"type\"
@@ -24620,7 +24792,7 @@ spec:
                 description: NodeRefs will point to the corresponding Nodes if it
                   they exist.
                 items:
-                  description: 'ObjectReference contains enough information to let
+                  description: "ObjectReference contains enough information to let
                     you inspect or modify the referred object. --- New uses of this
                     type are discouraged because of difficulty describing its usage
                     when embedded in APIs. 1. Ignored fields.  It includes many fields
@@ -24628,10 +24800,10 @@ spec:
                     and FieldPath are both very rarely valid in actual usage. 2. Invalid
                     usage help.  It is impossible to add specific help for individual
                     usage.  In most embedded usages, there are particular restrictions
-                    like, "must refer only to types A and B" or "UID not honored"
-                    or "name must be restricted". Those cannot be well described when
-                    embedded. 3. Inconsistent validation.  Because the usages are
-                    different, the validation rules are different by usage, which
+                    like, \"must refer only to types A and B\" or \"UID not honored\"
+                    or \"name must be restricted\". Those cannot be well described
+                    when embedded. 3. Inconsistent validation.  Because the usages
+                    are different, the validation rules are different by usage, which
                     makes it hard for users to predict what will happen. 4. The fields
                     are both imprecise and overly precise.  Kind is not a precise
                     mapping to a URL. This can produce ambiguity during interpretation
@@ -24639,12 +24811,12 @@ spec:
                     on the group,resource tuple and the version of the actual struct
                     is irrelevant. 5. We cannot easily change it.  Because this type
                     is embedded in many locations, updates to this type will affect
-                    numerous schemas.  Don''t make new APIs embed an underspecified
-                    API type they do not control. Instead of using this type, create
+                    numerous schemas.  Don't make new APIs embed an underspecified
+                    API type they do not control. \n Instead of using this type, create
                     a locally provided and used type that is well-focused on your
                     reference. For example, ServiceReferences for admission registration:
                     https://github.com/kubernetes/api/blob/release-1.17/admissionregistration/v1/types.go#L533
-                    .'
+                    ."
                   properties:
                     apiVersion:
                       description: API version of the referent.
@@ -25778,6 +25950,13 @@ spec:
                   rolling update, which kind of defeats the purpose of the change.
                   In future we plan to propagate this field in-place. https://github.com/kubernetes-sigs/cluster-api/issues/5880'
                 type: string
+              pausedUntil:
+                description: 'PausedUntil is a field that can be used to pause reconciliation
+                  on a resource. Either a date can be provided in RFC3339 format or
+                  a boolean. If a date is provided: reconciliation is paused on the
+                  resource until that date. If the boolean true is provided: reconciliation
+                  is paused on the resource until the field is removed.'
+                type: string
               platform:
                 description: Platform specifies the underlying infrastructure provider
                   for the NodePool and is used to configure platform specific behavior.
@@ -26075,6 +26254,18 @@ spec:
                               This is the default type used when no storage type is
                               defined.
                             properties:
+                              accessModes:
+                                description: 'AccessModes is an array that contains
+                                  the desired Access Modes the root volume should
+                                  have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes'
+                                items:
+                                  enum:
+                                  - ReadWriteOnce
+                                  - ReadWriteMany
+                                  - ReadOnly
+                                  - ReadWriteOncePod
+                                  type: string
+                                type: array
                               size:
                                 anyOf:
                                 - type: integer
@@ -26242,6 +26433,24 @@ spec:
                   maintain. If unset, the default value is 0.
                 format: int32
                 type: integer
+              tunedConfig:
+                description: "TunedConfig is a list of references to ConfigMaps containing
+                  serialized Tuned resources to define the tuning configuration to
+                  be applied to nodes in the NodePool. The Tuned API is defined here:
+                  \n https://github.com/openshift/cluster-node-tuning-operator/blob/2c76314fb3cc8f12aef4a0dcd67ddc3677d5b54f/pkg/apis/tuned/v1/tuned_types.go
+                  \n Each ConfigMap must have a single key named \"tuned\" whose value
+                  is the JSON or YAML of a serialized Tuned."
+                items:
+                  description: LocalObjectReference contains enough information to
+                    let you locate the referenced object inside the same namespace.
+                  properties:
+                    name:
+                      description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                        TODO: Add other useful fields. apiVersion, kind, uid?'
+                      type: string
+                  type: object
+                  x-kubernetes-map-type: atomic
+                type: array
             required:
             - clusterName
             - management
@@ -26672,7 +26881,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    hypershift.openshift.io/install-cli-version: openshift/hypershift 460b721445def8e9e6006fbf4882c8e497e5e0c9
+    hypershift.openshift.io/install-cli-version: openshift/hypershift f8ecfb849fa4d36e627016ea7e464238e520efb9
     image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"hypershift-operator:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"operator\")].image"}]'
   name: operator
   namespace: hypershift
