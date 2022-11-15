@@ -15,6 +15,14 @@ spec:
       type: Local
     importPolicy:
       scheduled: true
+  - name: ci
+    from:
+      kind: DockerImage
+      name: quay.io/hypershift/hypershift-operator:e43a80bb
+    referencePolicy:
+      type: Local
+    importPolicy:
+      scheduled: true
 ---
 # this grants all authenticated users rights to pull images. We need this to allow
 # pulling of the hypershift operator image from cluster namespaces, which happens

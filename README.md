@@ -12,9 +12,24 @@ hypershift install render \
   --oidc-storage-provider-s3-bucket-name hypershift-ci-1-oidc \
   --oidc-storage-provider-s3-region us-east-1 \
   --oidc-storage-provider-s3-secret oidc-s3-creds \
-  --hypershift-image hypershift-operator:latest > clusters/hypershift-ci-1/manifests/hypershift-operator.yaml
+  --hypershift-image hypershift-operator:ci > clusters/hypershift-ci-1/manifests/hypershift-operator.yaml
 
 make kustomize
+```
+
+## Update the hypershift operator image
+
+Edit the `ci` tag in clusters/hypershift-ci-1/manifests/hypershift-imagestream.yaml
+
+```yaml
+  - name: ci
+    from:
+      kind: DockerImage
+      name: quay.io/hypershift/hypershift-operator:xxxx   <- THIS
+    referencePolicy:
+      type: Local
+    importPolicy:
+      scheduled: true
 ```
 
 ## Install
