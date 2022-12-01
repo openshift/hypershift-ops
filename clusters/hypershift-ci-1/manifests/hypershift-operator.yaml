@@ -34074,6 +34074,7 @@ rules:
   - apps
   resources:
   - deployments
+  - replicasets
   - statefulsets
   verbs:
   - '*'
@@ -34276,7 +34277,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    hypershift.openshift.io/install-cli-version: openshift/hypershift 9c3e998b0b37bedce07163a197e0bf30339e627e
+    hypershift.openshift.io/install-cli-version: openshift/hypershift 1527580a9a97e89165a4b484f2afa7a8821fdf64
     image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"hypershift-operator:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"operator\")].image"}]'
   name: operator
   namespace: hypershift
@@ -34329,7 +34330,7 @@ spec:
               fieldPath: metadata.name
         - name: METRICS_SET
           value: Telemetry
-        image: hypershift-operator:latest
+        image: hypershift-operator:ci
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 5
