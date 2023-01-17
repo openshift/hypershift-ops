@@ -9832,6 +9832,16 @@ spec:
                     description: AWS specifies configuration for clusters running
                       on Amazon Web Services.
                     properties:
+                      additionalAllowedPrincipals:
+                        description: AdditionalAllowedPrincipals specifies a list
+                          of additional allowed principal ARNs to be added to the
+                          hosted control plane's VPC Endpoint Service to enable additional
+                          VPC Endpoint connection requests to be automatically accepted.
+                          See https://docs.aws.amazon.com/vpc/latest/privatelink/configure-endpoint-service.html
+                          for more details around VPC Endpoint Service allowed principals.
+                        items:
+                          type: string
+                        type: array
                       cloudProviderConfig:
                         description: 'CloudProviderConfig specifies AWS networking
                           configuration for the control plane. This is mainly used
@@ -10457,13 +10467,31 @@ spec:
                             description: Auth defines metadata about the management
                               of credentials used to interact with AWS KMS
                             properties:
+                              awsKms:
+                                description: "The referenced role must have a trust
+                                  relationship that allows it to be assumed via web
+                                  identity. https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc.html.
+                                  Example: { \"Version\": \"2012-10-17\", \"Statement\":
+                                  [ { \"Effect\": \"Allow\", \"Principal\": { \"Federated\":
+                                  \"{{ .ProviderARN }}\" }, \"Action\": \"sts:AssumeRoleWithWebIdentity\",
+                                  \"Condition\": { \"StringEquals\": { \"{{ .ProviderName
+                                  }}:sub\": {{ .ServiceAccounts }} } } } ] } \n AWSKMSARN
+                                  is an ARN value referencing a role appropriate for
+                                  managing the auth via the AWS KMS key. \n The following
+                                  is an example of a valid policy document: \n { \"Version\":
+                                  \"2012-10-17\", \"Statement\": [ { \"Effect\": \"Allow\",
+                                  \"Action\": [ \"kms:Encrypt\", \"kms:Decrypt\",
+                                  \"kms:ReEncrypt*\", \"kms:GenerateDataKey*\", \"kms:DescribeKey\"
+                                  ], \"Resource\": %q } ] }"
+                                type: string
                               credentials:
-                                description: Credentials contains the name of the
-                                  secret that holds the aws credentials that can be
-                                  used to make the necessary KMS calls. It should
-                                  at key AWSCredentialsFileSecretKey contain the aws
-                                  credentials file that can be used to configure AWS
-                                  SDKs
+                                description: Deprecated This field is deprecated and
+                                  will be removed in a future release. Use AWSKMSRoleARN
+                                  instead. Credentials contains the name of the secret
+                                  that holds the aws credentials that can be used
+                                  to make the necessary KMS calls. It should at key
+                                  AWSCredentialsFileSecretKey contain the aws credentials
+                                  file that can be used to configure AWS SDKs
                                 properties:
                                   name:
                                     description: 'Name of the referent. More info:
@@ -10474,6 +10502,7 @@ spec:
                                 type: object
                                 x-kubernetes-map-type: atomic
                             required:
+                            - awsKms
                             - credentials
                             type: object
                           backupKey:
@@ -13112,6 +13141,16 @@ spec:
                     description: AWS specifies configuration for clusters running
                       on Amazon Web Services.
                     properties:
+                      additionalAllowedPrincipals:
+                        description: AdditionalAllowedPrincipals specifies a list
+                          of additional allowed principal ARNs to be added to the
+                          hosted control plane's VPC Endpoint Service to enable additional
+                          VPC Endpoint connection requests to be automatically accepted.
+                          See https://docs.aws.amazon.com/vpc/latest/privatelink/configure-endpoint-service.html
+                          for more details around VPC Endpoint Service allowed principals.
+                        items:
+                          type: string
+                        type: array
                       cloudProviderConfig:
                         description: 'CloudProviderConfig specifies AWS networking
                           configuration for the control plane. This is mainly used
@@ -13221,7 +13260,7 @@ spec:
                               policy document: \n { \"Version\": \"2012-10-17\", \"Statement\":
                               [ { \"Effect\": \"Allow\", \"Action\": [ \"ec2:CreateVpcEndpoint\",
                               \"ec2:DescribeVpcEndpoints\", \"ec2:ModifyVpcEndpoint\",
-                              \"ec2:DeleteVpcEndpoints\", \"ec2:CreateTags\", \"route53:ListHostedZones\"
+                              \"ec2:DeleteVpcEndpoints\", \"ec2:CreateTags\", \"route53:ListHostedZones\",
                               ], \"Resource\": \"*\" }, { \"Effect\": \"Allow\", \"Action\":
                               [ \"route53:ChangeResourceRecordSets\", \"route53:ListResourceRecordSets\"
                               ], \"Resource\": \"arn:aws:route53:::%s\" } ] }"
@@ -13684,24 +13723,25 @@ spec:
                             description: Auth defines metadata about the management
                               of credentials used to interact with AWS KMS
                             properties:
-                              credentials:
-                                description: Credentials contains the name of the
-                                  secret that holds the aws credentials that can be
-                                  used to make the necessary KMS calls. It should
-                                  at key AWSCredentialsFileSecretKey contain the aws
-                                  credentials file that can be used to configure AWS
-                                  SDKs
-                                properties:
-                                  name:
-                                    description: 'Name of the referent. More info:
-                                      https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                      TODO: Add other useful fields. apiVersion, kind,
-                                      uid?'
-                                    type: string
-                                type: object
-                                x-kubernetes-map-type: atomic
+                              awsKms:
+                                description: "The referenced role must have a trust
+                                  relationship that allows it to be assumed via web
+                                  identity. https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc.html.
+                                  Example: { \"Version\": \"2012-10-17\", \"Statement\":
+                                  [ { \"Effect\": \"Allow\", \"Principal\": { \"Federated\":
+                                  \"{{ .ProviderARN }}\" }, \"Action\": \"sts:AssumeRoleWithWebIdentity\",
+                                  \"Condition\": { \"StringEquals\": { \"{{ .ProviderName
+                                  }}:sub\": {{ .ServiceAccounts }} } } } ] } \n AWSKMSARN
+                                  is an ARN value referencing a role appropriate for
+                                  managing the auth via the AWS KMS key. \n The following
+                                  is an example of a valid policy document: \n { \"Version\":
+                                  \"2012-10-17\", \"Statement\": [ { \"Effect\": \"Allow\",
+                                  \"Action\": [ \"kms:Encrypt\", \"kms:Decrypt\",
+                                  \"kms:ReEncrypt*\", \"kms:GenerateDataKey*\", \"kms:DescribeKey\"
+                                  ], \"Resource\": %q } ] }"
+                                type: string
                             required:
-                            - credentials
+                            - awsKms
                             type: object
                           backupKey:
                             description: BackupKey defines the old key during the
@@ -13913,6 +13953,7 @@ spec:
                           - NodePort
                           - Route
                           - None
+                          - S3
                           type: string
                       required:
                       - type
@@ -16433,6 +16474,16 @@ spec:
                     description: AWS specifies configuration for clusters running
                       on Amazon Web Services.
                     properties:
+                      additionalAllowedPrincipals:
+                        description: AdditionalAllowedPrincipals specifies a list
+                          of additional allowed principal ARNs to be added to the
+                          hosted control plane's VPC Endpoint Service to enable additional
+                          VPC Endpoint connection requests to be automatically accepted.
+                          See https://docs.aws.amazon.com/vpc/latest/privatelink/configure-endpoint-service.html
+                          for more details around VPC Endpoint Service allowed principals.
+                        items:
+                          type: string
+                        type: array
                       cloudProviderConfig:
                         description: 'CloudProviderConfig specifies AWS networking
                           configuration for the control plane. This is mainly used
@@ -17050,13 +17101,31 @@ spec:
                             description: Auth defines metadata about the management
                               of credentials used to interact with AWS KMS
                             properties:
+                              awsKms:
+                                description: "The referenced role must have a trust
+                                  relationship that allows it to be assumed via web
+                                  identity. https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc.html.
+                                  Example: { \"Version\": \"2012-10-17\", \"Statement\":
+                                  [ { \"Effect\": \"Allow\", \"Principal\": { \"Federated\":
+                                  \"{{ .ProviderARN }}\" }, \"Action\": \"sts:AssumeRoleWithWebIdentity\",
+                                  \"Condition\": { \"StringEquals\": { \"{{ .ProviderName
+                                  }}:sub\": {{ .ServiceAccounts }} } } } ] } \n AWSKMSARN
+                                  is an ARN value referencing a role appropriate for
+                                  managing the auth via the AWS KMS key. \n The following
+                                  is an example of a valid policy document: \n { \"Version\":
+                                  \"2012-10-17\", \"Statement\": [ { \"Effect\": \"Allow\",
+                                  \"Action\": [ \"kms:Encrypt\", \"kms:Decrypt\",
+                                  \"kms:ReEncrypt*\", \"kms:GenerateDataKey*\", \"kms:DescribeKey\"
+                                  ], \"Resource\": %q } ] }"
+                                type: string
                               credentials:
-                                description: Credentials contains the name of the
-                                  secret that holds the aws credentials that can be
-                                  used to make the necessary KMS calls. It should
-                                  at key AWSCredentialsFileSecretKey contain the aws
-                                  credentials file that can be used to configure AWS
-                                  SDKs
+                                description: Deprecated This field is deprecated and
+                                  will be removed in a future release. Use AWSKMSRoleARN
+                                  instead. Credentials contains the name of the secret
+                                  that holds the aws credentials that can be used
+                                  to make the necessary KMS calls. It should at key
+                                  AWSCredentialsFileSecretKey contain the aws credentials
+                                  file that can be used to configure AWS SDKs
                                 properties:
                                   name:
                                     description: 'Name of the referent. More info:
@@ -17067,6 +17136,7 @@ spec:
                                 type: object
                                 x-kubernetes-map-type: atomic
                             required:
+                            - awsKms
                             - credentials
                             type: object
                           backupKey:
@@ -19603,6 +19673,16 @@ spec:
                     description: AWS specifies configuration for clusters running
                       on Amazon Web Services.
                     properties:
+                      additionalAllowedPrincipals:
+                        description: AdditionalAllowedPrincipals specifies a list
+                          of additional allowed principal ARNs to be added to the
+                          hosted control plane's VPC Endpoint Service to enable additional
+                          VPC Endpoint connection requests to be automatically accepted.
+                          See https://docs.aws.amazon.com/vpc/latest/privatelink/configure-endpoint-service.html
+                          for more details around VPC Endpoint Service allowed principals.
+                        items:
+                          type: string
+                        type: array
                       cloudProviderConfig:
                         description: 'CloudProviderConfig specifies AWS networking
                           configuration for the control plane. This is mainly used
@@ -19712,7 +19792,7 @@ spec:
                               policy document: \n { \"Version\": \"2012-10-17\", \"Statement\":
                               [ { \"Effect\": \"Allow\", \"Action\": [ \"ec2:CreateVpcEndpoint\",
                               \"ec2:DescribeVpcEndpoints\", \"ec2:ModifyVpcEndpoint\",
-                              \"ec2:DeleteVpcEndpoints\", \"ec2:CreateTags\", \"route53:ListHostedZones\"
+                              \"ec2:DeleteVpcEndpoints\", \"ec2:CreateTags\", \"route53:ListHostedZones\",
                               ], \"Resource\": \"*\" }, { \"Effect\": \"Allow\", \"Action\":
                               [ \"route53:ChangeResourceRecordSets\", \"route53:ListResourceRecordSets\"
                               ], \"Resource\": \"arn:aws:route53:::%s\" } ] }"
@@ -20162,24 +20242,25 @@ spec:
                             description: Auth defines metadata about the management
                               of credentials used to interact with AWS KMS
                             properties:
-                              credentials:
-                                description: Credentials contains the name of the
-                                  secret that holds the aws credentials that can be
-                                  used to make the necessary KMS calls. It should
-                                  at key AWSCredentialsFileSecretKey contain the aws
-                                  credentials file that can be used to configure AWS
-                                  SDKs
-                                properties:
-                                  name:
-                                    description: 'Name of the referent. More info:
-                                      https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                      TODO: Add other useful fields. apiVersion, kind,
-                                      uid?'
-                                    type: string
-                                type: object
-                                x-kubernetes-map-type: atomic
+                              awsKms:
+                                description: "The referenced role must have a trust
+                                  relationship that allows it to be assumed via web
+                                  identity. https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc.html.
+                                  Example: { \"Version\": \"2012-10-17\", \"Statement\":
+                                  [ { \"Effect\": \"Allow\", \"Principal\": { \"Federated\":
+                                  \"{{ .ProviderARN }}\" }, \"Action\": \"sts:AssumeRoleWithWebIdentity\",
+                                  \"Condition\": { \"StringEquals\": { \"{{ .ProviderName
+                                  }}:sub\": {{ .ServiceAccounts }} } } } ] } \n AWSKMSARN
+                                  is an ARN value referencing a role appropriate for
+                                  managing the auth via the AWS KMS key. \n The following
+                                  is an example of a valid policy document: \n { \"Version\":
+                                  \"2012-10-17\", \"Statement\": [ { \"Effect\": \"Allow\",
+                                  \"Action\": [ \"kms:Encrypt\", \"kms:Decrypt\",
+                                  \"kms:ReEncrypt*\", \"kms:GenerateDataKey*\", \"kms:DescribeKey\"
+                                  ], \"Resource\": %q } ] }"
+                                type: string
                             required:
-                            - credentials
+                            - awsKms
                             type: object
                           backupKey:
                             description: BackupKey defines the old key during the
@@ -20388,6 +20469,7 @@ spec:
                           - NodePort
                           - Route
                           - None
+                          - S3
                           type: string
                       required:
                       - type
@@ -20601,7 +20683,30 @@ spec:
     singular: ibmpowervscluster
   scope: Namespaced
   versions:
-  - name: v1beta1
+  - additionalPrinterColumns:
+    - description: Cluster to which this IBMPowerVSCluster belongs
+      jsonPath: .metadata.labels.cluster\.x-k8s\.io/cluster-name
+      name: Cluster
+      type: string
+    - description: Time duration since creation of IBMPowerVSCluster
+      jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    - jsonPath: .spec.serviceInstanceID
+      name: PowerVS Cloud Instance ID
+      priority: 1
+      type: string
+    - description: Control Plane Endpoint
+      jsonPath: .spec.controlPlaneEndpoint.host
+      name: Endpoint
+      priority: 1
+      type: string
+    - description: Control Plane Port
+      jsonPath: .spec.controlPlaneEndpoint.port
+      name: Port
+      priority: 1
+      type: string
+    name: v1beta1
     schema:
       openAPIV3Schema:
         description: IBMPowerVSCluster is the Schema for the ibmpowervsclusters API.
@@ -20646,6 +20751,12 @@ spec:
                     type: string
                   name:
                     description: Name of resource
+                    minLength: 1
+                    type: string
+                  regex:
+                    description: Regular expression to match resource, In case of
+                      multiple resources matches the provided regular expression the
+                      first matched resource will be selected
                     minLength: 1
                     type: string
                 type: object
@@ -20865,9 +20976,28 @@ spec:
       jsonPath: .metadata.labels.cluster\.x-k8s\.io/cluster-name
       name: Cluster
       type: string
+    - description: Machine object to which this IBMPowerVSMachine belongs
+      jsonPath: .metadata.ownerReferences[?(@.kind=="Machine")].name
+      name: Machine
+      priority: 1
+      type: string
+    - description: Time duration since creation of IBMPowerVSMachine
+      jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
     - description: Cluster infrastructure is ready for IBM PowerVS instances
       jsonPath: .status.ready
       name: Ready
+      type: string
+    - description: Instance Internal Addresses
+      jsonPath: .status.addresses[?(@.type=="InternalIP")].address
+      name: Internal-IP
+      priority: 1
+      type: string
+    - description: Instance External Addresses
+      jsonPath: .status.addresses[?(@.type=="ExternalIP")].address
+      name: External-IP
+      priority: 1
       type: string
     - description: PowerVS instance state
       jsonPath: .status.instanceState
@@ -20909,6 +21039,12 @@ spec:
                     description: Name of resource
                     minLength: 1
                     type: string
+                  regex:
+                    description: Regular expression to match resource, In case of
+                      multiple resources matches the provided regular expression the
+                      first matched resource will be selected
+                    minLength: 1
+                    type: string
                 type: object
               imageRef:
                 description: ImageRef is an optional reference to a provider-specific
@@ -20934,6 +21070,12 @@ spec:
                     type: string
                   name:
                     description: Name of resource
+                    minLength: 1
+                    type: string
+                  regex:
+                    description: Regular expression to match resource, In case of
+                      multiple resources matches the provided regular expression the
+                      first matched resource will be selected
                     minLength: 1
                     type: string
                 type: object
@@ -21153,6 +21295,12 @@ spec:
                             description: Name of resource
                             minLength: 1
                             type: string
+                          regex:
+                            description: Regular expression to match resource, In
+                              case of multiple resources matches the provided regular
+                              expression the first matched resource will be selected
+                            minLength: 1
+                            type: string
                         type: object
                       imageRef:
                         description: ImageRef is an optional reference to a provider-specific
@@ -21178,6 +21326,12 @@ spec:
                             type: string
                           name:
                             description: Name of resource
+                            minLength: 1
+                            type: string
+                          regex:
+                            description: Regular expression to match resource, In
+                              case of multiple resources matches the provided regular
+                              expression the first matched resource will be selected
                             minLength: 1
                             type: string
                         type: object
@@ -21218,10 +21372,24 @@ spec:
           status:
             description: IBMPowerVSMachineTemplateStatus defines the observed state
               of IBMPowerVSMachineTemplate.
+            properties:
+              capacity:
+                additionalProperties:
+                  anyOf:
+                  - type: integer
+                  - type: string
+                  pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                  x-kubernetes-int-or-string: true
+                description: 'Capacity defines the resource capacity for this machine.
+                  This value is used for autoscaling from zero operations as defined
+                  in: https://github.com/kubernetes-sigs/cluster-api/blob/main/docs/proposals/20210310-opt-in-autoscaling-from-zero.md'
+                type: object
             type: object
         type: object
     served: true
     storage: true
+    subresources:
+      status: {}
 status:
   acceptedNames:
     kind: ""
@@ -21293,6 +21461,16 @@ spec:
                 - host
                 - port
                 type: object
+              controlPlaneLoadBalancer:
+                description: ControlPlaneLoadBalancer is optional configuration for
+                  customizing control plane behavior.
+                properties:
+                  name:
+                    description: Name sets the name of the VPC load balancer.
+                    maxLength: 64
+                    pattern: ^[A-Za-z0-9]([A-Za-z0-9]{0,31}|[-A-Za-z0-9]{0,30}[A-Za-z0-9])$
+                    type: string
+                type: object
               region:
                 description: The IBM Cloud Region the cluster lives in.
                 type: string
@@ -21313,8 +21491,58 @@ spec:
           status:
             description: IBMVPCClusterStatus defines the observed state of IBMVPCCluster.
             properties:
+              conditions:
+                description: Conditions defines current service state of the load
+                  balancer.
+                items:
+                  description: Condition defines an observation of a Cluster API resource
+                    operational state.
+                  properties:
+                    lastTransitionTime:
+                      description: Last time the condition transitioned from one status
+                        to another. This should be when the underlying condition changed.
+                        If that is not known, then using the time when the API field
+                        changed is acceptable.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A human readable message indicating details about
+                        the transition. This field may be empty.
+                      type: string
+                    reason:
+                      description: The reason for the condition's last transition
+                        in CamelCase. The specific API may choose whether or not this
+                        field is considered a guaranteed API. This field may not be
+                        empty.
+                      type: string
+                    severity:
+                      description: Severity provides an explicit classification of
+                        Reason code, so the users or machines can immediately understand
+                        the current situation and act accordingly. The Severity field
+                        MUST be set only when Status=False.
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, Unknown.
+                      type: string
+                    type:
+                      description: Type of condition in CamelCase or in foo.example.com/CamelCase.
+                        Many .condition.type values are consistent across resources
+                        like Available, but because arbitrary conditions can be useful
+                        (see .node.status.conditions), the ability to deconflict is
+                        important.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - status
+                  - type
+                  type: object
+                type: array
+              controlPlaneLoadBalancerState:
+                description: ControlPlaneLoadBalancerState is the status of the load
+                  balancer.
+                type: string
               ready:
-                description: Bastion Instance `json:"bastion,omitempty"`
+                description: Ready is true when the provider resource is ready.
                 type: boolean
               subnet:
                 description: Subnet describes a subnet.
@@ -21353,12 +21581,11 @@ spec:
                     type: string
                   floatingIPID:
                     type: string
+                  loadBalancerIPID:
+                    type: string
                 required:
                 - address
-                - floatingIPID
                 type: object
-            required:
-            - ready
             type: object
         type: object
     served: true
@@ -21481,9 +21708,8 @@ spec:
                   this machine.
                 type: string
               ready:
+                description: Ready is true when the provider resource is ready.
                 type: boolean
-            required:
-            - ready
             type: object
         type: object
     served: true
@@ -32540,6 +32766,12 @@ spec:
                   rolling update, which kind of defeats the purpose of the change.
                   In future we plan to propagate this field in-place. https://github.com/kubernetes-sigs/cluster-api/issues/5880'
                 type: string
+              nodeLabels:
+                additionalProperties:
+                  type: string
+                description: NodeLabels propagates a list of labels to Nodes, only
+                  once on creation. Valid values are those in https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#syntax-and-character-set
+                type: object
               pausedUntil:
                 description: 'PausedUntil is a field that can be used to pause reconciliation
                   on a resource. Either a date can be provided in RFC3339 format or
@@ -33032,6 +33264,28 @@ spec:
                   maintain. If unset, the default value is 0.
                 format: int32
                 type: integer
+              taints:
+                description: Taints if specified, propagates a list of taints to Nodes,
+                  only once on creation.
+                items:
+                  description: Taint is as v1 Core but without TimeAdded. https://github.com/kubernetes/kubernetes/blob/ed8cad1e80d096257921908a52ac69cf1f41a098/staging/src/k8s.io/api/core/v1/types.go#L3037-L3053
+                  properties:
+                    effect:
+                      description: Required. The effect of the taint on pods that
+                        do not tolerate the taint. Valid effects are NoSchedule, PreferNoSchedule
+                        and NoExecute.
+                      type: string
+                    key:
+                      description: Required. The taint key to be applied to a node.
+                      type: string
+                    value:
+                      description: The taint value corresponding to the taint key.
+                      type: string
+                  required:
+                  - effect
+                  - key
+                  type: object
+                type: array
               tuningConfig:
                 description: "TuningConfig is a list of references to ConfigMaps containing
                   serialized Tuned resources to define the tuning configuration to
@@ -33332,6 +33586,12 @@ spec:
                   rolling update, which kind of defeats the purpose of the change.
                   In future we plan to propagate this field in-place. https://github.com/kubernetes-sigs/cluster-api/issues/5880'
                 type: string
+              nodeLabels:
+                additionalProperties:
+                  type: string
+                description: NodeLabels propagates a list of labels to Nodes, only
+                  once on creation. Valid values are those in https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#syntax-and-character-set
+                type: object
               pausedUntil:
                 description: 'PausedUntil is a field that can be used to pause reconciliation
                   on a resource. Either a date can be provided in RFC3339 format or
@@ -33815,6 +34075,28 @@ spec:
                   maintain. If unset, the default value is 0.
                 format: int32
                 type: integer
+              taints:
+                description: Taints if specified, propagates a list of taints to Nodes,
+                  only once on creation.
+                items:
+                  description: Taint is as v1 Core but without TimeAdded. https://github.com/kubernetes/kubernetes/blob/ed8cad1e80d096257921908a52ac69cf1f41a098/staging/src/k8s.io/api/core/v1/types.go#L3037-L3053
+                  properties:
+                    effect:
+                      description: Required. The effect of the taint on pods that
+                        do not tolerate the taint. Valid effects are NoSchedule, PreferNoSchedule
+                        and NoExecute.
+                      type: string
+                    key:
+                      description: Required. The taint key to be applied to a node.
+                      type: string
+                    value:
+                      description: The taint value corresponding to the taint key.
+                      type: string
+                  required:
+                  - effect
+                  - key
+                  type: object
+                type: array
               tuningConfig:
                 description: "TuningConfig is a list of references to ConfigMaps containing
                   serialized Tuned resources to define the tuning configuration to
@@ -34032,6 +34314,12 @@ rules:
   - '*'
 - apiGroups:
   - route.openshift.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - image.openshift.io
   resources:
   - '*'
   verbs:
@@ -34277,7 +34565,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    hypershift.openshift.io/install-cli-version: openshift/hypershift 1527580a9a97e89165a4b484f2afa7a8821fdf64
+    hypershift.openshift.io/install-cli-version: openshift/hypershift 1ca115ee92b0b9026ec652322d0e7ad944b76129
     image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"hypershift-operator:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"operator\")].image"}]'
   name: operator
   namespace: hypershift
@@ -34414,10 +34702,10 @@ spec:
       record: hypershift:controlplane:component_memory_request
     - expr: histogram_quantile(0.9, sum by (namespace, le) (rate(ign_server_payload_generation_seconds_bucket{container="ignition-server"}[3m])))
       record: hypershift:controlplane:ign_payload_generation_seconds_p90
-    - expr: avg by (app, namespace, pod) ( sum( rate( container_cpu_usage_seconds_total{container_name!="POD",container!=""}[1m]
+    - expr: avg by (app, namespace, pod) ( sum( rate( container_cpu_usage_seconds_total{container_name!="POD",container!=""}[2m]
         ) ) by (pod, namespace) * on (pod, namespace) group_left(app) label_replace(kube_pod_labels{label_hypershift_openshift_io_control_plane_component!=""},
         "app", "$1", "label_app", "(.*)") ) / count by (app, namespace, pod) ( sum(
-        rate( container_cpu_usage_seconds_total{container_name!="POD",container!=""}[1m]
+        rate( container_cpu_usage_seconds_total{container_name!="POD",container!=""}[2m]
         ) ) by (pod, namespace) * on (pod, namespace) group_left(app) label_replace(kube_pod_labels{label_hypershift_openshift_io_control_plane_component!=""},
         "app", "$1", "label_app", "(.*)") )
       record: hypershift:controlplane:component_cpu_usage_seconds
